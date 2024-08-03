@@ -175,8 +175,9 @@ namespace NFe.Danfe.Html.Dominio
         /// <param name="status">Status</param>
         /// <param name="protocolo">Número do protocolo retornado pela SEFAZ</param>
         /// <param name="creditos">Créditos</param>
+        /// <param name="logo">Imagem em base64</param>
         /// <param name="issqn">ISSQN</param>
-        public DanfeNFe(Classes.NFe nfe, Status status,string protocolo, string creditos, Issqn issqn=null)
+        public DanfeNFe(Classes.NFe nfe, Status status,string protocolo, string creditos, string logo=null, Issqn issqn=null)
         {
             if (nfe == null) throw new ArgumentNullException(nameof(nfe));
             if(nfe.infNFe.ide.mod!=ModeloDocumento.NFe) throw new InvalidOperationException("Modelo da nota imcompatível com o esperado 55");
@@ -187,7 +188,7 @@ namespace NFe.Danfe.Html.Dominio
             var enderecoEmit = new Endereco(nfe.infNFe.emit.enderEmit.xLgr, nfe.infNFe.emit.enderEmit.xBairro, 
                     nfe.infNFe.emit.enderEmit.xMun, nfe.infNFe.emit.enderEmit.nro, nfe.infNFe.emit.enderEmit.CEP,
                     nfe.infNFe.emit.enderEmit.UF.ToString(), nfe.infNFe.emit.enderEmit.fone.ToString(), nfe.infNFe.emit.enderEmit.UF.ToString());
-            Emitente = new Emitente(nfe.infNFe.emit.xNome, nfe.infNFe.emit.IE, doc, "", enderecoEmit);
+            Emitente = new Emitente(nfe.infNFe.emit.xNome, nfe.infNFe.emit.IE, doc, logo, enderecoEmit);
 
             #endregion
 
