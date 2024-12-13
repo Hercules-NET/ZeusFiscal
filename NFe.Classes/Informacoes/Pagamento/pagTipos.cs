@@ -28,6 +28,13 @@ namespace NFe.Classes.Informacoes.Pagamento
     /// </summary>
     public enum FormaPagamento
     {
+		/// <summary>
+        /// >00 - Nenhum (nota emitida e aprovada com este codigo causando problema na distribuicao)
+        /// </summary>
+        [Description("Nenhum")]
+        [XmlEnum("00")]
+        bcNenhum = 00,
+	  
         /// <summary>
         /// 01 - Dinheiro
         /// </summary>
