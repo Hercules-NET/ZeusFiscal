@@ -7,7 +7,12 @@ namespace NFe.Classes.Informacoes.Detalhe.DeclaracaoImportacao
         /// <summary>
         ///     I26 - Numero da Adição
         /// </summary>
-        public int nAdicao { get; set; }
+        public int? nAdicao { get; set; }
+
+        public bool ShouldSerializenAdicao()
+        {
+            return nAdicao.HasValue;
+        }
 
         /// <summary>
         ///     I27 - Numero sequencial do item dentro da Adição
