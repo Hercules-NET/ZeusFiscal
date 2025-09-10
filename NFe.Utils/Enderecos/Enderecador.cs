@@ -1295,7 +1295,7 @@ namespace NFe.Utils.Enderecos
                 {
                     #region NFe
 
-                    if (estado != Estado.BA & estado != Estado.CE & estado != Estado.MA & estado != Estado.PE) //Esses estados usam SVRS somente para NFCe, possuindo endereços próprios para NFe.
+                    if (estado != Estado.BA & estado != Estado.MA & estado != Estado.PE) //Esses estados usam SVRS somente para NFCe, possuindo endereços próprios para NFe.
                     {
                         if (emissao != TipoEmissao.teEPEC)
                             addServico(eventoCceCanc, versao1, hom, emissao, estado, nfe, "https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx");
@@ -1358,7 +1358,7 @@ namespace NFe.Utils.Enderecos
                     #region NFe
 
                     //Rev: 02/09/2019
-                    if (estado != Estado.BA & estado != Estado.CE & estado != Estado.MA & estado != Estado.PE) //Esses estados usam SVRS somente para NFCe, possuindo endereços próprios para NFe.
+                    if (estado != Estado.BA & estado != Estado.MA & estado != Estado.PE) //Esses estados usam SVRS somente para NFCe, possuindo endereços próprios para NFe.
                     {
                         if (emissao != TipoEmissao.teEPEC)
                             addServico(eventoCceCanc, versao1, prod, emissao, estado, nfe, "https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx");
