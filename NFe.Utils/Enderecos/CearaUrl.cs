@@ -14,42 +14,36 @@
             NfeDownloadNFHomologacao_VersaoDoisETres = "https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeDownloadNF?wsdl";
             NFeAutorizacaoHomologacao_VersaoTres = "https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeAutorizacao?wsdl";
             NFeRetAutorizacaoHomologacao_VersaoTres = "https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRetAutorizacao?wsdl";
-            CartaCorrecaoCancelamentoHomologacao_VersaoQuatro =
-                "https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeRecepcaoEvento4?wsdl";
-            NfeInutilizacaoHomologacao_VersaoQuatro =
-                "https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeInutilizacao4?wsdl";
-            NfeConsultaProtocoloHomologacao_VersaoQuatro =
-                "https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeConsultaProtocolo4?wsdl";
-            NfeStatusServicoHomologacao_VersaoQuatro =
-                "https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeStatusServico4?wsdl";
-            NFeAutorizacaoHomologacao_VersaoQuatro = "https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeAutorizacao4?wsdl";
-            NFeRetAutorizacaoHomologacao_VersaoQuatro =
-                "https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeRetAutorizacao4?wsdl";
-            CartaCorrecaoCancelamentoProducao_VersaoUm =
-                "https://nfe.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento?wsdl";
+
+            #region Homologacao Versao4
+            CartaCorrecaoCancelamentoHomologacao_VersaoQuatro = "https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx?WSDL";
+            NfeInutilizacaoHomologacao_VersaoQuatro = "https://nfe-homologacao.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx?WSDL";
+            NfeConsultaProtocoloHomologacao_VersaoQuatro = "https://nfe-homologacao.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx?WSDL";
+            NfeStatusServicoHomologacao_VersaoQuatro = "https://nfe-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx?WSDL";
+            NFeAutorizacaoHomologacao_VersaoQuatro = "https://nfe-homologacao.svrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx?WSDL";
+            NFeRetAutorizacaoHomologacao_VersaoQuatro = "https://nfe-homologacao.svrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx?WSDL";
+            #endregion
+
+            CartaCorrecaoCancelamentoProducao_VersaoUm = "https://nfe.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento?wsdl";
             NfeRecepcaoProducao_VersaoDois = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2?wsdl";
             NfeRetRecepcaoProducao_VersaoDois = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2?wsdl";
             NfeInutilizacaoProducao_VersaoDoisETres = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeInutilizacao2?wsdl";
-            NfeConsultaProtocoloProducao_VersaoDoisETres =
-                "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeConsulta2?wsdl";
-            NfeStatusServicoProducao_VersaoDoisETres =
-                "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeStatusServico2?wsdl";
-            NfeConsultaCadastroProducao_VersaoDoisETres =
-                "https://nfe.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2?wsdl";
+            NfeConsultaProtocoloProducao_VersaoDoisETres = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeConsulta2?wsdl";
+            NfeStatusServicoProducao_VersaoDoisETres = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeStatusServico2?wsdl";
+            NfeConsultaCadastroProducao_VersaoDoisETres = "https://nfe.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2?wsdl";
             NfeDownloadNFProducao_VersaoDoisETres = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeDownloadNF?wsdl";
             NFeAutorizacaoProducao_VersaoTres = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeAutorizacao?wsdl";
             NFeRetAutorizacaoProducao_VersaoTres = "https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRetAutorizacao?wsdl";
-            NfeInutilizacaoProducao_VersaoQuatro = "https://nfe.sefaz.ce.gov.br/nfe4/services/NFeInutilizacao4?wsdl";
-            NfeConsultaProtocoloProducao_VersaoQuatro =
-                "https://nfe.sefaz.ce.gov.br/nfe4/services/NFeConsultaProtocolo4?wsdl";
-            NfeStatusServicoProducao_VersaoQuatro = "https://nfe.sefaz.ce.gov.br/nfe4/services/NFeStatusServico4?wsdl";
-            NfeConsultaCadastroProducao_VersaoQuatro =
-                "https://nfe.sefaz.ce.gov.br/nfe4/services/CadConsultaCadastro4?wsdl";
-            CartaCorrecaoCancelamentoProducao_VersaoQuatro =
-                "https://nfe.sefaz.ce.gov.br/nfe4/services/NFeRecepcaoEvento4?wsdl";
-            NFeAutorizacaoProducao_VersaoQuatro = "https://nfe.sefaz.ce.gov.br/nfe4/services/NFeAutorizacao4?wsdl";
-            NFeRetAutorizacaoProducao_VersaoQuatro =
-                "https://nfe.sefaz.ce.gov.br/nfe4/services/NFeRetAutorizacao4?wsdl";
+
+            #region Producao Versao4
+            NfeInutilizacaoProducao_VersaoQuatro = "https://nfce.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx";
+            NfeConsultaProtocoloProducao_VersaoQuatro = "https://nfce.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx";
+            NfeStatusServicoProducao_VersaoQuatro = "https://nfce.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx";
+            NfeConsultaCadastroProducao_VersaoQuatro = "https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro4.asmx?WSDL";
+            CartaCorrecaoCancelamentoProducao_VersaoQuatro = "https://nfce.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx";
+            NFeAutorizacaoProducao_VersaoQuatro = "https://nfce.svrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx";
+            NFeRetAutorizacaoProducao_VersaoQuatro = "https://nfce.svrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx";
+            #endregion
         }
 
         public string CartaCorrecaoCancelamentoHomologacao_VersaoUm { get; }
