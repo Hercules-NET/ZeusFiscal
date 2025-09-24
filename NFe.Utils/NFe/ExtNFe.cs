@@ -127,43 +127,5 @@ namespace NFe.Utils.NFe
             nfeLocal.Signature = assinatura;
             return nfeLocal;
         }
-
-        /// <summary>
-        ///     Assina um objeto NFe
-        /// </summary>
-        /// <param name="chave"></param>
-        /// <param name="nfe"></param>
-        /// <param name="cfgServico">ConfiguracaoServico para uso na classe Assinador</param>
-        /// <returns>Retorna um objeto do tipo NFe assinado</returns>
-        public static Classes.NFe Assina(this Classes.NFe nfe, string chave, ConfiguracaoServico cfgServico = null, X509Certificate2 _certificado = null)
-        {
-            var nfeLocal = nfe;
-            if (nfeLocal is null) throw new ArgumentNullException("nfe");
-
-            var config = cfgServico ?? ConfiguracaoServico.Instancia;
-
-            #region Define cNF
-
-            var tamanhocNf = 9;
-            var versao = decimal.Parse(nfeLocal.infNFe.versao, CultureInfo.InvariantCulture);
-            if (versao >= 2) tamanhocNf = 8;
-
-            var cnf = chave.Substring(chave.Length - 10);
-            cnf = cnf.Remove(cnf.Length - 1, 1);
-            nfeLocal.infNFe.ide.cNF = cnf;
-
-            #endregion
-
-            nfeLocal.infNFe.Id = $"NFe{chave}";
-            nfeLocal.infNFe.ide.cDV = Convert.ToInt32(chave.Substring(chave.Length - 1));
-
-            Signature assinatura = null;
-            if (_certificado is null)
-                assinatura = Assinador.ObterAssinatura(nfeLocal, nfeLocal.infNFe.Id, config);
-            else
-                assinatura = Assinador.ObterAssinatura(nfeLocal, nfeLocal.infNFe.Id, _certificado, config.Certificado.ManterDadosEmCache, config.Certificado.SignatureMethodSignedXml, config.Certificado.DigestMethodReference, config.RemoverAcentos);
-            nfeLocal.Signature = assinatura;
-            return nfeLocal;
-        }
     }
 }
