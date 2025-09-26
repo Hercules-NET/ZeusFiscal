@@ -13,6 +13,8 @@ namespace DFe.Utils
 
         // https://github.com/ZeusAutomacao/DFe.NET/issues/610
         private static readonly Hashtable CacheSerializers = new Hashtable();
+        private static XNamespace ns = "http://www.portalfiscal.inf.br/nfe";
+
 
         /// <summary>
         ///     Serializa a classe passada para uma string no form
@@ -193,6 +195,13 @@ namespace DFe.Utils
         {
             var s = stringXml;
             var xmlDoc = XDocument.Parse(s);
+
+            foreach (var infCpl in xmlDoc.Descendants(ns + "infCpl"))
+            {
+                // Remove nós filhos (ex.: <br/>) e mantém só o texto
+                infCpl.ReplaceNodes(new XText(infCpl.Value));
+            }
+
             var xmlString = (from d in xmlDoc.Descendants()
                              where d.Name.LocalName == nomeDoNode
                              select d).FirstOrDefault();
