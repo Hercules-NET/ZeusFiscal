@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DFe.Classes\DFe.Classes.csproj" />
+    <ProjectReference Include="..\DFe.Utils\DFe.Utils.csproj" />
+    <ProjectReference Include="..\NFe.Danfe.Base\NFe.Danfe.Base.csproj" />
+    <ProjectReference Include="..\NFe.Danfe.Fast.Skia\NFe.Danfe.Fast.Skia.csproj" />
+    <ProjectReference Include="..\NFe.Utils\NFe.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FastReport">
+      <HintPath>..\NFe.Danfe.Fast.Skia\Dlls\FastReport.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Compat.Skia">
+      <HintPath>..\..\FastReport .NET WEB\Nugets\FastReport.Compat.Skia.2025.2.6\FastReport.Compat.Skia.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.SkiaDrawing">
+      <HintPath>..\..\FastReport .NET WEB\Nugets\FastReport.SkiaDrawing.2025.2.6\FastReport.SkiaDrawing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
