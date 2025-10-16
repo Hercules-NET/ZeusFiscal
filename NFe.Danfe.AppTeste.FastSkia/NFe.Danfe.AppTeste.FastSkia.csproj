@@ -20,10 +20,10 @@
       <HintPath>..\NFe.Danfe.Fast.Skia\Dlls\FastReport.dll</HintPath>
     </Reference>
     <Reference Include="FastReport.Compat.Skia">
-      <HintPath>..\..\FastReport .NET WEB\Nugets\FastReport.Compat.Skia.2025.2.6\FastReport.Compat.Skia.dll</HintPath>
+      <HintPath>..\..\FastReport .NET WEB\Nugets\FastReport.Compat.Skia.2025.2.0\FastReport.Compat.Skia.dll</HintPath>
     </Reference>
     <Reference Include="FastReport.SkiaDrawing">
-      <HintPath>..\..\FastReport .NET WEB\Nugets\FastReport.SkiaDrawing.2025.2.6\FastReport.SkiaDrawing.dll</HintPath>
+      <HintPath>..\..\FastReport .NET WEB\Nugets\FastReport.SkiaDrawing.2025.2.0\FastReport.SkiaDrawing.dll</HintPath>
     </Reference>
   </ItemGroup>
 
