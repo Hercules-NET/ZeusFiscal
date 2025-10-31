@@ -121,6 +121,22 @@ namespace NFe.Classes.Informacoes.Identificacao
         }
 
         /// <summary>
+        /// B10a - Data da previsão de entrega ou disponibilização do bem
+        /// </summary>
+        [XmlIgnore]
+        public DateTime dPrevEntrega { get; set; }
+
+        /// <summary>
+        /// Proxy para dPrevEntrega no formato AAAA-MM-DD
+        /// </summary>
+        [XmlElement(ElementName = "dPrevEntrega")]
+        public string ProxydPrevEntrega
+        {
+            get { return dPrevEntrega.ParaDataString(); }
+            set { dPrevEntrega = DateTime.Parse(value); }
+        }
+
+        /// <summary>
         ///     B11 - Tipo do Documento Fiscal
         /// </summary>
         public TipoNFe tpNF { get; set; }
