@@ -21,9 +21,13 @@ namespace MDFe.Utils.Validacao
             // Define o tipo de validação
             var cfg = new XmlReaderSettings { ValidationType = ValidationType.Schema };
 
+            // Previne ataques XXE: nao permite resolver recursos externos
+            cfg.DtdProcessing = DtdProcessing.Prohibit;
+            cfg.XmlResolver = null;
+
             // Carrega o arquivo de esquema
             var schemas = new XmlSchemaSet();
-            schemas.XmlResolver = new XmlUrlResolver();
+            schemas.XmlResolver = null;
 
             cfg.Schemas = schemas;
             // Quando carregar o eschema, especificar o namespace que ele valida
