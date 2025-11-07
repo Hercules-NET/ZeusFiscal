@@ -27,7 +27,7 @@ namespace MDFe.Utils.Validacao
 
             // Carrega o arquivo de esquema
             var schemas = new XmlSchemaSet();
-            schemas.XmlResolver = null;
+            schemas.XmlResolver = new XmlUrlResolver();
 
             cfg.Schemas = schemas;
             // Quando carregar o eschema, especificar o namespace que ele valida
