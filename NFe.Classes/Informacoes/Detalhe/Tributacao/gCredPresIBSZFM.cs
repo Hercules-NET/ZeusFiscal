@@ -7,6 +7,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         private decimal? _vCredPresIbsZfm;
         
         [XmlElement(Order = 1)]
+        // UB132
         public string competApur { get; set; }
 
         // UB133
