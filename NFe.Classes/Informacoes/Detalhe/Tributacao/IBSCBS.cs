@@ -30,7 +30,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB112
         [XmlElement(Order = 7)]
-        public gAjusteCompet gAjusteCompet { get; set; }
+        public gAjusteCompet? gAjusteCompet { get; set; }
 
         // UB116
         [XmlElement(Order = 8)]
