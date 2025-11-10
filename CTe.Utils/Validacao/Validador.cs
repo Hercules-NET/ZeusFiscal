@@ -27,8 +27,10 @@ namespace CTe.Utils.Validacao
             cfg.XmlResolver = null;
 
             // Carrega o arquivo de esquema
-            var schemas = new XmlSchemaSet();
-            schemas.XmlResolver = null;
+            var schemas = new XmlSchemaSet
+            {
+                XmlResolver = new XmlUrlResolver()
+            };
 
             cfg.Schemas = schemas;
             // Quando carregar o schema, especificar o namespace que ele valida
