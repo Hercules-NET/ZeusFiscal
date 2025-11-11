@@ -1,4 +1,5 @@
 using DFe.Classes;
+using CTe.Classes.Informacoes.Impostos.ReformaTributaria;
 
 namespace CTe.Classes.Informacoes.Impostos
 {
@@ -20,5 +21,35 @@ namespace CTe.Classes.Informacoes.Impostos
         public ICMSUFFim ICMSUFFim { get; set; }
 
         public infTribFed infTribFed { get; set; }
+
+        /// <summary>
+        /// Grupo de Tributação Monofásica Padrão
+        /// Reforma Tributária - NT 2025.001
+        /// </summary>
+        public gMonoPadrao gMonoPadrao { get; set; }
+
+        /// <summary>
+        /// Grupo de Tributação Monofásica com Alíquota Diferenciada
+        /// Reforma Tributária - NT 2025.001
+        /// </summary>
+        public gMonoDif gMonoDif { get; set; }
+
+        /// <summary>
+        /// Grupo de Valores Totais da Tributação Monofásica
+        /// Reforma Tributária - NT 2025.001
+        /// </summary>
+        public gMono gMono { get; set; }
+
+        /// <summary>
+        /// Indicador de alto desempenho logístico
+        /// Tag opcional para reforma tributária (NT 2025.001)
+        /// Valores: 0 - Não; 1 - Sim
+        /// </summary>
+        public byte? indAltoDesemp { get; set; }
+
+        /// <summary>
+        /// Se null, não aparece no xml
+        /// </summary>
+        public bool indAltoDesempSpecified { get { return indAltoDesemp.HasValue; } }
     }
 }
