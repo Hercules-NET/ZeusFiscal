@@ -6,7 +6,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
     {
         private decimal _pCredPres;
         private decimal _vCredPres;
-        private decimal _vCredPresCondSus;
+        private decimal? _vCredPresCondSus;
 
         // UB124
         [XmlElement(Order = 1)]
@@ -26,10 +26,10 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB126
         [XmlElement(Order = 3)]
-        public decimal vCredPresCondSus
+        public decimal? vCredPresCondSus
         {
             get => _vCredPresCondSus.Arredondar(2);
-            set => _vCredPresCondSus = value.Arredondar(2);
+            set => _vCredPresCondSus = value?.Arredondar(2);
         }
     }
 }
