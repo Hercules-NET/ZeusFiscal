@@ -21,10 +21,6 @@ namespace CTe.Classes.Informacoes.Impostos
         [XmlEnum("200")]
         cst200 = 200,
 
-        [Description("Redução de alíquota com redutor de base de cálculo")]
-        [XmlEnum("210")]
-        cst210 = 210,
-
         [Description("Alíquota fixa")]
         [XmlEnum("220")]
         cst220 = 220,
@@ -49,6 +45,10 @@ namespace CTe.Classes.Informacoes.Impostos
         [XmlEnum("510")]
         cst510 = 510,
 
+        [Description("Diferimento com redução de alíquota")]
+        [XmlEnum("515")]
+        cst515 = 515,
+
         [Description("Suspensão")]
         [XmlEnum("550")]
         cst550 = 550,
@@ -61,9 +61,13 @@ namespace CTe.Classes.Informacoes.Impostos
         [XmlEnum("800")]
         cst800 = 800,
 
-        [Description("Ajustes")]
+        [Description("Ajuste de IBS na ZFM")]
         [XmlEnum("810")]
         cst810 = 810,
+
+        [Description("Ajustes")]
+        [XmlEnum("811")]
+        cst811 = 811,
 
         [Description("Tributação em declaração de regime específico")]
         [XmlEnum("820")]
