@@ -24,7 +24,14 @@ namespace DFe.Utils.Assinatura
                 ? FuncoesXml.ClasseParaXmlString(objetoLocal).RemoverAcentos()
                 : FuncoesXml.ClasseParaXmlString(objetoLocal));
 
-            var docXml = new SignedXml(documento) {SigningKey = certificado.PrivateKey};
+            var rsa = certificado.GetRSAPrivateKey();
+            if (rsa == null)
+                throw new Exception("Certificado A1 não possui chave privada RSA acessível.");
+
+            var docXml = new SignedXml(documento)
+            {
+                SigningKey = rsa
+            };
 
             docXml.SignedInfo.SignatureMethod = signatureMethod;
             var reference = new Reference {Uri = "#" + id, DigestMethod = digestMethod};
