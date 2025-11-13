@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using NFe.Classes.Informacoes.Detalhe.Tributacao;
 
 namespace NFe.Classes.Informacoes.Total
 {
@@ -25,5 +26,9 @@ namespace NFe.Classes.Informacoes.Total
         // W57
         [XmlElement(Order = 4)]
         public gMono gMono { get; set; }
+
+        // W59e
+        [XmlElement(Order = 5)]
+        public gEstornoCred? gEstornoCred { get; set; }
     }
 }

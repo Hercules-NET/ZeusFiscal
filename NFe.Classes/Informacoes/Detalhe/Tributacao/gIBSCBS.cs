@@ -44,14 +44,6 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlElement(Order = 6)]
         public gTribRegular gTribRegular { get; set; }
 
-        // UB73
-        [XmlElement(Order = 7)]
-        public gIBSCredPres gIBSCredPres { get; set; }
-
-        // UB78
-        [XmlElement(Order = 8)]
-        public gIBSCredPres gCBSCredPres { get; set; }
-
         // UB82a
         [XmlElement(Order = 9)]
         public gTribCompraGov gTribCompraGov { get; set; }
