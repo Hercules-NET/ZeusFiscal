@@ -31,5 +31,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
             get => _vCredPresCondSus.Arredondar(2);
             set => _vCredPresCondSus = value?.Arredondar(2);
         }
+
+        public bool ShouldSerializevCredPresCondSus() => vCredPresCondSus.HasValue;
     }
 }
