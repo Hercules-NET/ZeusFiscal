@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace NFe.Classes.Informacoes.Detalhe.Tributacao
+namespace CTe.Classes.Informacoes.Impostos
 {
     public enum CSTIBSCBS
     {
