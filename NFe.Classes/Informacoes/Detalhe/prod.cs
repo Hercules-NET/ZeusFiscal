@@ -340,5 +340,10 @@ namespace NFe.Classes.Informacoes.Detalhe
         {
             return tpCredPresIBSZFM.HasValue;
         }
+
+        public bool ShouldSerializeindBemMovelUsado()
+        {
+            return indBemMovelUsado.HasValue;
+        }
     }
 }
