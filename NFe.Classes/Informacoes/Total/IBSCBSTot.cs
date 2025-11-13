@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using NFe.Classes.Informacoes.Detalhe.Tributacao;
 
 namespace NFe.Classes.Informacoes.Total
 {
