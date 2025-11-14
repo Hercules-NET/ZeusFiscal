@@ -27,6 +27,10 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlEnum("010001")]
         ct010001 = 010001,
 
+        [Description("Operações do serviço financeiro.")]
+        [XmlEnum("010002")]
+        ct010002 = 010002,
+
         [Description("Planos de assistência funerária, observado o art. 236 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("011001")]
         ct011001 = 011001,
@@ -243,6 +247,10 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlEnum("200049")]
         ct200049 = 200049,
 
+        [Description("Serviços de transporte aéreo regional coletivo de passageiros ou de carga, observado o art. 287 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("200050")]
+        ct200050 = 200050,
+
         [Description("Agências de Turismo, observado o art. 289 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("200051")]
         ct200051 = 200051,
@@ -250,10 +258,6 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [Description("Prestação de serviços das seguintes profissões intelectuais de natureza científica, literária ou artística, submetidas à fiscalização por conselho profissional: administradores, advogados, arquitetos e urbanistas, assistentes sociais, bibliotecários, biólogos, contabilistas, economistas, economistas domésticos, profissionais de educação física, engenheiros e agrônomos, estatísticos, médicos veterinários e zootecnistas, museólogos, químicos, profissionais de relações públicas, técnicos industriais e técnicos agrícolas, observado o art. 127 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("200052")]
         ct200052 = 200052,
-
-        [Description("Serviços de transporte aéreo regional coletivo de passageiros ou de carga, observado o art. 287 da Lei Complementar nº 214, de 2025.")]
-        [XmlEnum("200450")]
-        ct200450 = 200450,
 
         [Description("Redutor social aplicado uma única vez na alienação de bem imóvel residencial novo, observado o art. 259 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("210001")]
@@ -375,17 +379,37 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlEnum("410021")]
         ct410021 = 410021,
 
+        [Description("Consolidação da propriedade pelo credor de bens móveis ou imóveis que tenham sido objeto de garantia, observado o art. 200 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("410022")]
+        ct410022 = 410022,
+
+        [Description("Alienação de bens móveis ou imóveis que tenham sido objeto de garantia constituída em favor de credor em que o prestador da garantia não seja contribuinte, observado o art. 200 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("410023")]
+        ct410023 = 410023,
+
+        [Description("Consolidação da propriedade pelo grupo de consórcio de bem que tenha sido objeto de garantia, observado o art. 204 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("410024")]
+        ct410024 = 410024,
+
+        [Description("Alienação de bem que tenha sido objeto de garantia constituída em favor do grupo de consórcio em que o prestador da garantia não seja contribuinte, observado o art. 204 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("410025")]
+        ct410025 = 410025,
+
+        [Description("Doações sem contraprestação em benefício do doador, com anulação de crédito apropriados pelo doador referente ao fornecimento doado, observado o art. 6º da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("410026")]
+        ct410026 = 410026,
+
         [Description("Operações não onerosas sem previsão de tributação, não especificadas anteriormente, observado o art. 4º da Lei Complementar nº 214, de 2025.")]
-        [XmlEnum("410099")]
-        ct410099 = 410099,
+        [XmlEnum("410999")]
+        ct410099 = 410999,
 
         [Description("Operações, sujeitas a diferimento, com energia elétrica ou com direitos a ela relacionados, relativas à geração, comercialização, distribuição e transmissão, observado o art. 28 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("510001")]
         ct510001 = 510001,
 
         [Description("Operações, sujeitas a diferimento, com insumos agropecuários e aquícolas destinados a produtor rural contribuinte, observado o art. 138 da Lei Complementar nº 214, de 2025.")]
-        [XmlEnum("510002")]
-        ct510002 = 510002,
+        [XmlEnum("515001")]
+        ct515001 = 515001,
 
         [Description("Exportações de bens materiais, observado o art. 82 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("550001")]
@@ -467,6 +491,10 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlEnum("550020")]
         ct550020 = 550020,
 
+        [Description("Fornecimento de produtos agropecuários in natura para contribuinte do regime regular que promova industrialização destinada a exportação, observado o art. 82 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("550021")]
+        ct550021 = 550021,
+
         [Description("Tributação monofásica sobre combustíveis, observados os art. 172 e art. 179 I da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("620001")]
         ct620001 = 620001,
@@ -503,6 +531,18 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlEnum("810001")]
         ct810001 = 810001,
 
+        [Description("Anulação de crédito proporcional ao valor das operações imunes e isentas, observado o art. 51 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("811001")]
+        ct811001 = 811001,
+
+        [Description("Débitos de notas fiscais não processadas na apuração, observado o art. 45 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("811002")]
+        ct811002 = 811002,
+
+        [Description("Débitos apurados após o desenquadramento do regime Simples Nacional, observado o art. 41 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("811003")]
+        ct811003 = 811003,
+
         [Description(" Documento com informações de fornecimento de serviços de planos de assinstência à saúde, mas com tributação realizada por outro meio, observado o art. 235 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("820001")]
         ct820001 = 820001,
@@ -522,6 +562,10 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [Description("Documento com informações de alienação de bens imóveis, mas com tributação realizada por outro meio,, observado o art. 254 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("820005")]
         ct820005 = 820005,
+
+        [Description("Documento com informações de fornecimento de serviços de exploração de via, mas com tributação realizada por outro meio, observado o art. 11 da Lei Complementar nº 214, de 2025.")]
+        [XmlEnum("820006")]
+        ct820006 = 820006,
 
         [Description("Documento com exclusão da base de cálculo da CBS e do IBS refrente à energia elétrica fornecida pela distribuidora à unidade consumidora, conforme Art 28, parágrafos 3° e 4°.")]
         [XmlEnum("830001")]
