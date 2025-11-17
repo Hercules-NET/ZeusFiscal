@@ -12,20 +12,41 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlElement(Order = 2)]
         public cClassTrib cClassTrib { get; set; }
 
-        // UB15
+        // UB14a
         [XmlElement(Order = 3)]
+        public string? indDoacao { get; set; }
+
+        // UB15
+        [XmlElement(Order = 4)]
         public gIBSCBS gIBSCBS { get; set; }
 
         // UB84
-        [XmlElement(Order = 4)]
+        [XmlElement(Order = 5)]
         public gIBSCBSMono gIBSCBSMono { get; set; }
 
         // UB106
-        [XmlElement(Order = 5)]
+        [XmlElement(Order = 6)]
         public gTransfCred gTransfCred { get; set; }
 
-        // UB109
-        [XmlElement(Order = 6)]
+        // UB112
+        [XmlElement(Order = 7)]
+        public gAjusteCompet? gAjusteCompet { get; set; }
+
+        // UB116
+        [XmlElement(Order = 8)]
+        public gEstornoCred? gEstornoCred { get; set; }
+
+        // UB120
+        [XmlElement(Order = 9)]
+        public gCredPresOper gCredPresOper { get; set; }
+
+         // UB131
+         [XmlElement(Order = 10)]
         public gCredPresIBSZFM gCredPresIBSZFM { get; set; }
+
+        public bool ShouldSerializeindDoacao()
+        {
+            return indDoacao != null;
+        }
     }
 }

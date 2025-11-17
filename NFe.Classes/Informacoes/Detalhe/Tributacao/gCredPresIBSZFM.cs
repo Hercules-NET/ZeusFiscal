@@ -5,13 +5,17 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
     public class gCredPresIBSZFM
     {
         private decimal? _vCredPresIbsZfm;
-
-        // UB110
+        
         [XmlElement(Order = 1)]
+        // UB132
+        public string competApur { get; set; }
+
+        // UB133
+        [XmlElement(Order = 2)]
         public tpCredPresIBSZFM tpCredPresIBSZFM { get; set; }
 
-        // UB111
-        [XmlElement(Order = 2)]
+        // UB134
+        [XmlElement(Order = 3)]
         public decimal? vCredPresIBSZFM
         {
             get => _vCredPresIbsZfm.Arredondar(2);
