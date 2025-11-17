@@ -14,7 +14,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB14a
         [XmlElement(Order = 3)]
-        public string? indDoacao { get; set; }
+        public string indDoacao { get; set; } //nullable
 
         // UB15
         [XmlElement(Order = 4)]
@@ -30,18 +30,18 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB112
         [XmlElement(Order = 7)]
-        public gAjusteCompet? gAjusteCompet { get; set; }
+        public gAjusteCompet gAjusteCompet { get; set; }
 
         // UB116
         [XmlElement(Order = 8)]
-        public gEstornoCred? gEstornoCred { get; set; }
+        public gEstornoCred gEstornoCred { get; set; }
 
         // UB120
         [XmlElement(Order = 9)]
         public gCredPresOper gCredPresOper { get; set; }
 
-         // UB131
-         [XmlElement(Order = 10)]
+        // UB131
+        [XmlElement(Order = 10)]
         public gCredPresIBSZFM gCredPresIBSZFM { get; set; }
 
         public bool ShouldSerializeindDoacao()

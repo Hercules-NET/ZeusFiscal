@@ -20,10 +20,10 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB123
         [XmlElement(Order = 3)]
-        public gIBSCredPres? gIBSCredPres { get; set; }
+        public gIBSCredPres gIBSCredPres { get; set; }
 
         // UB127
         [XmlElement(Order = 4)]
-        public gIBSCredPres? gCBSCredPres { get; set; }
+        public gIBSCredPres gCBSCredPres { get; set; }
     }
 }

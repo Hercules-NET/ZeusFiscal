@@ -7,7 +7,9 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         private decimal _pIbsUf;
         private decimal _vIbsUf;
 
-        // UB18
+        /// <summary>
+        /// UB18 - Alíquota do IBS de competência das UF (em percentual)
+        /// </summary>
         [XmlElement(Order = 1)]
         public decimal pIBSUF
         {
@@ -15,19 +17,27 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
             set => _pIbsUf = value.Arredondar(4);
         }
 
-        // UB21
+        /// <summary>
+        /// UB21 - Grupo de Informações do Diferimento
+        /// </summary>
         [XmlElement(Order = 2)]
         public gDif gDif { get; set; }
 
-        // UB24
+        /// <summary>
+        /// UB24 - Grupo de Informações da devolução de tributos
+        /// </summary>
         [XmlElement(Order = 3)]
         public gDevTrib gDevTrib { get; set; }
 
-        // UB26
+        /// <summary>
+        /// UB26 - Grupo de informações da redução da alíquota
+        /// </summary>
         [XmlElement(Order = 4)]
         public gRed gRed { get; set; }
 
-        // UB35
+        /// <summary>
+        /// UB35 - Valor do IBS de competência da UF
+        /// </summary>
         [XmlElement(Order = 5)]
         public decimal vIBSUF
         {
@@ -41,14 +51,18 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         private decimal _pDif;
         private decimal _vDif;
 
-        // UB22
+        /// <summary>
+        /// UB22 - Percentual do diferimento
+        /// </summary>
         public decimal pDif
         {
             get => _pDif.Arredondar(4);
             set => _pDif = value.Arredondar(4);
         }
 
-        // UB23
+        /// <summary>
+        /// UB23 - Valor do Diferimento
+        /// </summary>
         public decimal vDif
         {
             get => _vDif.Arredondar(2);
@@ -60,7 +74,9 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
     {
         private decimal _vDevTrib { get; set; }
 
-        // UB25
+        /// <summary>
+        /// UB25 - Valor do tributo devolvido
+        /// </summary>
         public decimal vDevTrib
         {
             get => _vDevTrib.Arredondar(2);
@@ -73,14 +89,18 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         private decimal _pRedAliq;
         private decimal _pAliqEfet;
 
-        // UB27
+        /// <summary>
+        /// UB27 - Percentual da redução de alíquota do cClassTrib
+        /// </summary>
         public decimal pRedAliq
         {
             get => _pRedAliq.Arredondar(4);
             set => _pRedAliq = value.Arredondar(4);
         }
 
-        // UB28
+        /// <summary>
+        /// UB28 - Alíquota Efetiva do IBS de competência das UF que será aplicada a Base de Cálculo(em percentual)
+        /// </summary>
         public decimal pAliqEfet
         {
             get => _pAliqEfet.Arredondar(4);

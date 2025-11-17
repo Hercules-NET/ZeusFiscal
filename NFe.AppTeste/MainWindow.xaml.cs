@@ -1784,7 +1784,7 @@ namespace NFe.AppTeste
                 IBSCBSTot = CbxEnviarTributacaoIbsCBS.IsChecked == true ? new IBSCBSTot
                 {
                     vBCIBSCBS = 0,
-                    gIBS = new gIBS
+                    gIBS = new gIBSTotal
                     {
                        gIBSUF = new gIBSUFTotal
                        {

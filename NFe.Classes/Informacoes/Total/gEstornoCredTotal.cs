@@ -1,14 +1,14 @@
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
-namespace NFe.Classes.Informacoes.Detalhe.Tributacao
+namespace NFe.Classes.Informacoes.Total
 {
-    public class gEstornoCred
+    public class gEstornoCredTotal
     {
         private decimal _vIBSEstCred;
         private decimal _vCBSEstCred;
 
         /// <summary>
-        /// UB117 - Valor total do IBS estornado
+        /// W59f - Valor total do IBS estornado
         /// </summary>
         [XmlElement(Order = 1)]
         public decimal vIBSEstCred
@@ -17,7 +17,9 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
             set => _vIBSEstCred = value.Arredondar(2);
         }
 
-        // UB118
+        /// <summary>
+        /// W59g - Valor total da CBS estornada
+        /// </summary>
         [XmlElement(Order = 2)]
         public decimal vCBSEstCred
         {
