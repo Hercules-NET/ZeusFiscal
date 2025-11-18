@@ -6,7 +6,9 @@ namespace NFe.Classes.Informacoes.Total
     {
         private decimal _vBCIBSCBS;
 
-        // W35
+        /// <summary>
+        /// W35 - Valor total da BC do IBS e da CBS
+        /// </summary>
         [XmlElement(Order = 1)]
         public decimal vBCIBSCBS
         {
@@ -14,16 +16,28 @@ namespace NFe.Classes.Informacoes.Total
             set => _vBCIBSCBS = value.Arredondar(2);
         }
 
-        // W36
+        /// <summary>
+        /// W36 - Grupo total do IBS
+        /// </summary>
         [XmlElement(Order = 2)]
-        public gIBS gIBS { get; set; }
+        public gIBSTotal gIBS { get; set; }
 
-        // W50
+        /// <summary>
+        /// W50 - Grupo total da CBS
+        /// </summary>
         [XmlElement(Order = 3)]
         public gCBSTotal gCBS { get; set; }
 
-        // W57
+        /// <summary>
+        /// W57 - Grupo total da Monofasia
+        /// </summary>
         [XmlElement(Order = 4)]
-        public gMono gMono { get; set; }
+        public gMonoTotal gMono { get; set; }
+
+        /// <summary>
+        /// W59e - Grupo total do Estorno de Crédito (nt 1.30)
+        /// </summary>
+        [XmlElement(Order = 5)]
+        public gEstornoCredTotal gEstornoCred { get; set; }
     }
 }

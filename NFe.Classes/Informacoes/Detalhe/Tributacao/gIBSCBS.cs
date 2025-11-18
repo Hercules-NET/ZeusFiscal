@@ -15,7 +15,9 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
             set => _vBc = value.Arredondar(2);
         }
 
-        // UB17
+        /// <summary>
+        /// UB17 - Grupo de Informações do IBS para a UF
+        /// </summary>
         [XmlElement(Order = 2)]
         public gIBSUF gIBSUF { get; set; }
 
@@ -23,7 +25,10 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlElement(Order = 3)]
         public gIBSMun gIBSMun { get; set; }
 
-        // UB54a
+        /// <summary>
+        /// UB54a - Valor do IBS
+        /// Valor do IBS (soma de vIBSUF e vIBSMun). Quando houver crédito presumido com indicador IndDeduzCredPres=1, o vCredPres deve ser abatido desse valor.
+        /// </summary>
         [XmlElement(Order = 4)]
         public decimal? vIBS
         {
@@ -43,14 +48,6 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         // UB68
         [XmlElement(Order = 6)]
         public gTribRegular gTribRegular { get; set; }
-
-        // UB73
-        [XmlElement(Order = 7)]
-        public gIBSCredPres gIBSCredPres { get; set; }
-
-        // UB78
-        [XmlElement(Order = 8)]
-        public gIBSCredPres gCBSCredPres { get; set; }
 
         // UB82a
         [XmlElement(Order = 9)]

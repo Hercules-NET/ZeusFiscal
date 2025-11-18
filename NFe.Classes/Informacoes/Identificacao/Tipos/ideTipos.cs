@@ -273,7 +273,7 @@ namespace NFe.Classes.Informacoes.Identificacao.Tipos
         [XmlEnum("04")]
         tdMultaJuros = 04,
 
-        [Description("Transferência de crédito de sucessão;")]
+        [Description("Transferência de crédito na sucessão;")]
         [XmlEnum("05")]
         tdTransferenciaCreditoSucessao = 05,
 
