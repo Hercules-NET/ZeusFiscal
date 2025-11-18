@@ -65,7 +65,14 @@ namespace NFe.Utils.Assinatura
 
                 documento.LoadXml(xml);
 
-                var docXml = new SignedXml(documento) { SigningKey = certificadoDigital.PrivateKey };
+                SignedXml docXml = new SignedXml(documento);
+
+                // Pega a chave RSA de forma "moderna", compatível com CNG e CSP
+                RSA rsa = certificadoDigital.GetRSAPrivateKey();
+                if (rsa == null)
+                    throw new Exception("O certificado não possui chave privada RSA.");
+                
+                docXml.SigningKey = rsa;
 
                 docXml.SignedInfo.SignatureMethod = signatureMethod;
 
