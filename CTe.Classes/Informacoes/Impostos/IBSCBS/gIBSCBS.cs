@@ -1,14 +1,13 @@
 ﻿using DFe.Classes;
 using System.Xml.Serialization;
 
-namespace CTe.Classes.Informacoes.Impostos
+namespace CTe.Classes.Informacoes.Impostos.IBSCBS
 {
     public class gIBSCBS
     {
         private decimal _vBc;
         private decimal? _vIbs;
 
-        // UB16
         [XmlElement(Order = 1)]
         public decimal vBC
         {
@@ -16,15 +15,12 @@ namespace CTe.Classes.Informacoes.Impostos
             set => _vBc = value.Arredondar(2);
         }
 
-        // UB17
         [XmlElement(Order = 2)]
         public gIBSUF gIBSUF { get; set; }
 
-        // UB36
         [XmlElement(Order = 3)]
         public gIBSMun gIBSMun { get; set; }
 
-        // UB54a
         [XmlElement(Order = 4)]
         public decimal? vIBS
         {
@@ -32,29 +28,21 @@ namespace CTe.Classes.Informacoes.Impostos
             set => _vIbs = value.Arredondar(2);
         }
 
+        [XmlElement(Order = 5)]
+        public gCBS gCBS { get; set; }
+
+        [XmlElement(Order = 6)]
+        public gTribRegular gTribRegular { get; set; }
+
+        [XmlElement(Order = 7)]
+        public gTribCompraGov gTribCompraGov { get; set; }
+
+        [XmlElement(Order = 8)]
+        public gEstornoCred gEstornoCred { get; set; }
+
         public bool vIBSSpecified
         {
             get { return vIBS.HasValue; }
         }
-
-        // UB55
-        [XmlElement(Order = 5)]
-        public gCBS gCBS { get; set; }
-
-        // UB68
-        [XmlElement(Order = 6)]
-        public gTribRegular gTribRegular { get; set; }
-
-        // UB73
-        [XmlElement(Order = 7)]
-        public gIBSCredPres gIBSCredPres { get; set; }
-
-        // UB78
-        [XmlElement(Order = 8)]
-        public gIBSCredPres gCBSCredPres { get; set; }
-
-        // UB82a
-        [XmlElement(Order = 9)]
-        public gTribCompraGov gTribCompraGov { get; set; }
     }
 }

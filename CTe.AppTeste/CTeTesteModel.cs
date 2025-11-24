@@ -51,6 +51,7 @@ using infServico = CTe.Classes.Informacoes.infCTeNormal.infServico;
 using infTribFed = CTe.Classes.Informacoes.Impostos.infTribFed;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using rodoOS = CTe.Classes.Informacoes.infCTeNormal.infModals.rodoOS;
+using CTe.Classes.Informacoes.Impostos.IBSCBS;
 
 namespace CTe.AppTeste
 {

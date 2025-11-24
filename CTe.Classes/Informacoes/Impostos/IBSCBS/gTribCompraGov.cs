@@ -1,7 +1,7 @@
 ﻿using DFe.Classes;
 using System.Xml.Serialization;
 
-namespace CTe.Classes.Informacoes.Impostos
+namespace CTe.Classes.Informacoes.Impostos.IBSCBS
 {
     public class gTribCompraGov
     {
@@ -12,7 +12,6 @@ namespace CTe.Classes.Informacoes.Impostos
         private decimal _pAliqCbs;
         private decimal _vTribCbs;
 
-        // UB82b
         [XmlElement(Order = 1)]
         public decimal pAliqIBSUF
         {
@@ -20,7 +19,6 @@ namespace CTe.Classes.Informacoes.Impostos
             set => _pAliqIbsUf = value.Arredondar(4);
         }
 
-        // UB82c
         [XmlElement(Order = 2)]
         public decimal vTribIBSUF
         {
@@ -28,7 +26,6 @@ namespace CTe.Classes.Informacoes.Impostos
             set => _vTribIbsUf = value.Arredondar(2);
         }
 
-        // UB82d
         [XmlElement(Order = 3)]
         public decimal pAliqIBSMun
         {
@@ -36,7 +33,6 @@ namespace CTe.Classes.Informacoes.Impostos
             set => _pAliqIbsMun = value.Arredondar(4);
         }
 
-        // UB82e
         [XmlElement(Order = 4)]
         public decimal vTribIBSMun
         {
@@ -44,7 +40,6 @@ namespace CTe.Classes.Informacoes.Impostos
             set => _vTribIbsMun = value.Arredondar(2);
         }
 
-        // UB82f
         [XmlElement(Order = 5)]
         public decimal pAliqCBS
         {
@@ -52,7 +47,6 @@ namespace CTe.Classes.Informacoes.Impostos
             set => _pAliqCbs = value.Arredondar(4);
         }
 
-        // UB82g
         [XmlElement(Order = 6)]
         public decimal vTribCBS
         {
