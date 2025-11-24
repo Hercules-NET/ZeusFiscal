@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using DFe.Classes.Entidades;
 using DFe.Classes.Flags;
 using DFe.Utils;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace NFe.Classes.Informacoes.Identificacao
 {
+    // B01
     public class ide
     {
         /// <summary>
@@ -120,6 +121,27 @@ namespace NFe.Classes.Informacoes.Identificacao
         }
 
         /// <summary>
+        /// B10a - Data da previsão de entrega ou disponibilização do bem
+        /// </summary>
+        [XmlIgnore]
+        public DateTime? dPrevEntrega { get; set; }
+
+        /// <summary>
+        /// Proxy para dPrevEntrega no formato AAAA-MM-DD
+        /// </summary>
+        [XmlElement(ElementName = "dPrevEntrega")]
+        public string ProxydPrevEntrega
+        {
+            get
+            {
+                if (dPrevEntrega == null)
+                    return null;
+                return dPrevEntrega.ParaDataString();
+            }
+            set { dPrevEntrega = DateTime.Parse(value); }
+        }
+
+        /// <summary>
         ///     B11 - Tipo do Documento Fiscal
         /// </summary>
         public TipoNFe tpNF { get; set; }
@@ -133,6 +155,14 @@ namespace NFe.Classes.Informacoes.Identificacao
         ///     B12 - Código do Município de Ocorrência do Fato Gerador (utilizar a tabela do IBGE)
         /// </summary>
         public long cMunFG { get; set; }
+
+        // B12a
+        public long? cMunFGIBS { get; set; }
+
+        public bool cMunFGIBSSpecified
+        {
+            get { return cMunFGIBS.HasValue; }
+        }
 
         /// <summary>
         ///     B21 - Formato de impressão do DANFE
@@ -158,6 +188,12 @@ namespace NFe.Classes.Informacoes.Identificacao
         ///     B25a - Finalidade da emissão da NF-e
         /// </summary>
         public FinalidadeNFe finNFe { get; set; }
+
+        // B25.1
+        public TipoNFeDebito? tpNFDebito { get; set; }
+
+        // B25.2 
+        public TipoNFeCredito? tpNFCredito { get; set; }
 
         /// <summary>
         ///     B25a - Indica operação com consumidor final
@@ -219,6 +255,12 @@ namespace NFe.Classes.Informacoes.Identificacao
         [XmlElement("NFref")]
         public List<NFref> NFref { get; set; }
 
+        // B31
+        public gCompraGov gCompraGov { get; set; }
+
+        // BB01
+        public gPagAntecipado gPagAntecipado { get; set; }
+
         public bool ShouldSerializeidDest()
         {
             return idDest.HasValue;
@@ -232,6 +274,16 @@ namespace NFe.Classes.Informacoes.Identificacao
         public bool ShouldSerializeindPres()
         {
             return indPres.HasValue;
+        }
+
+        public bool ShouldSerializetpNFDebito()
+        {
+            return tpNFDebito.HasValue;
+        }
+
+        public bool ShouldSerializetpNFCredito()
+        {
+            return tpNFCredito.HasValue;
         }
     }
 }

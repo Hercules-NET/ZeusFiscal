@@ -1,0 +1,56 @@
+﻿using System.Xml.Serialization;
+
+namespace NFe.Classes.Informacoes.Detalhe.Tributacao
+{
+    public class gIBSCBS
+    {
+        private decimal _vBc;
+        private decimal? _vIbs;
+
+        // UB16
+        [XmlElement(Order = 1)]
+        public decimal vBC
+        {
+            get => _vBc.Arredondar(2);
+            set => _vBc = value.Arredondar(2);
+        }
+
+        /// <summary>
+        /// UB17 - Grupo de Informações do IBS para a UF
+        /// </summary>
+        [XmlElement(Order = 2)]
+        public gIBSUF gIBSUF { get; set; }
+
+        // UB36
+        [XmlElement(Order = 3)]
+        public gIBSMun gIBSMun { get; set; }
+
+        /// <summary>
+        /// UB54a - Valor do IBS
+        /// Valor do IBS (soma de vIBSUF e vIBSMun). Quando houver crédito presumido com indicador IndDeduzCredPres=1, o vCredPres deve ser abatido desse valor.
+        /// </summary>
+        [XmlElement(Order = 4)]
+        public decimal? vIBS
+        {
+            get => _vIbs.Arredondar(2);
+            set => _vIbs = value.Arredondar(2);
+        }
+
+        public bool vIBSSpecified
+        {
+            get { return vIBS.HasValue; }
+        }
+
+        // UB55
+        [XmlElement(Order = 5)]
+        public gCBS gCBS { get; set; }
+
+        // UB68
+        [XmlElement(Order = 6)]
+        public gTribRegular gTribRegular { get; set; }
+
+        // UB82a
+        [XmlElement(Order = 9)]
+        public gTribCompraGov gTribCompraGov { get; set; }
+    }
+}

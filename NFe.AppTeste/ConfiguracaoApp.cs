@@ -52,6 +52,9 @@ namespace NFe.AppTeste
         public ConfiguracaoCsc ConfiguracaoCsc { get; set; }
         public ConfiguracaoDanfeNfce ConfiguracaoDanfeNfce { get; set; }
 
+        public bool EnviarTributacaoIbsCbs { get; set; }
+        public bool EnviarTributacaoIS { get; set; }
+
         /// <summary>
         ///     Salva os dados de CfgServico em um arquivo XML
         /// </summary>
