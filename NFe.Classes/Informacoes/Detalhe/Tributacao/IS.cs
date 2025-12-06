@@ -9,6 +9,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         private decimal? _pIsEspec;
         private decimal _qTrib;
         private decimal _vIs;
+        private string _cClassTribIS;
 
         // UB02
         [XmlElement(Order = 1)]
@@ -16,7 +17,11 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB03
         [XmlElement(Order = 2)]
-        public cClassTribIS cClassTribIS { get; set; }
+        public string cClassTribIS
+        {
+            get => _cClassTribIS;
+            set => _cClassTribIS = value;
+        }
 
         // UB05
         [XmlElement(Order = 3)]
@@ -64,6 +69,14 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         {
             get => _vIs.Arredondar(2);
             set => _vIs = value.Arredondar(2);
+        }
+
+        /// <summary>
+        /// Define o valor de cClassTribIS a partir de um inteiro
+        /// </summary>
+        public void SetcClassTribIS(int intValue)
+        {
+            _cClassTribIS = intValue.ToString("D6");
         }
     }
 }

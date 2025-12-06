@@ -4,13 +4,19 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 {
     public class IBSCBS
     {
+        private string _cClassTrib;
+
         // UB13
         [XmlElement(Order = 1)]
         public CSTIBSCBS CST { get; set; }
 
         // UB14
         [XmlElement(Order = 2)]
-        public cClassTrib cClassTrib { get; set; }
+        public string cClassTrib 
+        { 
+            get => _cClassTrib;
+            set => _cClassTrib = value;
+        }
 
         // UB14a
         [XmlElement(Order = 3)]
@@ -47,6 +53,14 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         public bool ShouldSerializeindDoacao()
         {
             return indDoacao != null;
+        }
+
+        /// <summary>
+        /// Define o valor de cClassTrib a partir de um inteiro
+        /// </summary>
+        public void SetcClassTrib(int intValue)
+        {
+            _cClassTrib = intValue.ToString("D6");
         }
     }
 }
