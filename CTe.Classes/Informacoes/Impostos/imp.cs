@@ -39,6 +39,6 @@ namespace CTe.Classes.Informacoes.Impostos
             set { _vTotDFe = value.Arredondar(2); }
         }
 
-
+        public bool vTotDFeSpecified { get { return vTotDFe.HasValue; } }
     }
 }
