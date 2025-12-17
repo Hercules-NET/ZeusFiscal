@@ -397,17 +397,17 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         [Description("Doações sem contraprestação em benefício do doador, com anulação de crédito apropriados pelo doador referente ao fornecimento doado, observado o art. 6º da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("410026")]
-        ct410026 = 410026, 
-        
-        [Description("Exportação de serviço ou de bem imaterial")]
+        ct410026 = 410026,
+
+        [Description("Exportação de serviço ou de bem imaterial.")]
         [XmlEnum("410027")]
         ct410027 = 410027,
 
-        [Description("Operações com bens imóveis realizadas por pessoas físicas não consideradas contribuintes")]
+        [Description("Operações com bens imóveis realizadas por pessoas físicas não consideradas contribuintes.")]
         [XmlEnum("410028")]
         ct410028 = 410028,
 
-        [Description("Operações acobertadas somente pelo ICMS")]
+        [Description("Operações acobertadas somente pelo ICMS.")]
         [XmlEnum("410029")]
         ct410029 = 410029,
 
@@ -415,7 +415,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlEnum("410030")]
         ct410030 = 410030,
 
-        [Description("Fornecimento em período anterior ao início de vigência de incidências de CBS e IBS")]
+        [Description("Fornecimento em período anterior ao início de vigência de incidências de CBS e IBS.")]
         [XmlEnum("410031")]
         ct410031 = 410031,
 
@@ -591,7 +591,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlEnum("820007")]
         ct820007 = 820007,
 
-        [Description("Documento com informações de fornecimento, mas com tributação realizada em fatura anterior")]
+        [Description("Documento com informações de fornecimento, mas com tributação realizada em fatura anterior.")]
         [XmlEnum("820008")]
         ct820008 = 820008,
 
