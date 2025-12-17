@@ -397,7 +397,27 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         [Description("Doações sem contraprestação em benefício do doador, com anulação de crédito apropriados pelo doador referente ao fornecimento doado, observado o art. 6º da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("410026")]
-        ct410026 = 410026,
+        ct410026 = 410026, 
+        
+        [Description("Exportação de serviço ou de bem imaterial")]
+        [XmlEnum("410027")]
+        ct410027 = 410027,
+
+        [Description("Operações com bens imóveis realizadas por pessoas físicas não consideradas contribuintes")]
+        [XmlEnum("410028")]
+        ct410028 = 410028,
+
+        [Description("Operações acobertadas somente pelo ICMS")]
+        [XmlEnum("410029")]
+        ct410029 = 410029,
+
+        [Description("Estorno de crédito por perecimento, deteriorização, roubo, furto ou extravio.")]
+        [XmlEnum("410030")]
+        ct410030 = 410030,
+
+        [Description("Fornecimento em período anterior ao início de vigência de incidências de CBS e IBS")]
+        [XmlEnum("410031")]
+        ct410031 = 410031,
 
         [Description("Operações não onerosas sem previsão de tributação, não especificadas anteriormente, observado o art. 4º da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("410999")]
@@ -566,6 +586,14 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [Description("Documento com informações de fornecimento de serviços de exploração de via, mas com tributação realizada por outro meio, observado o art. 11 da Lei Complementar nº 214, de 2025.")]
         [XmlEnum("820006")]
         ct820006 = 820006,
+
+        [Description("Documento com informações de fornecimento de serviços financeiros")]
+        [XmlEnum("820007")]
+        ct820007 = 820007,
+
+        [Description("Documento com informações de fornecimento, mas com tributação realizada em fatura anterior")]
+        [XmlEnum("820008")]
+        ct820008 = 820008,
 
         [Description("Documento com exclusão da base de cálculo da CBS e do IBS refrente à energia elétrica fornecida pela distribuidora à unidade consumidora, conforme Art 28, parágrafos 3° e 4°.")]
         [XmlEnum("830001")]
