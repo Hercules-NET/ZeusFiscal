@@ -6,12 +6,12 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 {
     public class imposto
     {
-        private decimal? _vTotTrib;
+        private decimal _vTotTrib;
 
         /// <summary>
         ///     M02 - Valor estimado total de impostos federais, estaduais e municipais
         /// </summary>
-        public decimal? vTotTrib
+        public decimal vTotTrib
         {
             get { return _vTotTrib.Arredondar(2); }
             set { _vTotTrib = value.Arredondar(2); }
@@ -68,9 +68,11 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         // UB12
         public IBSCBS IBSCBS { get; set; }
 
+        /*
         public bool ShouldSerializevTotTrib()
         {
             return vTotTrib.HasValue;
         }
+        */
     }
 }

@@ -558,7 +558,7 @@ namespace NFe.Danfe.Nativo.NFCe
 
             _y += 5;
 
-            var tributosIncidentes = _nfe.infNFe.total.ICMSTot.vTotTrib ?? 0;
+            var tributosIncidentes = _nfe.infNFe.total.ICMSTot.vTotTrib;
 
             if (tributosIncidentes != 0)
             {
