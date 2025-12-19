@@ -6,11 +6,17 @@ namespace CTe.Classes.Informacoes.Impostos.Tributacao
 {
     public class IBSCBS
     {
+        private string _cClassTrib;
+
         [XmlElement(Order = 1)]
         public CSTIBSCBS CST { get; set; }
 
         [XmlElement(Order = 2)]
-        public cClassTrib cClassTrib { get; set; }
+        public string cClassTrib
+        {
+            get => _cClassTrib;
+            set => _cClassTrib = value;
+        }
 
         [XmlElement(Order = 3)]
         public short? indDoacao { get; set; }
@@ -22,6 +28,14 @@ namespace CTe.Classes.Informacoes.Impostos.Tributacao
         public bool ShouldSerializeindDoacao()
         {
             return indDoacao.HasValue;
+        }
+
+        /// <summary>
+        /// Define o valor de cClassTrib a partir de um inteiro
+        /// </summary>
+        public void SetcClassTrib(int intValue)
+        {
+            _cClassTrib = intValue.ToString("D6");
         }
     }
 }
