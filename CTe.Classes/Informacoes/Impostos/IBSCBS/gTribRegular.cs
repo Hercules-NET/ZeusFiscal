@@ -6,6 +6,7 @@ namespace CTe.Classes.Informacoes.Impostos.IBSCBS
 {
     public class gTribRegular
     {
+        private string _cClassTribReg;
         private decimal _pAliqEfetRegIbsUf;
         private decimal _vTribRegIbsUf;
         private decimal _pAliqEfetRegIbsMun;
@@ -17,7 +18,11 @@ namespace CTe.Classes.Informacoes.Impostos.IBSCBS
         public CSTIBSCBS CSTReg { get; set; }
 
         [XmlElement(Order = 2)]
-        public cClassTrib cClassTribReg { get; set; }
+        public string cClassTribReg
+        {
+            get => _cClassTribReg;
+            set => _cClassTribReg = value;
+        }
 
         [XmlElement(Order = 3)]
         public decimal pAliqEfetRegIBSUF
@@ -59,6 +64,14 @@ namespace CTe.Classes.Informacoes.Impostos.IBSCBS
         {
             get => _vTribRegCbs.Arredondar(2);
             set => _vTribRegCbs = value.Arredondar(2);
+        }
+
+        /// <summary>
+        /// Define o valor de cClassTrib a partir de um inteiro
+        /// </summary>
+        public void SetcClassTrib(int intValue)
+        {
+            _cClassTribReg = intValue.ToString("D6");
         }
     }
 }

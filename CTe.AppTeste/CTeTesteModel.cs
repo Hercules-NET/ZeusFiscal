@@ -1002,7 +1002,7 @@ namespace CTe.AppTeste
 
             cteEletronico.infCte.imp.IBSCBS = new IBSCBS()
             {
-                cClassTrib = cClassTrib.ct000001,
+                cClassTrib = "000001",
                 CST = CSTIBSCBS.cst000,
                 gIBSCBS =  new gIBSCBS()
                 {
