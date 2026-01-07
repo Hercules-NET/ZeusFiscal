@@ -6,7 +6,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
     public enum TipocCredPres
     {
         [Description("Sem Crédito Presumido")]
-        [XmlEnum("0")]
+        [XmlEnum("00")]
         SemCreditoPresumido = 0,
 
         [Description("Crédito presumido da aquisição de bens e serviços de produtor rural não contribuinte.")]
