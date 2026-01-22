@@ -1522,7 +1522,7 @@ namespace NFe.AppTeste
                         cClassTribIS = "000001",
                         uTrib = "UN",
                         qTrib = 1,
-                        CSTIS = CSTIS.Is000,
+                        CSTIS = "000",
                         pIS = 0,
                         vIS = 0
                     } : null,
