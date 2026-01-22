@@ -13,7 +13,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB02
         [XmlElement(Order = 1)]
-        public CSTIS CSTIS { get; set; }
+        public string CSTIS { get; set; }
 
         // UB03
         [XmlElement(Order = 2)]
@@ -77,6 +77,15 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         public void SetcClassTribIS(int intValue)
         {
             _cClassTribIS = intValue.ToString("D6");
+        }
+
+        /// <summary>
+        /// Define o valor de CSTIS a partir de um inteiro
+        /// </summary>
+        /// <param name="intValue"></param>
+        public void SetCSTIS(int intValue)
+        {
+            CSTIS = intValue.ToString("D3");
         }
     }
 }
