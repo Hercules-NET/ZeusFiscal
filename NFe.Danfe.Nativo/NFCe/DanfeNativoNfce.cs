@@ -202,12 +202,11 @@ namespace NFe.Danfe.Nativo.NFCe
             {
                 using (var ms = new MemoryStream(_logo))
                 {
+                    int logox = ((larguraLinha - 128) / 2);
                     var image = Image.FromStream(ms);
-                    new RedimensionaImagemPara(new AdicionarImagem(g, image, x, _y), 50, 24).Desenhar();
+                    new RedimensionaImagemPara(new AdicionarImagem(g, image, logox, _y), 128, 128).Desenhar();
+                    _y += 128;
                 }
-            }
-            else
-            {
                 larguraLogo = 0;
             }
 
