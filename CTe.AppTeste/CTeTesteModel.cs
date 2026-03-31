@@ -793,6 +793,22 @@ namespace CTe.AppTeste
             OnSucessoSync(new RetornoEEnvio(retorno));
         }
 
+        public void EventoCancelaDesacordoCTe()
+        {
+            var config = new ConfiguracaoDao().BuscarConfiguracao();
+            CarregarConfiguracoes(config);
+
+            var cnpj = (InputBoxTuche("CNPJ Tomador"));
+            var chave = (InputBoxTuche("Chave CTe"));
+            var sequenciaEvento = int.Parse(InputBoxTuche("Sequencia Evento"));
+            var nProtEventoDesacordo = InputBoxTuche("Número do Protocolo do Evento de Desacordo");
+
+            var servico = new EventoCancelamentoDesacordo(sequenciaEvento, chave, cnpj, nProtEventoDesacordo);
+            var retorno = servico.CancelarDesacordo();
+
+            OnSucessoSync(new RetornoEEnvio(retorno));
+        }
+
         public void CartaCorrecao()
         {
             var config = new ConfiguracaoDao().BuscarConfiguracao();
