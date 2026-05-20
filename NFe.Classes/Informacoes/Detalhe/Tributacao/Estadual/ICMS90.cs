@@ -73,11 +73,6 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
         [XmlElement(Order = 6)]
         public string? cBenefRBC { get; set; }
 
-        public bool ShouldSerializecBenefRBC()
-        {
-            return !string.IsNullOrWhiteSpace(cBenefRBC);
-        }
-
         /// <summary>
         ///     N16 - Alíquota do imposto
         /// </summary>
@@ -98,11 +93,6 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
             set { _vICMSOp = value.Arredondar(2); }
         }
 
-        public bool ShouldSerializevICMSOp()
-        {
-            return vICMSOp.HasValue;
-        }
-
         /// <summary>
         ///     N16c - Percentual do diferimento
         /// </summary>
@@ -111,11 +101,6 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
         {
             get { return _pDif.Arredondar(4); }
             set { _pDif = value.Arredondar(4); }
-        }
-
-        public bool ShouldSerializepDif()
-        {
-            return pDif.HasValue;
         }
 
         /// <summary>
@@ -202,11 +187,6 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
             set { _pFcpDif = value.Arredondar(4); }
         }
 
-        public bool ShouldSerializepFCPDif()
-        {
-            return pFCPDif.HasValue;
-        }
-
         /// <summary>
         ///     N17e - Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido
         ///     Grupo opcional N17.2
@@ -218,11 +198,6 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
             set { _vFcpDif = value.Arredondar(2); }
         }
 
-        public bool ShouldSerializevFCPDif()
-        {
-            return vFCPDif.HasValue;
-        }
-
         /// <summary>
         ///     N17f - Valor efetivo do ICMS relativo ao Fundo de Combate à Pobreza (FCP) realmente devido
         ///     Grupo opcional N17.1
@@ -232,11 +207,6 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
         {
             get { return _vFcpEfet.Arredondar(2); }
             set { _vFcpEfet = value.Arredondar(2); }
-        }
-
-        public bool ShouldSerializevFCPEfet()
-        {
-            return vFCPEfet.HasValue;
         }
 
         /// <summary>
@@ -462,6 +432,36 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
         public bool ShouldSerializeindDeduzDeson()
         {
             return indDeduzDeson.HasValue;
+        }
+
+        public bool ShouldSerializecBenefRBC()
+        {
+            return !string.IsNullOrWhiteSpace(cBenefRBC);
+        }
+
+        public bool ShouldSerializevICMSOp()
+        {
+            return vICMSOp.HasValue;
+        }
+
+        public bool ShouldSerializepDif()
+        {
+            return pDif.HasValue;
+        }
+
+        public bool ShouldSerializepFCPDif()
+        {
+            return pFCPDif.HasValue;
+        }
+
+        public bool ShouldSerializevFCPDif()
+        {
+            return vFCPDif.HasValue;
+        }
+
+        public bool ShouldSerializevFCPEfet()
+        {
+            return vFCPEfet.HasValue;
         }
     }
 }
