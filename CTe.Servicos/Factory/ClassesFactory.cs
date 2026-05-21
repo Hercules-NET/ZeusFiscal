@@ -142,7 +142,7 @@ namespace CTe.Servicos.Factory
 
             if (configServico.cUF == Estado.MT)//sem acentuação issue #1386
             {
-                evPrestDesacordo.descEvento = "Cancelamento Prestacaoo do Servico em Desacordo";
+                evPrestDesacordo.descEvento = "Cancelamento Prestacao do Servico em Desacordo";
             }
 
             return evPrestDesacordo;
