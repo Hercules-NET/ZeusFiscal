@@ -1,7 +1,7 @@
+using NFe.Classes.Informacoes.Detalhe.Tributacao.Estadual.Tipos;
 using System.Xml.Serialization;
-using hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalhe.Tributacao.Estadual.Tipos;
 
-namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalhe.Tributacao.Estadual
+namespace NFe.Classes.Informacoes.Detalhe.Tributacao.Estadual
 {
     public class ICMS90 : ICMSBasico
     {
@@ -71,7 +71,7 @@ namespace hypercubev2.dfe.launch.engine.Domain.Model.NFeSefaz.Informacoes.Detalh
         ///     N14a - Código de Benefício Fiscal na UF aplicado ao item quando houver RBC.
         /// </summary>
         [XmlElement(Order = 6)]
-        public string? cBenefRBC { get; set; }
+        public string cBenefRBC { get; set; }
 
         /// <summary>
         ///     N16 - Alíquota do imposto
