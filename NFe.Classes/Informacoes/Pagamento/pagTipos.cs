@@ -150,6 +150,20 @@ namespace NFe.Classes.Informacoes.Pagamento
         [XmlEnum("22")] fpPagamentoEletronicoNaoInformado = 22,
 
         /// <summary>
+        /// 23 - Pagamento Instantâneo (PIX) - Automático
+        /// </summary>
+        [Description("Pagamento Instantâneo (PIX) - Automático")]
+        [XmlEnum("23")]
+        fpPagamentoInstantaneoPIXAutomatico = 23,
+
+        /// <summary>
+        /// 24 - TEF - "Book Transfer"
+        /// </summary>
+        [Description("TEF - \"Book Transfer\"")]
+        [XmlEnum("24")]
+        fpPagamentoBookTransfer = 24,
+
+        /// <summary>
         /// 90 - Sem pagamento
         /// </summary>
         [Description("Sem pagamento")]
