@@ -2,7 +2,7 @@
 
 namespace NFe.Classes.Informacoes.Total
 {
-    public class gMono
+    public class gMonoTotal
     {
         private decimal _vIBSMono;
         private decimal _vCBSMono;

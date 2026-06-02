@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 using NFe.Classes.Informacoes.Detalhe.DeclaracaoImportacao;
 using NFe.Classes.Informacoes.Detalhe.Exportacao;
 using NFe.Classes.Informacoes.Detalhe.ProdEspecifico;
+using NFe.Classes.Informacoes.Detalhe.Tributacao;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
 
 namespace NFe.Classes.Informacoes.Detalhe
@@ -102,6 +103,12 @@ namespace NFe.Classes.Informacoes.Detalhe
         /// </summary>
         [XmlElement("gCred")]
         public List<gCred> gCred { get; set; }
+
+        /// <summary>
+        /// I05k -Classificação para subapuração do IBS na ZFM
+        /// Versão 4.00 - NT 2025.002 v1.30
+        /// </summary>
+        public tpCredPresIBSZFM? tpCredPresIBSZFM { get; set; }
 
         /// <summary>
         ///     I06 - Código EX TIPI (3 posições)
@@ -324,5 +331,9 @@ namespace NFe.Classes.Informacoes.Detalhe
             return indBemMovelUsado.HasValue;
         }
 
+        public bool ShouldSerializetpCredPresIBSZFM()
+        {
+            return tpCredPresIBSZFM.HasValue;
+        }
     }
 }
