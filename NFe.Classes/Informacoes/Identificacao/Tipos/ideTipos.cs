@@ -261,23 +261,23 @@ namespace NFe.Classes.Informacoes.Identificacao.Tipos
 
     public enum TipoNFeDebito
     {
-        [Description("Transferência de créditos para Cooperativas;")]
+        [Description("Transferência de créditos para Cooperativas")]
         [XmlEnum("01")]
         tdTransferenciaCreditoCooperativa = 01,
 
-        [Description("Anulação de Crédito por Saídas Imunes/Isentas;")]
+        [Description("Anulação de Crédito por Saídas Imunes/Isentas")]
         [XmlEnum("02")]
         tdAnulacao = 02,
 
-        [Description("Débitos de notas fiscais não processadas na apuração;")]
+        [Description("Débitos de notas fiscais não processadas na apuração")]
         [XmlEnum("03")]
         tdDebitosNaoProcessadas = 03,
 
-        [Description("Multa e juros;")]
+        [Description("Multa e juros")]
         [XmlEnum("04")]
         tdMultaJuros = 04,
 
-        [Description("Transferência de crédito na sucessão;")]
+        [Description("Transferência de crédito na sucessão")]
         [XmlEnum("05")]
         tdTransferenciaCreditoSucessao = 05,
 
