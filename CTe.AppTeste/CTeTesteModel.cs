@@ -51,6 +51,7 @@ using infServico = CTe.Classes.Informacoes.infCTeNormal.infServico;
 using infTribFed = CTe.Classes.Informacoes.Impostos.infTribFed;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using rodoOS = CTe.Classes.Informacoes.infCTeNormal.infModals.rodoOS;
+using CTe.Classes.Informacoes.Impostos.IBSCBS;
 
 namespace CTe.AppTeste
 {
@@ -569,6 +570,7 @@ namespace CTe.AppTeste
             var configuracaoCertificado = new ConfiguracaoCertificado
             {
                 Arquivo = config.CertificadoDigital.CaminhoArquivo,
+                TipoCertificado = TipoCertificado.A1Repositorio,
                 ManterDadosEmCache = config.CertificadoDigital.ManterEmCache,
                 Serial = config.CertificadoDigital.NumeroDeSerie
             };
@@ -791,6 +793,22 @@ namespace CTe.AppTeste
             OnSucessoSync(new RetornoEEnvio(retorno));
         }
 
+        public void EventoCancelaDesacordoCTe()
+        {
+            var config = new ConfiguracaoDao().BuscarConfiguracao();
+            CarregarConfiguracoes(config);
+
+            var cnpj = (InputBoxTuche("CNPJ Tomador"));
+            var chave = (InputBoxTuche("Chave CTe"));
+            var sequenciaEvento = int.Parse(InputBoxTuche("Sequencia Evento"));
+            var nProtEventoDesacordo = InputBoxTuche("Número do Protocolo do Evento de Desacordo");
+
+            var servico = new EventoCancelamentoDesacordo(sequenciaEvento, chave, cnpj, nProtEventoDesacordo);
+            var retorno = servico.CancelarDesacordo();
+
+            OnSucessoSync(new RetornoEEnvio(retorno));
+        }
+
         public void CartaCorrecao()
         {
             var config = new ConfiguracaoDao().BuscarConfiguracao();
@@ -998,6 +1016,32 @@ namespace CTe.AppTeste
                 icmsSimplesNacional.CST = CST.ICMS90;
             }
 
+            cteEletronico.infCte.imp.IBSCBS = new IBSCBS()
+            {
+                cClassTrib = "000001",
+                CST = CSTIBSCBS.cst000,
+                gIBSCBS =  new gIBSCBS()
+                {
+                    vBC = 0m,
+                    vIBS = 0m,
+                    gIBSUF = new gIBSUF()
+                    {
+                        pIBSUF = 0.1m,
+                        vIBSUF = 0m,
+                    },
+                    gIBSMun = new gIBSMun()
+                    {
+                        pIBSMun = 0,
+                        vIBSMun = 0,
+                    },
+                    gCBS = new gCBS()
+                    {
+                        pCBS = 0.09m,
+                        vCBS = 0
+                    },                    
+                }
+            };
+
             #endregion
 
             #region infCTeNorm
@@ -1061,9 +1105,7 @@ namespace CTe.AppTeste
             cteEletronico.infCte.infCTeNorm.infModal.ContainerModal = rodoviario;
             #endregion
 
-
-            
-
+           
             var servicoRecepcao = new ServicoCTeRecepcao();
 
 

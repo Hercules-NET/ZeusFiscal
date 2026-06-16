@@ -9,14 +9,19 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         private decimal? _pIsEspec;
         private decimal _qTrib;
         private decimal _vIs;
+        private string _cClassTribIS;
 
         // UB02
         [XmlElement(Order = 1)]
-        public CSTIS CSTIS { get; set; }
+        public string CSTIS { get; set; }
 
         // UB03
         [XmlElement(Order = 2)]
-        public cClassTribIS cClassTribIS { get; set; }
+        public string cClassTribIS
+        {
+            get => _cClassTribIS;
+            set => _cClassTribIS = value;
+        }
 
         // UB05
         [XmlElement(Order = 3)]
@@ -64,6 +69,23 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         {
             get => _vIs.Arredondar(2);
             set => _vIs = value.Arredondar(2);
+        }
+
+        /// <summary>
+        /// Define o valor de cClassTribIS a partir de um inteiro
+        /// </summary>
+        public void SetcClassTribIS(int intValue)
+        {
+            _cClassTribIS = intValue.ToString("D6");
+        }
+
+        /// <summary>
+        /// Define o valor de CSTIS a partir de um inteiro
+        /// </summary>
+        /// <param name="intValue"></param>
+        public void SetCSTIS(int intValue)
+        {
+            CSTIS = intValue.ToString("D3");
         }
     }
 }
