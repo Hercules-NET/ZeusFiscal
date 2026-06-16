@@ -4,6 +4,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 {
     public class gTribRegular
     {
+        private string _cClassTribReg;
         private decimal _pAliqEfetRegIbsUf;
         private decimal _vTribRegIbsUf;
         private decimal _pAliqEfetRegIbsMun;
@@ -17,7 +18,11 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 
         // UB70
         [XmlElement(Order = 2)]
-        public cClassTrib cClassTribReg { get; set; }
+        public string cClassTribReg
+        {
+            get => _cClassTribReg;
+            set => _cClassTribReg = value;
+        }
 
         // UB71
         [XmlElement(Order = 3)]
@@ -65,6 +70,14 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         {
             get => _vTribRegCbs.Arredondar(2);
             set => _vTribRegCbs = value.Arredondar(2);
+        }
+
+        /// <summary>
+        /// Define o valor de cClassTrib a partir de um inteiro
+        /// </summary>
+        public void SetcClassTrib(int intValue)
+        {
+            _cClassTribReg = intValue.ToString("D6");
         }
     }
 }

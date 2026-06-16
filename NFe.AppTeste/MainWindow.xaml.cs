@@ -1431,7 +1431,8 @@ namespace NFe.AppTeste
         {
             var dest = new dest(versao)
             {
-                CNPJ = "99999999000191",
+                CNPJ = "0ZEN3MS8000127",
+                //CNPJ = "99999999000191",
                 //CPF = "99999999999",
             };
             dest.xNome = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"; //Obrigatório para NFe e opcional para NFCe
@@ -1519,10 +1520,10 @@ namespace NFe.AppTeste
 
                     IS = CbxEnviarTributacaoIS.IsChecked == true ? new IS
                     {
-                        cClassTribIS = cClassTribIS.ctis000001,
+                        cClassTribIS = "000001",
                         uTrib = "UN",
                         qTrib = 1,
-                        CSTIS = CSTIS.Is000,
+                        CSTIS = "000",
                         pIS = 0,
                         vIS = 0
                     } : null,
@@ -1530,7 +1531,7 @@ namespace NFe.AppTeste
                     IBSCBS = CbxEnviarTributacaoIbsCBS.IsChecked == true ? new IBSCBS
                     {
                         CST = CSTIBSCBS.cst000,
-                        cClassTrib = cClassTrib.ct000001,
+                        cClassTrib = "000001",
                         gIBSCBS = new gIBSCBS
                         {
                             vBC = 0,
@@ -1784,7 +1785,7 @@ namespace NFe.AppTeste
                 IBSCBSTot = CbxEnviarTributacaoIbsCBS.IsChecked == true ? new IBSCBSTot
                 {
                     vBCIBSCBS = 0,
-                    gIBS = new gIBS
+                    gIBS = new gIBSTotal
                     {
                        gIBSUF = new gIBSUFTotal
                        {

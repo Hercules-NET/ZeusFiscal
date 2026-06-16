@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using DFe.Classes.Entidades;
 using DFe.Classes.Flags;
 using DFe.Utils;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace NFe.Classes.Informacoes.Identificacao
 {
@@ -118,6 +118,27 @@ namespace NFe.Classes.Informacoes.Identificacao
         {
             get { return dhSaiEnt.ParaDataHoraStringUtc(); }
             set { dhSaiEnt = DateTimeOffset.Parse(value); }
+        }
+
+        /// <summary>
+        /// B10a - Data da previsão de entrega ou disponibilização do bem
+        /// </summary>
+        [XmlIgnore]
+        public DateTime? dPrevEntrega { get; set; }
+
+        /// <summary>
+        /// Proxy para dPrevEntrega no formato AAAA-MM-DD
+        /// </summary>
+        [XmlElement(ElementName = "dPrevEntrega")]
+        public string ProxydPrevEntrega
+        {
+            get
+            {
+                if (dPrevEntrega == null)
+                    return null;
+                return dPrevEntrega.ParaDataString();
+            }
+            set { dPrevEntrega = DateTime.Parse(value); }
         }
 
         /// <summary>
@@ -237,9 +258,6 @@ namespace NFe.Classes.Informacoes.Identificacao
         // B31
         public gCompraGov gCompraGov { get; set; }
 
-        // B32
-        public TipoOperGov? tpOperGov { get; set; }
-
         // BB01
         public gPagAntecipado gPagAntecipado { get; set; }
 
@@ -266,11 +284,6 @@ namespace NFe.Classes.Informacoes.Identificacao
         public bool ShouldSerializetpNFCredito()
         {
             return tpNFCredito.HasValue;
-        }
-
-        public bool ShouldSerializetpOperGov()
-        {
-            return tpOperGov.HasValue;
         }
     }
 }

@@ -19,9 +19,9 @@ namespace DFe.Utils.Assinatura
         /// </summary>
         /// <param name="openFlags"></param>
         /// <returns></returns>
-        public static X509Store ObterX509Store(OpenFlags openFlags)
+        public static X509Store ObterX509Store(OpenFlags openFlags, StoreLocation storeLocation = StoreLocation.CurrentUser)
         {
-            var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+            X509Store store = new X509Store(StoreName.My, storeLocation);
             store.Open(openFlags);
             return store;
         }
@@ -56,7 +56,7 @@ namespace DFe.Utils.Assinatura
         {
             try
             {
-                var certificado = new X509Certificate2(arrayBytes, senha, keyStorageFlag);
+                X509Certificate2 certificado = new X509Certificate2(arrayBytes, senha, keyStorageFlag);
                 return certificado;
             }
             catch (Exception ex)
@@ -69,12 +69,12 @@ namespace DFe.Utils.Assinatura
         /// Obtém um objeto <see cref="X509Certificate2"/> pelo serial passado no parÂmetro
         /// </summary>
         /// <returns></returns>
-        private static X509Certificate2 ObterDoRepositorio(string serial, OpenFlags opcoesDeAbertura)
+        private static X509Certificate2 ObterDoRepositorio(string serial, OpenFlags opcoesDeAbertura, StoreLocation storeLocation = StoreLocation.CurrentUser)
         {
             if (string.IsNullOrEmpty(serial))
                 throw new ArgumentException("O número de série do certificado digital não foi informado!");
             X509Certificate2 certificado = null;
-            var store = ObterX509Store(opcoesDeAbertura);
+            var store = ObterX509Store(opcoesDeAbertura, storeLocation);
             try
             {
                 foreach (var item in store.Certificates)
@@ -100,9 +100,9 @@ namespace DFe.Utils.Assinatura
         /// <param name="serial"></param>
         /// <param name="senha"></param>
         /// <returns></returns>
-        private static X509Certificate2 ObterDoRepositorioPassandoPin(string serial, string senha = null)
+        private static X509Certificate2 ObterDoRepositorioPassandoPin(string serial, string senha = null, StoreLocation storeLocation = StoreLocation.CurrentUser)
         {
-            var certificado = ObterDoRepositorio(serial, OpenFlags.ReadOnly);
+            var certificado = ObterDoRepositorio(serial, OpenFlags.ReadOnly, storeLocation);
             if (string.IsNullOrEmpty(senha)) return certificado;
             certificado.DefinirPinParaChavePrivada(senha);
             return certificado;
@@ -154,13 +154,13 @@ namespace DFe.Utils.Assinatura
             switch (configuracaoCertificado.TipoCertificado)
             {
                 case TipoCertificado.A1Repositorio:
-                    return ObterDoRepositorio(configuracaoCertificado.Serial, OpenFlags.MaxAllowed);
+                    return ObterDoRepositorio(configuracaoCertificado.Serial, OpenFlags.MaxAllowed, configuracaoCertificado.StoreLocation);
                 case TipoCertificado.A1ByteArray:
                     return ObterDoArrayBytes(configuracaoCertificado.ArrayBytesArquivo, configuracaoCertificado.Senha, configuracaoCertificado.KeyStorageFlags);
                 case TipoCertificado.A1Arquivo:
                     return ObterDeArquivo(configuracaoCertificado.Arquivo, configuracaoCertificado.Senha, configuracaoCertificado.KeyStorageFlags);
                 case TipoCertificado.A3:
-                    return ObterDoRepositorioPassandoPin(configuracaoCertificado.Serial, configuracaoCertificado.Senha);
+                    return ObterDoRepositorioPassandoPin(configuracaoCertificado.Serial, configuracaoCertificado.Senha, configuracaoCertificado.StoreLocation);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
