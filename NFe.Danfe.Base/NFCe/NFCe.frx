@@ -40,12 +40,26 @@ namespace FastReport
       if(Report.GetDataSource(&quot;NFCe.NFe.infNFe.pag.detPag&quot;).RowCount != 0 &amp;&amp; Report.GetColumnValue(&quot;NFCe.NFe.infNFe.pag.detPag.tPag&quot;) != null)
         txtDescDetPagto.Text = ((FormaPagamento)Report.GetColumnValue(&quot;NFCe.NFe.infNFe.pag.detPag.tPag&quot;)).Descricao();
     }
+	
+	private string formatTxtCnpj(string cnpj){
+	  if (string.IsNullOrEmpty(cnpj) || cnpj.Length != 14)
+        return cnpj;
+	    
+      return cnpj.Insert(2, &quot;.&quot;).Insert(6, &quot;.&quot;).Insert(10, &quot;/&quot;).Insert(15, &quot;-&quot;);
+    }
+	
+	private string formatTxtCpf(string cpf){
+	  if (string.IsNullOrEmpty(cpf) || cpf.Length != 11)
+        return cpf;
+	    
+      return cpf.Insert(3, &quot;.&quot;).Insert(7, &quot;.&quot;).Insert(11, &quot;-&quot;);
+    }
 
     private void txtEmitCnpj_BeforePrint(object sender, EventArgs e)
     {
       var cnpj = (string)Report.GetColumnValue(&quot;NFCe.NFe.infNFe.emit.CNPJ&quot;);
       if (!string.IsNullOrEmpty(cnpj))
-        txtEmitCnpj.Text = &quot;CNPJ: &quot; + String.Format(@&quot;{0:00\.000\.000\/0000\-00}&quot;, long.Parse(cnpj));
+        txtEmitCnpj.Text = &quot;CNPJ: &quot; + formatTxtCnpj(cnpj);
     }
 
     private void memChaveNfe_BeforePrint(object sender, EventArgs e)
@@ -91,8 +105,8 @@ namespace FastReport
       var cnpj = (String)Report.GetColumnValue(&quot;NFCe.NFe.infNFe.dest.CNPJ&quot;);
       var cpf = (String)Report.GetColumnValue(&quot;NFCe.NFe.infNFe.dest.CPF&quot;);
       var idEstrangeiro = (String)Report.GetColumnValue(&quot;NFCe.NFe.infNFe.dest.idEstrangeiro&quot;);
-      if ( !String.IsNullOrEmpty(cnpj)) documentoDest = &quot;CNPJ: &quot; + String.Format(@&quot;{0:00\.000\.000\/0000\-00}&quot;, long.Parse(cnpj)) + &quot; &quot;;
-      if ( !String.IsNullOrEmpty(cpf)) documentoDest = &quot;CPF: &quot; + String.Format(@&quot;{0:000\.000\.000\-00}&quot;, long.Parse(cpf)) + &quot; &quot;;
+      if ( !String.IsNullOrEmpty(cnpj)) documentoDest = &quot;CNPJ: &quot; + formatTxtCnpj(cnpj) + &quot; &quot;;
+      if ( !String.IsNullOrEmpty(cpf)) documentoDest = &quot;CPF: &quot; + formatTxtCpf(cpf) + &quot; &quot;;
       if ( !String.IsNullOrEmpty(idEstrangeiro)) documentoDest = &quot;Id. Estrangeiro: &quot; + idEstrangeiro + &quot; &quot;;
       return documentoDest;
     }
