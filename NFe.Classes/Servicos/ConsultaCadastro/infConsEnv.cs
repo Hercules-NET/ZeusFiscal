@@ -33,13 +33,12 @@ namespace NFe.Classes.Servicos.ConsultaCadastro
             get { return _ie; }
             set
             {
-                if (string.IsNullOrEmpty(value)) return;
-                if (string.IsNullOrEmpty(CNPJ) & string.IsNullOrEmpty(CPF))
-                    _ie = value;
-                else
-                {
+                if (string.IsNullOrEmpty(value)) 
+                    return;
+                if (!string.IsNullOrEmpty(CNPJ) || !string.IsNullOrEmpty(CPF))
                     throw new ArgumentException(ErroCpfCnpjIePreenchidos);
-                }
+                
+                _ie = value;
             }
         }
 
@@ -52,13 +51,12 @@ namespace NFe.Classes.Servicos.ConsultaCadastro
             get { return _cnpj; }
             set
             {
-                if (string.IsNullOrEmpty(value)) return;
-                if (string.IsNullOrEmpty(CPF) & string.IsNullOrEmpty(IE))
-                    _cnpj = value;
-                else
-                {
+                if (string.IsNullOrEmpty(value))
+                    return;
+                if (!string.IsNullOrEmpty(CPF) || !string.IsNullOrEmpty(IE))
                     throw new ArgumentException(ErroCpfCnpjIePreenchidos);
-                }
+
+                _cnpj = value;
             }
         }
 
@@ -71,13 +69,12 @@ namespace NFe.Classes.Servicos.ConsultaCadastro
             get { return _cpf; }
             set
             {
-                if (string.IsNullOrEmpty(value)) return;
-                if (string.IsNullOrEmpty(CNPJ) & string.IsNullOrEmpty(IE))
-                    _cpf = value;
-                else
-                {
+                if (string.IsNullOrEmpty(value)) 
+                    return;
+                if (!string.IsNullOrEmpty(CNPJ) || !string.IsNullOrEmpty(IE))
                     throw new ArgumentException(ErroCpfCnpjIePreenchidos);
-                }
+
+                _cpf = value;
             }
         }
     }

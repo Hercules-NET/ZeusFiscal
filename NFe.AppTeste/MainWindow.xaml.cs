@@ -1431,7 +1431,8 @@ namespace NFe.AppTeste
         {
             var dest = new dest(versao)
             {
-                CNPJ = "99999999000191",
+                CNPJ = "0ZEN3MS8000127",
+                //CNPJ = "99999999000191",
                 //CPF = "99999999999",
             };
             dest.xNome = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"; //Obrigatório para NFe e opcional para NFCe
