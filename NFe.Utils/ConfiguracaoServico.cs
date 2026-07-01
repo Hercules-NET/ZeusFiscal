@@ -31,6 +31,7 @@ namespace NFe.Utils
         private VersaoServico _versaoRecepcaoEventoInsucessoEntrega;
         private VersaoServico _versaoRecepcaoEventoComprovanteEntrega;
         private VersaoServico _versaoRecepcaoEventoConciliacaoFinanceira;
+        private VersaoServico _versaoRecepcaoEventoPerecimentoTransporte;
         private VersaoServico _versaoRecepcaoEventoEpec;
         private VersaoServico _versaoRecepcaoEventoManifestacaoDestinatario;
         private VersaoServico _versaoNfeRecepcao;
@@ -205,9 +206,9 @@ namespace NFe.Utils
             if (enderecosMaisecentes.Any())
             {
                 VersaoRecepcaoEventoCceCancelamento = obterVersao(ServicoNFe.RecepcaoEventoCancelmento);
-                VersaoRecepcaoEventoInsucessoEntrega = obterVersao(ServicoNFe.RecepcaoEventoInsucessoEntregaNFe);
                 VersaoRecepcaoEventoComprovanteEntrega = obterVersao(ServicoNFe.RecepcaoEventoComprovanteEntregaNFe);
                 VersaoRecepcaoEventoConciliacaoFinanceira = obterVersao(ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe);
+                VersaoRecepcaoEventoPerecimentoTransporte = obterVersao(ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe);
                 VersaoRecepcaoEventoEpec = obterVersao(ServicoNFe.RecepcaoEventoEpec);
                 VersaoRecepcaoEventoManifestacaoDestinatario = obterVersao(ServicoNFe.RecepcaoEventoManifestacaoDestinatario);
                 VersaoNfeRecepcao = obterVersao(ServicoNFe.NfeRecepcao);
@@ -295,6 +296,20 @@ namespace NFe.Utils
             {
                 if (value == _versaoRecepcaoEventoConciliacaoFinanceira) return;
                 _versaoRecepcaoEventoConciliacaoFinanceira = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        ///     Versão do serviço RecepcaoEvento para Perecimento, Perda, Roubo ou Furto durante o Transporte
+        /// </summary>
+        public VersaoServico VersaoRecepcaoEventoPerecimentoTransporte
+        {
+            get { return _versaoRecepcaoEventoPerecimentoTransporte; }
+            set
+            {
+                if (value == _versaoRecepcaoEventoPerecimentoTransporte) return;
+                _versaoRecepcaoEventoPerecimentoTransporte = value;
                 OnPropertyChanged();
             }
         }

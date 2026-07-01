@@ -296,5 +296,21 @@ namespace NFe.Classes.Servicos.Evento
         }
 
         #endregion
+
+        #region Perecimento, perda, roubo ou furto durante o transporte
+
+        /// <summary>
+        /// Informações por item da Nota de Fornecimento para o evento 112130.
+        /// </summary>
+        [XmlElement("gPerecimento")]
+        public List<gPerecimento> gPerecimento { get; set; }
+
+        public bool ShouldSerializegPerecimento()
+        {
+            return gPerecimento != null &&
+                   gPerecimento.Count > 0;
+        }
+
+        #endregion
     }
 }
