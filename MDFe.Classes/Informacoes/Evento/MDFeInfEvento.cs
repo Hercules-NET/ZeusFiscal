@@ -14,7 +14,15 @@ namespace MDFe.Classes.Informacoes.Evento
     public class MDFeInfEvento
     {
         [XmlIgnore]
-        private readonly VersaoServico _versaoServico = MDFeConfiguracao.Instancia.VersaoWebService.VersaoLayout;
+        private readonly VersaoServico _versaoServico;
+
+        public MDFeInfEvento() : this(null) { }
+
+        public MDFeInfEvento(MDFeConfiguracao cfgMdfe)
+        {
+            var config = cfgMdfe ?? MDFeConfiguracao.Instancia;
+            _versaoServico = config.VersaoWebService.VersaoLayout;
+        }
 
         [XmlAttribute(AttributeName = "Id")]
         public string Id { get; set; }
