@@ -360,7 +360,7 @@ namespace NFe.Servicos
         /// </summary>
         /// <param name="idlote"></param>
         /// <param name="eventos"></param>
-        /// <param name="servicoEvento">Tipo de serviço do evento: valores válidos: RecepcaoEventoCancelmento, RecepcaoEventoCartaCorrecao, RecepcaoEventoEpec e RecepcaoEventoManifestacaoDestinatario</param>
+        /// <param name="servicoEvento">Tipo de serviço do evento.</param>
         /// <param name="versaoEvento">Versão do serviço para o evento</param>
         /// <returns>Retorna um objeto da classe RetornoRecepcaoEvento com o retorno do serviço RecepcaoEvento</returns>
         private RetornoRecepcaoEvento RecepcaoEvento(int idlote, List<evento> eventos, ServicoNFe servicoEvento, VersaoServico versaoEvento, bool assinar)
@@ -376,7 +376,8 @@ namespace NFe.Servicos
                 ServicoNFe.RecepcaoEventoComprovanteEntregaNFe,
                 ServicoNFe.RecepcaoEventoCancComprovanteEntregaNFe,
                 ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe,
-                ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe
+                ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe,
+                ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe
             };
             if (
                 !listaEventos.Contains(servicoEvento))
@@ -390,7 +391,7 @@ namespace NFe.Servicos
 
             var ws = CriarServico(servicoEvento);
 
-            if (_cFgServico.VersaoRecepcaoEventoCceCancelamento != VersaoServico.Versao400)
+            if (versaoEvento != VersaoServico.Versao400)
             {
                 ws.nfeCabecMsg = new nfeCabecMsg
                 {
@@ -431,7 +432,7 @@ namespace NFe.Servicos
             SalvarArquivoXml(idlote + "-ped-eve.xml", xmlEvento);
 
             if (_cFgServico.ValidarSchemas)
-                Validador.Valida(servicoEvento, _cFgServico.VersaoRecepcaoEventoCceCancelamento, xmlEvento, cfgServico: _cFgServico);
+                Validador.Valida(servicoEvento, versaoEvento, xmlEvento, cfgServico: _cFgServico);
 
             var dadosEvento = new XmlDocument();
             dadosEvento.LoadXml(xmlEvento);
@@ -1092,6 +1093,74 @@ namespace NFe.Servicos
         }
 
         /// <summary>
+        /// Recepção do Evento de Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor
+        /// </summary>
+        /// <param name="idlote">Nº do lote</param>
+        /// <param name="sequenciaEvento">Sequência do evento</param>
+        /// <param name="cpfcnpj">CPF/CNPJ do autor do evento</param>
+        /// <param name="chaveNFe">Chave de acesso da NF-e vinculada ao evento</param>
+        /// <param name="perecimentos">Informações por item da Nota de Fornecimento</param>
+        /// <param name="ufAutor">Código da UF do autor do evento</param>
+        /// <param name="versaoAplicativo">Versão do aplicativo do autor do evento</param>
+        /// <param name="dhEvento">Data e hora do evento</param>
+        /// <returns>Retorna um objeto da classe RetornoRecepcaoEvento com o retorno do serviço RecepcaoEvento</returns>
+        public RetornoRecepcaoEvento RecepcaoEventoPerecimentoTransporte(int idlote,
+            int sequenciaEvento, string cpfcnpj, string chaveNFe, List<gPerecimento> perecimentos,
+            Estado? ufAutor = null, string versaoAplicativo = null, DateTimeOffset? dhEvento = null)
+        {
+            if (perecimentos == null || !perecimentos.Any())
+                throw new ArgumentException("Informe ao menos um item para o evento de Perecimento, perda, roubo ou furto durante o transporte.", nameof(perecimentos));
+
+            var versaoServico =
+                ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe.VersaoServicoParaString(
+                    _cFgServico.VersaoRecepcaoEventoPerecimentoTransporte);
+
+            var detEvento = new detEvento
+            {
+                versao = versaoServico,
+                descEvento = NFeTipoEvento.TeNfePerecimentoTransporteNFe.Descricao(),
+                cOrgaoAutor = ufAutor ?? _cFgServico.cUF,
+                tpAutor = TipoAutor.taEmpresaEmitente,
+                verAplic = versaoAplicativo ?? "1.0",
+                gPerecimento = perecimentos
+            };
+
+            var infEvento = new infEventoEnv
+            {
+                cOrgao = Estado.AN,
+                tpAmb = _cFgServico.tpAmb,
+                chNFe = chaveNFe,
+                dhEvento = dhEvento ?? DateTime.Now,
+                tpEvento = NFeTipoEvento.TeNfePerecimentoTransporteNFe,
+                nSeqEvento = sequenciaEvento,
+                verEvento = versaoServico,
+                detEvento = detEvento
+            };
+
+            if (cpfcnpj.Length == 11)
+                infEvento.CPF = cpfcnpj;
+            else
+                infEvento.CNPJ = cpfcnpj;
+
+            var evento = new evento { versao = versaoServico, infEvento = infEvento };
+
+            var retorno = RecepcaoEvento(idlote, new List<evento> { evento }, ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe, _cFgServico.VersaoRecepcaoEventoPerecimentoTransporte, true);
+            return retorno;
+        }
+
+        /// <summary>
+        /// Envia eventos do tipo "Perecimento, perda, roubo ou furto durante o transporte" já assinados.
+        /// </summary>
+        /// <param name="idlote">Nº do lote</param>
+        /// <param name="eventos">Eventos já montados e assinados</param>
+        /// <returns>Retorna um objeto da classe RetornoRecepcaoEvento com o retorno do serviço RecepcaoEvento</returns>
+        public RetornoRecepcaoEvento RecepcaoEventoPerecimentoTransporte(int idlote, List<evento> eventos)
+        {
+            var retorno = RecepcaoEvento(idlote, eventos, ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe, _cFgServico.VersaoRecepcaoEventoPerecimentoTransporte, false);
+            return retorno;
+        }
+
+        /// <summary>
         ///     Consulta a situação cadastral, com base na UF/Documento
         ///     <para>O documento pode ser: IE, CNPJ ou CPF</para>
         /// </summary>
@@ -1099,6 +1168,7 @@ namespace NFe.Servicos
         /// <param name="tipoDocumento">Tipo de documento a ser consultado</param>
         /// <param name="documento">Documento a ser consultado</param>
         /// <returns>Retorna um objeto da classe RetornoNfeConsultaCadastro com o retorno do serviço NfeConsultaCadastro</returns>
+
         public RetornoNfeConsultaCadastro NfeConsultaCadastro(string uf, ConsultaCadastroTipoDocumento tipoDocumento, string documento)
         {
             var versaoServico = ServicoNFe.NfeConsultaCadastro.VersaoServicoParaString(_cFgServico.VersaoNfeConsultaCadastro);

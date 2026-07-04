@@ -121,6 +121,8 @@ namespace NFe.Utils.Enderecos
 
             var eventoCceCanc = new[] { ServicoNFe.RecepcaoEventoCartaCorrecao, ServicoNFe.RecepcaoEventoCancelmento };
 
+            var eventoPerecimentoTransporteNFe = new[] { ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe };
+
             var hom = TipoAmbiente.Homologacao;
 
             var prod = TipoAmbiente.Producao;
@@ -1553,7 +1555,12 @@ namespace NFe.Utils.Enderecos
                     if (estado != Estado.CE & !svanEstados.Contains(estado))
                         addServico(new[] { ServicoNFe.NfeDownloadNF }, versao2E3, hom, TipoEmissao.teNormal, estado, modelo, "https://hom.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx");
                     if (modelo != ModeloDocumento.NFCe)
+                    {
                         addServico(new[] { ServicoNFe.NFeDistribuicaoDFe }, versao1, hom, TipoEmissao.teNormal, estado, modelo, "https://hom1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx");
+
+                        // Perecimento, perda, roubo ou furto durante o transporte
+                        addServico(eventoPerecimentoTransporteNFe, versao1, hom, TipoEmissao.teNormal, estado, modelo, "https://hom1.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx");
+                    }
 
                     // Comprovante de Entrega
                     addServico(new[] { ServicoNFe.RecepcaoEventoComprovanteEntregaNFe, ServicoNFe.RecepcaoEventoCancComprovanteEntregaNFe }, versao1, hom, TipoEmissao.teNormal, estado, modelo, "https://hom1.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx");
@@ -1585,7 +1592,12 @@ namespace NFe.Utils.Enderecos
                     if (estado != Estado.CE & !svanEstados.Contains(estado))
                         addServico(new[] { ServicoNFe.NfeDownloadNF }, versao2E3, prod, TipoEmissao.teNormal, estado, modelo, "https://www.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx");
                     if (modelo != ModeloDocumento.NFCe)
-                        addServico(new[] { ServicoNFe.NFeDistribuicaoDFe }, versao1, prod, TipoEmissao.teNormal, estado, modelo, "https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx");
+                    {
+                        addServico(new[] { ServicoNFe.NFeDistribuicaoDFe }, versao1, prod, TipoEmissao.teNormal, estado, modelo, "https://www.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx");
+
+                        // Perecimento, perda, roubo ou furto durante o transporte
+                        addServico(eventoPerecimentoTransporteNFe, versao1, prod, TipoEmissao.teNormal, estado, modelo, "https://www.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx");
+                    }
 
                     // Comprovante de Entrega
                     addServico(new[] { ServicoNFe.RecepcaoEventoComprovanteEntregaNFe, ServicoNFe.RecepcaoEventoCancComprovanteEntregaNFe }, versao1, prod, TipoEmissao.teNormal, estado, modelo, "https://www.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx");
@@ -1660,6 +1672,8 @@ namespace NFe.Utils.Enderecos
                 case ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe:
                 case ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe:
                     return cfgServico.VersaoRecepcaoEventoConciliacaoFinanceira;
+                case ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe:
+                    return cfgServico.VersaoRecepcaoEventoPerecimentoTransporte;
                 case ServicoNFe.RecepcaoEventoEpec:
                     return cfgServico.VersaoRecepcaoEventoEpec;
                 case ServicoNFe.RecepcaoEventoManifestacaoDestinatario:

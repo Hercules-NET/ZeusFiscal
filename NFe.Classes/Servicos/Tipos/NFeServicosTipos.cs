@@ -52,6 +52,11 @@ namespace NFe.Classes.Servicos.Tipos
         RecepcaoEventoCancConciliacaoFinanceiraNFe,
 
         /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Perecimento, Perda, Roubo ou Furto durante o Transporte
+        /// </summary>
+        RecepcaoEventoPerecimentoTransporteNFe,
+
+        /// <summary>
         ///     serviço destinado à recepção de mensagem do Evento de Manifestação do destinatário da NF-e
         /// </summary>
         RecepcaoEventoManifestacaoDestinatario,
@@ -155,6 +160,7 @@ namespace NFe.Classes.Servicos.Tipos
     ///     110193 - Cancelamento Insucesso na Entrega da NF-e
     ///     110750 - Conciliação Financeira da NF-e
     ///     110751 - Cancelamento Conciliação Financeira da NF-e
+    ///     112130 - Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor (Extravio de Transporte)
     ///     210200 – Confirmação da Operação
     ///     210210 – Ciência da Emissão
     ///     210220 – Desconhecimento da Operação
@@ -231,6 +237,13 @@ namespace NFe.Classes.Servicos.Tipos
         [Description("Cancelamento Conciliação Financeira")]
         [XmlEnum("110751")]
         TeNfeCancConciliacaoFinanceiraNFe = 110751,
+
+        /// <summary>
+        /// 112130 - Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor (Extravio de Transporte)
+        /// </summary>
+        [Description("Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor")]
+        [XmlEnum("112130")]
+        TeNfePerecimentoTransporteNFe = 112130,
 
         /// <summary>
         /// 210200 – Confirmação da Operação
