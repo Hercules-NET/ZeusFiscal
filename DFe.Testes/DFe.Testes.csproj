@@ -17,8 +17,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\DFe.Utils\DFe.Utils.csproj" />
 		<ProjectReference Include="..\NFe.Classes\NFe.Classes.csproj" />
 		<ProjectReference Include="..\NFe.Utils\NFe.Utils.csproj" />
+		<ProjectReference Include="..\NFe.Danfe.PdfClown\NFe.Danfe.PdfClown.csproj" />
 	</ItemGroup>
 
 </Project>

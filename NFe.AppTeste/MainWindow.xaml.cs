@@ -1973,14 +1973,11 @@ namespace NFe.AppTeste
                     throw new Exception("O Identificador do tipo de operação deve ser um número inteiro entre 1 e 3!");
 
                 //raizCnpj
-                var raizCnpj = Funcoes.InpuBox(this, "Administração do CSC", "Raiz do CNPJ do contribuinte que está efetuando a consulta (oito primeiros dígitos do CNPJ):");
+                var raizCnpj = Funcoes.InpuBox(this, "Administração do CSC", "Raiz do CNPJ do contribuinte que está efetuando a consulta (oito primeiras posições do CNPJ):");
                 if (string.IsNullOrEmpty(raizCnpj)) throw new Exception("A Raiz do CNPJ do contribuinte deve ser informada!");
-                long l;
-                var longo = long.TryParse(raizCnpj, out l);
-                if (!longo)
-                    throw new Exception("A Raiz do CNPJ do contribuinte deve conter apenas números!");
-                if (raizCnpj.Length != 8)
-                    throw new Exception("A Raiz do CNPJ do contribuinte deve conter 8 caracteres!");
+                //NT Conjunta 2025.001: o CNPJ pode ser alfanumérico nas 12 primeiras posições
+                if (!System.Text.RegularExpressions.Regex.IsMatch(raizCnpj, "^[0-9A-Z]{8}$"))
+                    throw new Exception("A Raiz do CNPJ do contribuinte deve conter 8 caracteres, apenas números e letras maiúsculas!");
 
                 var idCsc = "";
                 var codigoCsc = "";

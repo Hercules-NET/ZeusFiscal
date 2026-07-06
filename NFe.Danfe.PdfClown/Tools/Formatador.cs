@@ -22,7 +22,8 @@ namespace NFe.Danfe.PdfClown.Tools
         public const string FormatoNumeroNF = @"000\.000\.000";
 
         public const string CEP = @"^(\d{5})\-?(\d{3})$";
-        public const string CNPJ = @"^(\d{2})\.?(\d{3})\.?(\d{3})\/?(\d{4})\-?(\d{2})$";
+        //NT Conjunta 2025.001: CNPJ alfanumérico - 12 posições [A-Z0-9] e 2 dígitos verificadores numéricos, com a mesma máscara posicional
+        public const string CNPJ = @"^([A-Z\d]{2})\.?([A-Z\d]{3})\.?([A-Z\d]{3})\/?([A-Z\d]{4})\-?(\d{2})$";
         public const string CPF = @"^(\d{3})\.?(\d{3})\.?(\d{3})\-?(\d{2})$";
         public const string Telefone = @"^\(?(\d{2})\)?\s*(\d{4,5})\s*\-?\s*(\d{4})$";
 
