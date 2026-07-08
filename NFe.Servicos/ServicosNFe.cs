@@ -1127,7 +1127,7 @@ namespace NFe.Servicos
 
             var infEvento = new infEventoEnv
             {
-                cOrgao = Estado.AN,
+                cOrgao = Estado.SVRS,
                 tpAmb = _cFgServico.tpAmb,
                 chNFe = chaveNFe,
                 dhEvento = dhEvento ?? DateTime.Now,
