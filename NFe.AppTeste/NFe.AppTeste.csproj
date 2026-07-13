@@ -1231,6 +1231,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Schemas\e112120_v1.00.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Schemas\e112130_v1.00.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
