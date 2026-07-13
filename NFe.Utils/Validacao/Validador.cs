@@ -43,7 +43,7 @@ namespace NFe.Utils.Validacao
                 case ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe:
                     return "envEventoCancEConf_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe:
-                    return "envEvento_v1.00.xsd";
+                    return "envEventoNFe_v9.99.xsd";
                 case ServicoNFe.RecepcaoEventoEpec:
                     return "envEPEC_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoManifestacaoDestinatario:
