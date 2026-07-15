@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Schema;
 using DFe.Classes.Flags;
 using DFe.Utils;
@@ -43,7 +44,7 @@ namespace NFe.Utils.Validacao
                 case ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe:
                     return "envEventoCancEConf_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe:
-                    return "envEventoNFe_v9.99.xsd";
+                    return "envEvento_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoEpec:
                     return "envEPEC_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoManifestacaoDestinatario:
@@ -115,12 +116,38 @@ namespace NFe.Utils.Validacao
 
         public static string[] Valida(ServicoNFe servicoNFe, VersaoServico versaoServico, string stringXml, bool loteNfe = true, string pathSchema = null)
         {
-            StringBuilder falhas = new StringBuilder();
-
             if (!Directory.Exists(pathSchema))
                 throw new Exception("Diretório de Schemas não encontrado: \n" + pathSchema);
 
             string arquivoSchema = Path.Combine(pathSchema, ObterArquivoSchema(servicoNFe, versaoServico, stringXml, loteNfe));
+
+            var falhas = ValidaXmlContraSchema(stringXml, arquivoSchema);
+
+            switch (servicoNFe)
+            {
+                case ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e112130_v1.00.xsd"));
+                    break;
+            }
+
+            return falhas.ToString().Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        private static StringBuilder ValidaDetEvento(string stringXml, string arquivoSchema)
+        {
+            var detEventos = from d in XDocument.Parse(stringXml).Descendants()
+                             where d.Name.LocalName == "detEvento"
+                             select d;
+            StringBuilder sb = new StringBuilder();
+            foreach (var detEvento in detEventos)
+                sb.AppendLine(ValidaXmlContraSchema(detEvento.ToString(), arquivoSchema).ToString());
+
+            return sb;
+        }
+
+        private static StringBuilder ValidaXmlContraSchema(string stringXml, string arquivoSchema)
+        {
+            StringBuilder falhas = new StringBuilder();
 
             // Define o tipo de validação
             XmlReaderSettings cfg = new XmlReaderSettings
@@ -179,7 +206,7 @@ namespace NFe.Utils.Validacao
             if (falhas.Length > 0)
                 throw new ValidacaoSchemaException($"Ocorreu o seguinte erro durante a validação XML: {Environment.NewLine}{falhas}", stringXml);
 
-            return falhas.ToString().Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            return falhas;
         }
     }
 }
