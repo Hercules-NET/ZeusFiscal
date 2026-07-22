@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using MDFe.Classes.Informacoes;
 using MDFe.Classes.Informacoes.Evento.CorpoEvento;
 using MDFe.Classes.Informacoes.Evento.Flags;
@@ -14,13 +14,15 @@ namespace MDFe.Servicos.EventosMDFe
             string protocolo, infViagens infViagens, List<infPag> infPagamentos, MDFeConfiguracao cfgMdfe = null)
         {
             var config = cfgMdfe ?? MDFeConfiguracao.Instancia;
-            var eventoPagamento = ClassesFactory.CriaEvPagtoOperMDFe(
-                protocolo
-                , infViagens
-                , infPagamentos
-            );
-
+            var eventoPagamento = ClassesFactory.CriaEvPagtoOperMDFe(protocolo, infViagens, infPagamentos);
             return new ServicoController().Executar(mdfe, sequencia, eventoPagamento, MDFeTipoEvento.PagamentoOperacaoMDFe, config);
+        }
+
+        public MDFeRetEventoMDFe MDFeEventoPagamentoOperacao(MDFeComandoPagamentoOperacao comando, MDFeConfiguracao cfgMdfe = null)
+        {
+            var config = cfgMdfe ?? MDFeConfiguracao.Instancia;
+            var evento = ClassesFactory.CriaEvPagtoOperMDFe(comando.Protocolo, comando.InfViagens, comando.Pagamentos);
+            return new ServicoController().Executar(comando, evento, MDFeTipoEvento.PagamentoOperacaoMDFe, config);
         }
     }
 }
