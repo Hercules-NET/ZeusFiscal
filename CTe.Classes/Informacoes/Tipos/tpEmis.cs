@@ -5,6 +5,7 @@ namespace CTe.Classes.Informacoes.Tipos
     /// <summary>
     ///     Forma de emissão da CT-e
     ///     <para>1 - Emissão normal (não em contingência)</para>
+    ///     <para>3 - Regime Especial NFF</para>
     ///     <para>4 - Contingência EPEC pela SVC</para>
     ///     <para>5 - Contingência FS-DA, com impressão do DANFE em formulário de segurança</para>
     ///     <para>7 - Contingência SVC-RS (SEFAZ Virtual de Contingência do RS)</para>
@@ -14,6 +15,8 @@ namespace CTe.Classes.Informacoes.Tipos
     {
         [XmlEnum("1")]
         teNormal = 1,
+        [XmlEnum("3")]
+        teNFF = 3,
         [XmlEnum("4")]
         teEPEC = 4,
         [XmlEnum("5")]
