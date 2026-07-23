@@ -7,6 +7,8 @@ namespace NFe.Classes.Servicos.Evento
     /// </summary>
     public class gPerecimento
     {
+        private decimal _vIBS;
+        private decimal _vCBS;
         /// <summary>
         /// Corresponde ao atributo nItem do elemento det da NF-e.
         /// </summary>
@@ -17,13 +19,21 @@ namespace NFe.Classes.Servicos.Evento
         /// Valor do IBS na Nota de Fornecimento correspondente à quantidade objeto de roubo, perda, furto ou perecimento.
         /// </summary>
         [XmlElement("vIBS")]
-        public decimal vIBS { get; set; }
+        public decimal vIBS 
+        { 
+            get { return _vIBS.Arredondar(2); } 
+            set { _vIBS = value.Arredondar(2); } 
+        }
 
         /// <summary>
         /// Valor da CBS na Nota de Fornecimento correspondente à quantidade objeto de roubo, perda, furto ou perecimento.
         /// </summary>
         [XmlElement("vCBS")]
-        public decimal vCBS { get; set; }
+        public decimal vCBS
+        {
+            get { return _vCBS.Arredondar(2); }
+            set { _vCBS = value.Arredondar(2); }
+        }
 
         /// <summary>
         /// Informações de quantidade de estoque influenciadas pelo evento.
