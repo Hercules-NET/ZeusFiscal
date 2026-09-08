@@ -32,10 +32,10 @@ namespace NFe.Classes.Servicos.Evento
         /// <para>Obrigatório no evento 112130 e não informado no evento 211124.</para>
         /// </summary>
         [XmlElement("vIBS")]
-        public decimal vIBS
+        public decimal? vIBS
         {
             get { return _vIBS.GetValueOrDefault(); }
-            set { _vIBS = value.Arredondar(2); }
+            set { _vIBS = value?.Arredondar(2); }
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace NFe.Classes.Servicos.Evento
         /// <para>Obrigatório no evento 112130 e não informado no evento 211124.</para>
         /// </summary>
         [XmlElement("vCBS")]
-        public decimal vCBS
+        public decimal? vCBS
         {
             get { return _vCBS.GetValueOrDefault(); }
-            set { _vCBS = value.Arredondar(2); }
+            set { _vCBS = value?.Arredondar(2); }
         }
 
         public bool ShouldSerializevIBS()
