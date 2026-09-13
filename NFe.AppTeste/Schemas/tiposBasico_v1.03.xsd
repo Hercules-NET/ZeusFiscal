@@ -895,4 +895,13 @@ acrescentado:
 			<xs:pattern value="[0-9]\.[0-9]{6}|[1-9][0-9]\.[0-9]{6}|1[0-7][0-9]\.[0-9]{6}|180\.[0-9]{6}|-[0-9]\.[0-9]{6}|-[1-9][0-9]\.[0-9]{6}|-1[0-7][0-9]\.[0-9]{6}|-180\.[0-9]{6}"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="TRSAKeyValueType">
+		<xs:annotation>
+			<xs:documentation>Tipo que representa uma chave publica padrão RSA</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Modulus" type="xs:base64Binary"/>
+			<xs:element name="Exponent" type="xs:base64Binary"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>

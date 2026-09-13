@@ -123,7 +123,79 @@ namespace NFe.Classes.Servicos.Tipos
         /// </summary>
         NfceAdministracaoCSC,
 
-        ConsultaGtin
+        ConsultaGtin,
+
+        // Serviços da Reforma Tributária (NT 2025.002) ficam no final para não alterar o valor numérico dos membros anteriores
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Cancelamento de Evento (NT 2025.002 - Reforma Tributária)
+        /// </summary>
+        RecepcaoEventoCancelamentoEventoNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Informação de efetivo pagamento integral para liberar crédito presumido do adquirente
+        /// </summary>
+        RecepcaoEventoPagamentoIntegralNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Importação em ALC/ZFM não convertida em isenção
+        /// </summary>
+        RecepcaoEventoImportacaoAlcZfmNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Fornecimento não realizado com pagamento antecipado
+        /// </summary>
+        RecepcaoEventoFornecimentoNaoRealizadoNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Solicitação de Apropriação de crédito presumido
+        /// </summary>
+        RecepcaoEventoApropriacaoCredPresumidoNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Perecimento, Perda, Roubo ou Furto durante o Transporte contratado pelo adquirente
+        /// </summary>
+        RecepcaoEventoPerecimentoTransporteAdquirenteNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Aceite de débito na apuração por emissão de nota de crédito
+        /// </summary>
+        RecepcaoEventoAceiteDebitoNotaCreditoNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Imobilização de Item
+        /// </summary>
+        RecepcaoEventoImobilizacaoItemNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Solicitação de Apropriação de Crédito de Combustível
+        /// </summary>
+        RecepcaoEventoApropriacaoCreditoCombustivelNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Solicitação de Apropriação de Crédito para bens e serviços que dependem de atividade do adquirente
+        /// </summary>
+        RecepcaoEventoApropriacaoCreditoBensServicosNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Manifestação sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão
+        /// </summary>
+        RecepcaoEventoManifestacaoTransfCredIBSNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão
+        /// </summary>
+        RecepcaoEventoManifestacaoTransfCredCBSNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Manifestação do Fisco sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão
+        /// </summary>
+        RecepcaoEventoManifestacaoFiscoTransfCredIBSNFe,
+
+        /// <summary>
+        ///     serviço destinado à recepção de mensagem do Evento de Manifestação do Fisco sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão
+        /// </summary>
+        RecepcaoEventoManifestacaoFiscoTransfCredCBSNFe
     }
 
     /// <summary>
@@ -161,6 +233,20 @@ namespace NFe.Classes.Servicos.Tipos
     ///     110750 - Conciliação Financeira da NF-e
     ///     110751 - Cancelamento Conciliação Financeira da NF-e
     ///     112130 - Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor (Extravio de Transporte)
+    ///     110001 - Cancelamento de Evento
+    ///     112110 - Informação de efetivo pagamento integral para liberar crédito presumido do adquirente
+    ///     112120 - Importação em ALC/ZFM não convertida em isenção
+    ///     112140 - Fornecimento não realizado com pagamento antecipado
+    ///     211110 - Solicitação de Apropriação de crédito presumido
+    ///     211124 - Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente
+    ///     211128 - Aceite de débito na apuração por emissão de nota de crédito
+    ///     211130 - Imobilização de Item
+    ///     211140 - Solicitação de Apropriação de Crédito de Combustível
+    ///     211150 - Solicitação de Apropriação de Crédito para bens e serviços que dependem de atividade do adquirente
+    ///     212110 - Manifestação sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão
+    ///     212120 - Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão
+    ///     412120 - Manifestação do Fisco sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão
+    ///     412130 - Manifestação do Fisco sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão
     ///     210200 – Confirmação da Operação
     ///     210210 – Ciência da Emissão
     ///     210220 – Desconhecimento da Operação
@@ -244,6 +330,104 @@ namespace NFe.Classes.Servicos.Tipos
         [Description("Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor")]
         [XmlEnum("112130")]
         TeNfePerecimentoTransporteNFe = 112130,
+
+        /// <summary>
+        /// 110001 - Cancelamento de Evento
+        /// </summary>
+        [Description("Cancelamento de Evento")]
+        [XmlEnum("110001")]
+        TeNfeCancelamentoEvento = 110001,
+
+        /// <summary>
+        /// 112110 - Informação de efetivo pagamento integral para liberar crédito presumido do adquirente
+        /// </summary>
+        [Description("Informação de efetivo pagamento integral para liberar crédito presumido do adquirente")]
+        [XmlEnum("112110")]
+        TeNfePagamentoIntegralNFe = 112110,
+
+        /// <summary>
+        /// 112120 - Importação em ALC/ZFM não convertida em isenção
+        /// </summary>
+        [Description("Importação em ALC/ZFM não convertida em isenção")]
+        [XmlEnum("112120")]
+        TeNfeImportacaoAlcZfmNFe = 112120,
+
+        /// <summary>
+        /// 112140 - Fornecimento não realizado com pagamento antecipado
+        /// </summary>
+        [Description("Fornecimento não realizado com pagamento antecipado")]
+        [XmlEnum("112140")]
+        TeNfeFornecimentoNaoRealizadoNFe = 112140,
+
+        /// <summary>
+        /// 211110 - Solicitação de Apropriação de crédito presumido
+        /// </summary>
+        [Description("Solicitação de Apropriação de crédito presumido")]
+        [XmlEnum("211110")]
+        TeNfeApropriacaoCredPresumidoNFe = 211110,
+
+        /// <summary>
+        /// 211124 - Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente
+        /// </summary>
+        [Description("Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente")]
+        [XmlEnum("211124")]
+        TeNfePerecimentoTransporteAdquirenteNFe = 211124,
+
+        /// <summary>
+        /// 211128 - Aceite de débito na apuração por emissão de nota de crédito
+        /// </summary>
+        [Description("Aceite de débito na apuração por emissão de nota de crédito")]
+        [XmlEnum("211128")]
+        TeNfeAceiteDebitoNotaCreditoNFe = 211128,
+
+        /// <summary>
+        /// 211130 - Imobilização de Item
+        /// </summary>
+        [Description("Imobilização de Item")]
+        [XmlEnum("211130")]
+        TeNfeImobilizacaoItemNFe = 211130,
+
+        /// <summary>
+        /// 211140 - Solicitação de Apropriação de Crédito de Combustível
+        /// </summary>
+        [Description("Solicitação de Apropriação de Crédito de Combustível")]
+        [XmlEnum("211140")]
+        TeNfeApropriacaoCreditoCombustivelNFe = 211140,
+
+        /// <summary>
+        /// 211150 - Solicitação de Apropriação de Crédito para bens e serviços que dependem de atividade do adquirente
+        /// </summary>
+        [Description("Solicitação de Apropriação de Crédito para bens e serviços que dependem de atividade do adquirente")]
+        [XmlEnum("211150")]
+        TeNfeApropriacaoCreditoBensServicosNFe = 211150,
+
+        /// <summary>
+        /// 212110 - Manifestação sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão
+        /// </summary>
+        [Description("Manifestação sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão")]
+        [XmlEnum("212110")]
+        TeNfeManifestacaoTransfCredIBSNFe = 212110,
+
+        /// <summary>
+        /// 212120 - Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão
+        /// </summary>
+        [Description("Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão")]
+        [XmlEnum("212120")]
+        TeNfeManifestacaoTransfCredCBSNFe = 212120,
+
+        /// <summary>
+        /// 412120 - Manifestação do Fisco sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão
+        /// </summary>
+        [Description("Manifestação do Fisco sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão")]
+        [XmlEnum("412120")]
+        TeNfeManifestacaoFiscoTransfCredIBSNFe = 412120,
+
+        /// <summary>
+        /// 412130 - Manifestação do Fisco sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão
+        /// </summary>
+        [Description("Manifestação do Fisco sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão")]
+        [XmlEnum("412130")]
+        TeNfeManifestacaoFiscoTransfCredCBSNFe = 412130,
 
         /// <summary>
         /// 210200 – Confirmação da Operação

@@ -3,7 +3,7 @@
 namespace NFe.Classes.Servicos.Evento
 {
     /// <summary>
-    /// Informações por item da Nota de Fornecimento para o evento 112130.
+    /// Informações por item da Nota de Fornecimento (evento 112130) ou da Nota de Aquisição (evento 211124).
     /// </summary>
     public class gPerecimento
     {
@@ -16,7 +16,7 @@ namespace NFe.Classes.Servicos.Evento
         public int nItem { get; set; }
 
         /// <summary>
-        /// Valor do IBS na Nota de Fornecimento correspondente à quantidade objeto de roubo, perda, furto ou perecimento.
+        /// Valor do IBS na Nota de Fornecimento/Aquisição correspondente à quantidade objeto de roubo, perda, furto ou perecimento.
         /// </summary>
         [XmlElement("vIBS")]
         public decimal vIBS 
@@ -26,7 +26,7 @@ namespace NFe.Classes.Servicos.Evento
         }
 
         /// <summary>
-        /// Valor da CBS na Nota de Fornecimento correspondente à quantidade objeto de roubo, perda, furto ou perecimento.
+        /// Valor da CBS na Nota de Fornecimento/Aquisição correspondente à quantidade objeto de roubo, perda, furto ou perecimento.
         /// </summary>
         [XmlElement("vCBS")]
         public decimal vCBS

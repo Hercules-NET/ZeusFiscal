@@ -998,6 +998,38 @@
                             Margin="375,260,0,0" VerticalAlignment="Top" Width="177" Click="BtnPerecimentoTransporte_Click" />
                 </Grid>
             </TabItem>
+            <TabItem Header="Eventos RTC">
+                <Grid Background="White">
+                    <Button x:Name="BtnEventoCancelamentoEvento" Content="Cancelamento de Evento" HorizontalAlignment="Left"
+                            Margin="10,10,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoCancelamentoEvento_Click" />
+                    <Button x:Name="BtnEventoPagamentoIntegral" Content="Pagamento Integral Créd. Pres." HorizontalAlignment="Left"
+                            Margin="192,10,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoPagamentoIntegral_Click" />
+                    <Button x:Name="BtnEventoImportacaoAlcZfm" Content="Importação ALC/ZFM sem Isenção" HorizontalAlignment="Left"
+                            Margin="375,10,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoImportacaoAlcZfm_Click" />
+                    <Button x:Name="BtnEventoFornecimentoNaoRealizado" Content="Fornecimento Não Realizado" HorizontalAlignment="Left"
+                            Margin="10,35,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoFornecimentoNaoRealizado_Click" />
+                    <Button x:Name="BtnEventoApropriacaoCredPresumido" Content="Apropriação Créd. Presumido" HorizontalAlignment="Left"
+                            Margin="192,35,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoApropriacaoCredPresumido_Click" />
+                    <Button x:Name="BtnEventoPerecimentoTransporteAdquirente" Content="Perecimento Transp. Adquirente" HorizontalAlignment="Left"
+                            Margin="375,35,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoPerecimentoTransporteAdquirente_Click" />
+                    <Button x:Name="BtnEventoAceiteDebitoNotaCredito" Content="Aceite Débito Nota de Crédito" HorizontalAlignment="Left"
+                            Margin="10,60,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoAceiteDebitoNotaCredito_Click" />
+                    <Button x:Name="BtnEventoImobilizacaoItem" Content="Imobilização de Item" HorizontalAlignment="Left"
+                            Margin="192,60,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoImobilizacaoItem_Click" />
+                    <Button x:Name="BtnEventoApropriacaoCreditoCombustivel" Content="Apropriação Créd. Combustível" HorizontalAlignment="Left"
+                            Margin="375,60,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoApropriacaoCreditoCombustivel_Click" />
+                    <Button x:Name="BtnEventoApropriacaoCreditoBensServicos" Content="Apropriação Créd. Bens/Serviços" HorizontalAlignment="Left"
+                            Margin="10,85,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoApropriacaoCreditoBensServicos_Click" />
+                    <Button x:Name="BtnEventoManifestacaoTransfCredIBS" Content="Manif. Transf. Créd. IBS" HorizontalAlignment="Left"
+                            Margin="192,85,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoManifestacaoTransfCredIBS_Click" />
+                    <Button x:Name="BtnEventoManifestacaoTransfCredCBS" Content="Manif. Transf. Créd. CBS" HorizontalAlignment="Left"
+                            Margin="375,85,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoManifestacaoTransfCredCBS_Click" />
+                    <Button x:Name="BtnEventoManifestacaoFiscoTransfCredIBS" Content="Manif. Fisco Transf. Créd. IBS" HorizontalAlignment="Left"
+                            Margin="10,110,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoManifestacaoFiscoTransfCredIBS_Click" />
+                    <Button x:Name="BtnEventoManifestacaoFiscoTransfCredCBS" Content="Manif. Fisco Transf. Créd. CBS" HorizontalAlignment="Left"
+                            Margin="192,110,0,0" VerticalAlignment="Top" Width="177" Click="BtnEventoManifestacaoFiscoTransfCredCBS_Click" />
+                </Grid>
+            </TabItem>
 
         </TabControl>
         <TabControl Name="TabInferior" Margin="509,331,0,0">

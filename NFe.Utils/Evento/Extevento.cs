@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using DFe.Utils;
 using NFe.Classes.Servicos.Evento;
 using NFe.Classes.Servicos.Tipos;
 using NFe.Utils.Assinatura;
+using Shared.DFe.Utils;
 
 namespace NFe.Utils.Evento
 {
@@ -56,6 +60,46 @@ namespace NFe.Utils.Evento
             var assinatura = Assinador.ObterAssinatura(eventoLocal, eventoLocal.infEvento.Id, certificadoDigital, false, signatureMethodSignedXml, digestMethodReference, removerAcentos);
             eventoLocal.Signature = assinatura;
             return eventoLocal;
+        }
+
+        /// <summary>
+        ///     descEvento que o XSD do evento só aceita acentuado, indexados pela forma sem acentos.
+        ///     Os demais eventos (ex.: Carta de Correção, cujo XSD aceita as duas formas) seguem tendo os acentos removidos.
+        /// </summary>
+        private static readonly Dictionary<string, string> DescEventoSomenteComAcento = new[]
+        {
+            NFeTipoEvento.TeNfeCancConciliacaoFinanceiraNFe,
+            NFeTipoEvento.TeNfePagamentoIntegralNFe,
+            NFeTipoEvento.TeNfeImportacaoAlcZfmNFe,
+            NFeTipoEvento.TeNfeFornecimentoNaoRealizadoNFe,
+            NFeTipoEvento.TeNfeApropriacaoCredPresumidoNFe,
+            NFeTipoEvento.TeNfeAceiteDebitoNotaCreditoNFe,
+            NFeTipoEvento.TeNfeImobilizacaoItemNFe,
+            NFeTipoEvento.TeNfeApropriacaoCreditoCombustivelNFe,
+            NFeTipoEvento.TeNfeApropriacaoCreditoBensServicosNFe,
+            NFeTipoEvento.TeNfeManifestacaoTransfCredIBSNFe,
+            NFeTipoEvento.TeNfeManifestacaoTransfCredCBSNFe,
+            NFeTipoEvento.TeNfeManifestacaoFiscoTransfCredIBSNFe,
+            NFeTipoEvento.TeNfeManifestacaoFiscoTransfCredCBSNFe
+        }.Select(t => t.Descricao()).ToDictionary(d => d.RemoverAcentos(), d => d);
+
+        /// <summary>
+        ///     Remove os acentos do XML, mantendo o descEvento dos eventos cujo XSD só aceita a descrição acentuada
+        ///     (ex.: "Imobilização de Item")
+        /// </summary>
+        public static string RemoverAcentosPreservandoDescEvento(this string xml)
+        {
+            var semAcentos = xml.RemoverAcentos();
+            if (string.IsNullOrEmpty(semAcentos) || semAcentos.IndexOf("<descEvento>", StringComparison.Ordinal) < 0)
+                return semAcentos;
+
+            return Regex.Replace(semAcentos, "<descEvento>([^<]*)</descEvento>", m =>
+            {
+                string descricao;
+                return DescEventoSomenteComAcento.TryGetValue(m.Groups[1].Value, out descricao)
+                    ? "<descEvento>" + descricao + "</descEvento>"
+                    : m.Value;
+            });
         }
     }
 }

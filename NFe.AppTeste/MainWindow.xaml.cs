@@ -746,6 +746,689 @@ namespace NFe.AppTeste
             }
         }
 
+
+        #region Eventos da Reforma Tributária
+
+        /// <summary>
+        /// Solicita os dados comuns a todos os eventos da Reforma Tributária: lote, sequência, chave e autor
+        /// </summary>
+        private void LerDadosEventoRtc(string titulo, out int idlote, out int sequenciaEvento, out string chave,
+            out string cpfcnpj)
+        {
+            var idloteStr = Funcoes.InpuBox(this, titulo, "Identificador de controle do Lote de envio:", "1");
+            if (string.IsNullOrEmpty(idloteStr)) throw new Exception("A Id do Lote deve ser informada!");
+
+            var sequenciaEventoStr = Funcoes.InpuBox(this, titulo, "Número sequencial do evento:", "1");
+            if (string.IsNullOrEmpty(sequenciaEventoStr))
+                throw new Exception("O número sequencial deve ser informado!");
+
+            var chaveStr = Funcoes.InpuBox(this, titulo, "Chave da NFe:",
+                "35240311656919000154550750000008281647961399");
+            if (string.IsNullOrEmpty(chaveStr)) throw new Exception("A Chave deve ser informada!");
+            if (chaveStr.Length != 44) throw new Exception("Chave deve conter 44 caracteres!");
+
+            idlote = Convert.ToInt32(idloteStr);
+            sequenciaEvento = Convert.ToInt32(sequenciaEventoStr);
+            chave = chaveStr;
+            cpfcnpj = string.IsNullOrEmpty(_configuracoes.Emitente.CNPJ)
+                ? _configuracoes.Emitente.CPF
+                : _configuracoes.Emitente.CNPJ;
+        }
+
+        private string LerTextoEventoRtc(string titulo, string descricao, string valorPadrao)
+        {
+            var valor = Funcoes.InpuBox(this, titulo, descricao, valorPadrao);
+            if (string.IsNullOrEmpty(valor)) throw new Exception("O campo \"" + descricao + "\" deve ser informado!");
+            return valor;
+        }
+
+        private int LerInteiroEventoRtc(string titulo, string descricao, string valorPadrao)
+        {
+            return Convert.ToInt32(LerTextoEventoRtc(titulo, descricao, valorPadrao));
+        }
+
+        private decimal LerDecimalEventoRtc(string titulo, string descricao, string valorPadrao)
+        {
+            return Convert.ToDecimal(LerTextoEventoRtc(titulo, descricao, valorPadrao));
+        }
+
+        private int LerIndicadorEventoRtc(string titulo, string descricao, string valorPadrao)
+        {
+            var indicador = LerInteiroEventoRtc(titulo, descricao, valorPadrao);
+            if (indicador != 0 && indicador != 1)
+                throw new Exception("O indicador deve ser 0 (Não Aceite) ou 1 (Aceite)!");
+            return indicador;
+        }
+
+        private void BtnEventoCancelamentoEvento_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Cancelamento de Evento";
+
+            try
+            {
+                #region Cancelamento de Evento (110001)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var codigoEvento = LerTextoEventoRtc(titulo, "Código do evento a ser cancelado:", "211130");
+                if (codigoEvento.Length != 6)
+                    throw new Exception("O Código do Evento a ser cancelado deve conter 6 caracteres!");
+
+                var tpEventoAut = (NFeTipoEvento)int.Parse(codigoEvento);
+                if (!Enum.IsDefined(typeof(NFeTipoEvento), tpEventoAut))
+                    throw new Exception("O Código do Evento a ser cancelado é inválido!");
+
+                var nProtEvento = LerTextoEventoRtc(titulo, "Protocolo de Autorização do Evento a ser cancelado:", "");
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoCancelamentoEvento(idlote, sequenciaEvento, cpfcnpj, chave,
+                    tpEventoAut, nProtEvento);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoPagamentoIntegral_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Pagamento Integral Créd. Presumido";
+
+            try
+            {
+                #region Informação de efetivo pagamento integral para liberar crédito presumido do adquirente (112110)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoPagamentoIntegral(idlote, sequenciaEvento, cpfcnpj, chave);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoImportacaoAlcZfm_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Importação ALC/ZFM sem Isenção";
+
+            try
+            {
+                #region Importação em ALC/ZFM não convertida em isenção (112120)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var consumo = new Classes.Servicos.Evento.gConsumo
+                {
+                    nItem = LerInteiroEventoRtc(titulo, "Número do item da NFe (nItem):", "1"),
+                    vIBS = LerDecimalEventoRtc(titulo, "Valor do IBS do item:", "1"),
+                    vCBS = LerDecimalEventoRtc(titulo, "Valor da CBS do item:", "1"),
+                    gControleEstoque = new Classes.Servicos.Evento.gControleEstoqueConsumo
+                    {
+                        qtde = LerDecimalEventoRtc(titulo,
+                            "Quantidade que não atendeu aos requisitos para a conversão em isenção:", "1"),
+                        unidade = LerTextoEventoRtc(titulo, "Unidade relativa à quantidade:", "UN")
+                    }
+                };
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoImportacaoAlcZfm(idlote, sequenciaEvento, cpfcnpj, chave,
+                    new List<Classes.Servicos.Evento.gConsumo> { consumo });
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoFornecimentoNaoRealizado_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Fornecimento Não Realizado";
+
+            try
+            {
+                #region Fornecimento não realizado com pagamento antecipado (112140)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var itemNaoFornecido = new Classes.Servicos.Evento.gItemNaoFornecido
+                {
+                    nItem = LerInteiroEventoRtc(titulo, "Número do item da NFe (nItem):", "1"),
+                    vIBS = LerDecimalEventoRtc(titulo, "Valor do IBS do item:", "1"),
+                    vCBS = LerDecimalEventoRtc(titulo, "Valor da CBS do item:", "1"),
+                    gControleEstoque = new Classes.Servicos.Evento.gControleEstoqueItemNaoFornecido
+                    {
+                        qNaoFornecida = LerDecimalEventoRtc(titulo, "Quantidade que não foi fornecida:", "1"),
+                        uNaoFornecida = LerTextoEventoRtc(titulo, "Unidade relativa à quantidade:", "UN")
+                    }
+                };
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoFornecimentoNaoRealizado(idlote, sequenciaEvento, cpfcnpj, chave,
+                    new List<Classes.Servicos.Evento.gItemNaoFornecido> { itemNaoFornecido });
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoApropriacaoCredPresumido_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Apropriação Créd. Presumido";
+
+            try
+            {
+                #region Solicitação de Apropriação de crédito presumido (211110)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var codigoAutor = LerInteiroEventoRtc(titulo,
+                    "Autor do evento (1=Empresa Emitente; 2=Empresa Destinatária):", "2");
+                if (codigoAutor != 1 && codigoAutor != 2)
+                    throw new Exception("O autor do evento deve ser 1 ou 2!");
+
+                var credPres = new Classes.Servicos.Evento.gCredPresOper
+                {
+                    nItem = LerInteiroEventoRtc(titulo, "Número do item da NFe (nItem):", "1"),
+                    vBCCredPres = LerDecimalEventoRtc(titulo, "Valor da base de cálculo do item:", "1000"),
+                    cCredPres = LerTextoEventoRtc(titulo, "Código de Classificação do Crédito presumido:", "01"),
+                };
+
+                var informaIbs = LerIndicadorEventoRtc(titulo, "Informar crédito presumido do IBS? (0=Não; 1=Sim):", "1");
+                if (informaIbs == 1)
+                    credPres.gIBSCredPres = new Classes.Servicos.Evento.gCredPresTributo
+                    {
+                        pCredPres = LerDecimalEventoRtc(titulo, "Percentual do Crédito Presumido do IBS:", "10"),
+                        vCredPres = LerDecimalEventoRtc(titulo, "Valor do Crédito Presumido do IBS:", "100")
+                    };
+
+                var informaCbs = LerIndicadorEventoRtc(titulo, "Informar crédito presumido da CBS? (0=Não; 1=Sim):", "1");
+                if (informaCbs == 1)
+                    credPres.gCBSCredPres = new Classes.Servicos.Evento.gCredPresTributo
+                    {
+                        pCredPres = LerDecimalEventoRtc(titulo, "Percentual do Crédito Presumido da CBS:", "10"),
+                        vCredPres = LerDecimalEventoRtc(titulo, "Valor do Crédito Presumido da CBS:", "100")
+                    };
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoApropriacaoCredPresumido(idlote, sequenciaEvento, cpfcnpj, chave,
+                    new List<Classes.Servicos.Evento.gCredPresOper> { credPres },
+                    (Classes.Servicos.Evento.TipoAutor)codigoAutor);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoPerecimentoTransporteAdquirente_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Perecimento Transp. Adquirente";
+
+            try
+            {
+                #region Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente (211124)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                /* Neste evento o grupo gControleEstoque não possui vIBS/vCBS, por isso não são informados */
+                var perecimento = new Classes.Servicos.Evento.gPerecimento
+                {
+                    nItem = LerInteiroEventoRtc(titulo, "Número do item da NFe (nItem):", "1"),
+                    vIBS = LerDecimalEventoRtc(titulo, "Valor do IBS do item:", "1"),
+                    vCBS = LerDecimalEventoRtc(titulo, "Valor da CBS do item:", "1"),
+                    gControleEstoque = new Classes.Servicos.Evento.gControleEstoque
+                    {
+                        qPerecimento = LerDecimalEventoRtc(titulo,
+                            "Quantidade objeto de roubo, perda, furto ou perecimento:", "1"),
+                        uPerecimento = LerTextoEventoRtc(titulo, "Unidade relativa à quantidade:", "UN")
+                    }
+                };
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoPerecimentoTransporteAdquirente(idlote, sequenciaEvento, cpfcnpj,
+                    chave, new List<Classes.Servicos.Evento.gPerecimento> { perecimento });
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoAceiteDebitoNotaCredito_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Aceite Débito Nota de Crédito";
+
+            try
+            {
+                #region Aceite de débito na apuração por emissão de nota de crédito (211128)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var indAceitacao = (Classes.Servicos.Evento.IndicadorAceitacao)LerIndicadorEventoRtc(titulo,
+                    "Indicador de aceitação (0=Não Aceite; 1=Aceite):", "1");
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoAceiteDebitoNotaCredito(idlote, sequenciaEvento, cpfcnpj, chave,
+                    indAceitacao);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoImobilizacaoItem_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Imobilização de Item";
+
+            try
+            {
+                #region Imobilização de Item (211130)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var imobilizacao = new Classes.Servicos.Evento.gImobilizacao
+                {
+                    nItem = LerInteiroEventoRtc(titulo, "Número do item da NFe (nItem):", "1"),
+                    vIBS = LerDecimalEventoRtc(titulo, "Valor do IBS relativo à imobilização:", "1"),
+                    vCBS = LerDecimalEventoRtc(titulo, "Valor da CBS relativo à imobilização:", "1"),
+                    gControleEstoque = new Classes.Servicos.Evento.gControleEstoqueImobilizacao
+                    {
+                        qImobilizado = LerDecimalEventoRtc(titulo, "Quantidade do item a ser imobilizado:", "1"),
+                        uImobilizado = LerTextoEventoRtc(titulo, "Unidade relativa à quantidade:", "UN")
+                    }
+                };
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoImobilizacaoItem(idlote, sequenciaEvento, cpfcnpj, chave,
+                    new List<Classes.Servicos.Evento.gImobilizacao> { imobilizacao });
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoApropriacaoCreditoCombustivel_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Apropriação Créd. Combustível";
+
+            try
+            {
+                #region Solicitação de Apropriação de Crédito de Combustível (211140)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var consumoComb = new Classes.Servicos.Evento.gConsumoComb
+                {
+                    nItem = LerInteiroEventoRtc(titulo, "Número do item da NFe (nItem):", "1"),
+                    vIBS = LerDecimalEventoRtc(titulo, "Valor do IBS relativo ao consumo de combustível:", "1"),
+                    vCBS = LerDecimalEventoRtc(titulo, "Valor da CBS relativo ao consumo de combustível:", "1"),
+                    gControleEstoque = new Classes.Servicos.Evento.gControleEstoqueConsumoComb
+                    {
+                        qComb = LerDecimalEventoRtc(titulo, "Quantidade de consumo do item:", "1"),
+                        uComb = LerTextoEventoRtc(titulo, "Unidade relativa à quantidade:", "LT")
+                    }
+                };
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoApropriacaoCreditoCombustivel(idlote, sequenciaEvento, cpfcnpj,
+                    chave, new List<Classes.Servicos.Evento.gConsumoComb> { consumoComb });
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoApropriacaoCreditoBensServicos_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Apropriação Créd. Bens/Serviços";
+
+            try
+            {
+                #region Solicitação de Apropriação de Crédito para bens e serviços que dependem de atividade do adquirente (211150)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var credito = new Classes.Servicos.Evento.gCredito
+                {
+                    nItem = LerInteiroEventoRtc(titulo, "Número do item da NFe (nItem):", "1"),
+                    vCredIBS = LerDecimalEventoRtc(titulo, "Valor do crédito de IBS a ser apropriado:", "1"),
+                    vCredCBS = LerDecimalEventoRtc(titulo, "Valor do crédito de CBS a ser apropriado:", "1")
+                };
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoApropriacaoCreditoBensServicos(idlote, sequenciaEvento, cpfcnpj,
+                    chave, new List<Classes.Servicos.Evento.gCredito> { credito });
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoManifestacaoTransfCredIBS_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Manif. Transf. Créd. IBS";
+
+            try
+            {
+                #region Manifestação sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão (212110)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var indAceitacao = (Classes.Servicos.Evento.IndicadorAceitacao)LerIndicadorEventoRtc(titulo,
+                    "Indicador de aceitação (0=Não Aceite; 1=Aceite):", "1");
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoManifestacaoTransfCredIBS(idlote, sequenciaEvento, cpfcnpj, chave,
+                    indAceitacao);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoManifestacaoTransfCredCBS_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Manif. Transf. Créd. CBS";
+
+            try
+            {
+                #region Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão (212120)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var indAceitacao = (Classes.Servicos.Evento.IndicadorAceitacao)LerIndicadorEventoRtc(titulo,
+                    "Indicador de aceitação (0=Não Aceite; 1=Aceite):", "1");
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoManifestacaoTransfCredCBS(idlote, sequenciaEvento, cpfcnpj, chave,
+                    indAceitacao);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoManifestacaoFiscoTransfCredIBS_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Manif. Fisco Transf. Créd. IBS";
+
+            try
+            {
+                #region Manifestação do Fisco sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão (412120)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var indDeferimento = (Classes.Servicos.Evento.IndicadorDeferimento)LerIndicadorEventoRtc(titulo,
+                    "Indicador de deferimento (0=Não Aceite; 1=Aceite):", "1");
+
+                var codigoMotivo = LerInteiroEventoRtc(titulo,
+                    "Motivo (1=Falta de manifestação de todas as sucessoras; 2=Outros):", "2");
+                if (codigoMotivo != 1 && codigoMotivo != 2)
+                    throw new Exception("O motivo deve ser 1 ou 2!");
+
+                var xMotivo = LerTextoEventoRtc(titulo, "Descrição do motivo:", "Motivo da manifestação do fisco");
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredIBS(idlote, sequenciaEvento, cpfcnpj,
+                    chave, indDeferimento, (Classes.Servicos.Evento.MotivoDeferimento)codigoMotivo, xMotivo);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        private void BtnEventoManifestacaoFiscoTransfCredCBS_Click(object sender, RoutedEventArgs e)
+        {
+            const string titulo = "Manif. Fisco Transf. Créd. CBS";
+
+            try
+            {
+                #region Manifestação do Fisco sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão (412130)
+
+                int idlote, sequenciaEvento;
+                string chave, cpfcnpj;
+                LerDadosEventoRtc(titulo, out idlote, out sequenciaEvento, out chave, out cpfcnpj);
+
+                var indDeferimento = (Classes.Servicos.Evento.IndicadorDeferimento)LerIndicadorEventoRtc(titulo,
+                    "Indicador de deferimento (0=Não Aceite; 1=Aceite):", "1");
+
+                var codigoMotivo = LerInteiroEventoRtc(titulo,
+                    "Motivo (1=Falta de manifestação de todas as sucessoras; 2=Outros):", "2");
+                if (codigoMotivo != 1 && codigoMotivo != 2)
+                    throw new Exception("O motivo deve ser 1 ou 2!");
+
+                var xMotivo = LerTextoEventoRtc(titulo, "Descrição do motivo:", "Motivo da manifestação do fisco");
+
+                var servicoNFe = new ServicosNFe(_configuracoes.CfgServico);
+                var retorno = servicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredCBS(idlote, sequenciaEvento, cpfcnpj,
+                    chave, indDeferimento, (Classes.Servicos.Evento.MotivoDeferimento)codigoMotivo, xMotivo);
+
+                TrataRetorno(retorno);
+
+                #endregion
+            }
+            catch (ComunicacaoException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (ValidacaoSchemaException ex)
+            {
+                Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(ex.Message))
+                    Funcoes.Mensagem(ex.Message, "Erro", MessageBoxButton.OK);
+            }
+        }
+
+        #endregion
+
         private void BtnConsultaXml_Click(object sender, RoutedEventArgs e)
         {
             try

@@ -45,6 +45,21 @@ namespace NFe.Utils.Validacao
                     return "envEventoCancEConf_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe:
                     return "envEvento_v1.00.xsd";
+                case ServicoNFe.RecepcaoEventoCancelamentoEventoNFe:
+                case ServicoNFe.RecepcaoEventoPagamentoIntegralNFe:
+                case ServicoNFe.RecepcaoEventoImportacaoAlcZfmNFe:
+                case ServicoNFe.RecepcaoEventoFornecimentoNaoRealizadoNFe:
+                case ServicoNFe.RecepcaoEventoApropriacaoCredPresumidoNFe:
+                case ServicoNFe.RecepcaoEventoPerecimentoTransporteAdquirenteNFe:
+                case ServicoNFe.RecepcaoEventoAceiteDebitoNotaCreditoNFe:
+                case ServicoNFe.RecepcaoEventoImobilizacaoItemNFe:
+                case ServicoNFe.RecepcaoEventoApropriacaoCreditoCombustivelNFe:
+                case ServicoNFe.RecepcaoEventoApropriacaoCreditoBensServicosNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoTransfCredIBSNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoTransfCredCBSNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredIBSNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredCBSNFe:
+                    return "envEvento_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoEpec:
                     return "envEPEC_v1.00.xsd";
                 case ServicoNFe.RecepcaoEventoManifestacaoDestinatario:
@@ -127,6 +142,48 @@ namespace NFe.Utils.Validacao
             {
                 case ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe:
                     falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e112130_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoCancelamentoEventoNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e110001_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoPagamentoIntegralNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e112110_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoImportacaoAlcZfmNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e112120_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoFornecimentoNaoRealizadoNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e112140_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoApropriacaoCredPresumidoNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e211110_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoPerecimentoTransporteAdquirenteNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e211124_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoAceiteDebitoNotaCreditoNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e211128_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoImobilizacaoItemNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e211130_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoApropriacaoCreditoCombustivelNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e211140_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoApropriacaoCreditoBensServicosNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e211150_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoManifestacaoTransfCredIBSNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e212110_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoManifestacaoTransfCredCBSNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e212120_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredIBSNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e412120_v1.00.xsd"));
+                    break;
+                case ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredCBSNFe:
+                    falhas = ValidaDetEvento(stringXml, Path.Combine(pathSchema, "e412130_v1.00.xsd"));
                     break;
             }
 

@@ -11,6 +11,7 @@ namespace NFe.Classes.Servicos.Evento
     ///     3 - Empresa;
     ///     5 - Fisco;
     ///     6 - RFB;
+    ///     8 - Empresa Sucessora;
     ///     9 - Outros Órgãos.
     /// </summary>
     public enum TipoAutor
@@ -49,6 +50,13 @@ namespace NFe.Classes.Servicos.Evento
         [Description("RFB")]
         [XmlEnum("6")]
         taRFB = 6,
+
+        /// <summary>
+        /// 8 - Empresa Sucessora
+        /// </summary>
+        [Description("Empresa Sucessora")]
+        [XmlEnum("8")]
+        taEmpresaSucessora = 8,
 
         /// <summary>
         /// 9 - Outros Órgãos
@@ -95,5 +103,89 @@ namespace NFe.Classes.Servicos.Evento
         [Description("Outros")]
         [XmlEnum("4")]
         Outros = 4
+    }
+
+    /// <summary>
+    ///     Indicador de efetiva quitação do pagamento integral da operação referente à NF-e referenciada.
+    ///     Nota:
+    ///     1 - Quitado;
+    /// </summary>
+    public enum IndicadorQuitacao
+    {
+        /// <summary>
+        /// 1 - Quitado
+        /// </summary>
+        [Description("Quitado")]
+        [XmlEnum("1")]
+        Quitado = 1
+    }
+
+    /// <summary>
+    ///     Indicador de aceitação.
+    ///     Nota:
+    ///     0 - Não Aceite;
+    ///     1 - Aceite;
+    /// </summary>
+    public enum IndicadorAceitacao
+    {
+        /// <summary>
+        /// 0 - Não Aceite
+        /// </summary>
+        [Description("Não Aceite")]
+        [XmlEnum("0")]
+        NaoAceite = 0,
+
+        /// <summary>
+        /// 1 - Aceite
+        /// </summary>
+        [Description("Aceite")]
+        [XmlEnum("1")]
+        Aceite = 1
+    }
+
+    /// <summary>
+    ///     Indicador de deferimento do fisco sobre o pedido de transferência de crédito.
+    ///     Nota:
+    ///     0 - Não Aceite;
+    ///     1 - Aceite;
+    /// </summary>
+    public enum IndicadorDeferimento
+    {
+        /// <summary>
+        /// 0 - Não Aceite
+        /// </summary>
+        [Description("Não Aceite")]
+        [XmlEnum("0")]
+        NaoAceite = 0,
+
+        /// <summary>
+        /// 1 - Aceite
+        /// </summary>
+        [Description("Aceite")]
+        [XmlEnum("1")]
+        Aceite = 1
+    }
+
+    /// <summary>
+    ///     Motivo da manifestação do fisco sobre o pedido de transferência de crédito.
+    ///     Nota:
+    ///     1 - Falta de manifestação de todas as sucessoras;
+    ///     2 - Outros;
+    /// </summary>
+    public enum MotivoDeferimento
+    {
+        /// <summary>
+        /// 1 - Falta de manifestação de todas as sucessoras
+        /// </summary>
+        [Description("Falta de manifestação de todas as sucessoras")]
+        [XmlEnum("1")]
+        FaltaManifestacaoSucessoras = 1,
+
+        /// <summary>
+        /// 2 - Outros
+        /// </summary>
+        [Description("Outros")]
+        [XmlEnum("2")]
+        Outros = 2
     }
 }

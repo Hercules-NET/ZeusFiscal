@@ -123,6 +123,25 @@ namespace NFe.Utils.Enderecos
 
             var eventoPerecimentoTransporteNFe = new[] { ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe };
 
+            // Eventos da Reforma Tributária (NT 2025.002), autorizados na SVRS
+            var eventosRTC = new[]
+            {
+                ServicoNFe.RecepcaoEventoCancelamentoEventoNFe,
+                ServicoNFe.RecepcaoEventoPagamentoIntegralNFe,
+                ServicoNFe.RecepcaoEventoImportacaoAlcZfmNFe,
+                ServicoNFe.RecepcaoEventoFornecimentoNaoRealizadoNFe,
+                ServicoNFe.RecepcaoEventoApropriacaoCredPresumidoNFe,
+                ServicoNFe.RecepcaoEventoPerecimentoTransporteAdquirenteNFe,
+                ServicoNFe.RecepcaoEventoAceiteDebitoNotaCreditoNFe,
+                ServicoNFe.RecepcaoEventoImobilizacaoItemNFe,
+                ServicoNFe.RecepcaoEventoApropriacaoCreditoCombustivelNFe,
+                ServicoNFe.RecepcaoEventoApropriacaoCreditoBensServicosNFe,
+                ServicoNFe.RecepcaoEventoManifestacaoTransfCredIBSNFe,
+                ServicoNFe.RecepcaoEventoManifestacaoTransfCredCBSNFe,
+                ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredIBSNFe,
+                ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredCBSNFe
+            };
+
             var hom = TipoAmbiente.Homologacao;
 
             var prod = TipoAmbiente.Producao;
@@ -1632,6 +1651,10 @@ namespace NFe.Utils.Enderecos
                             //Perecimento, perda, roubo ou furto durante o transporte
                             addServico(eventoPerecimentoTransporteNFe, versao1, TipoAmbiente.Producao, emissao, estado, modelo, "https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx");
                             addServico(eventoPerecimentoTransporteNFe, versao1, TipoAmbiente.Homologacao, emissao, estado, modelo, "https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx");
+
+                            //Eventos da Reforma Tributária (NT 2025.002)
+                            addServico(eventosRTC, versao1, TipoAmbiente.Producao, emissao, estado, modelo, "https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx");
+                            addServico(eventosRTC, versao1, TipoAmbiente.Homologacao, emissao, estado, modelo, "https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx");
                         }
                     }
                 }
@@ -1675,6 +1698,21 @@ namespace NFe.Utils.Enderecos
                     return cfgServico.VersaoRecepcaoEventoConciliacaoFinanceira;
                 case ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe:
                     return cfgServico.VersaoRecepcaoEventoPerecimentoTransporte;
+                case ServicoNFe.RecepcaoEventoCancelamentoEventoNFe:
+                case ServicoNFe.RecepcaoEventoPagamentoIntegralNFe:
+                case ServicoNFe.RecepcaoEventoImportacaoAlcZfmNFe:
+                case ServicoNFe.RecepcaoEventoFornecimentoNaoRealizadoNFe:
+                case ServicoNFe.RecepcaoEventoApropriacaoCredPresumidoNFe:
+                case ServicoNFe.RecepcaoEventoPerecimentoTransporteAdquirenteNFe:
+                case ServicoNFe.RecepcaoEventoAceiteDebitoNotaCreditoNFe:
+                case ServicoNFe.RecepcaoEventoImobilizacaoItemNFe:
+                case ServicoNFe.RecepcaoEventoApropriacaoCreditoCombustivelNFe:
+                case ServicoNFe.RecepcaoEventoApropriacaoCreditoBensServicosNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoTransfCredIBSNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoTransfCredCBSNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredIBSNFe:
+                case ServicoNFe.RecepcaoEventoManifestacaoFiscoTransfCredCBSNFe:
+                    return cfgServico.VersaoRecepcaoEventoRTC;
                 case ServicoNFe.RecepcaoEventoEpec:
                     return cfgServico.VersaoRecepcaoEventoEpec;
                 case ServicoNFe.RecepcaoEventoManifestacaoDestinatario:

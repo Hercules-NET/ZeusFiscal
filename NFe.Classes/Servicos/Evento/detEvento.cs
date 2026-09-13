@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using DFe.Classes.Entidades;
 using DFe.Utils;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
+using NFe.Classes.Servicos.Tipos;
 using Shared.NFe.Classes.Servicos.Evento;
 
 namespace NFe.Classes.Servicos.Evento
@@ -135,6 +136,21 @@ namespace NFe.Classes.Servicos.Evento
         {
             return ItensAverbados != null;
         }
+        #endregion
+
+        #region Cancelamento de Evento
+
+        /// <summary>
+        ///     P23 - Código do evento autorizado a ser cancelado. Por este evento poderão ser cancelados todos os
+        ///     Eventos previstos na NT 2025.002, exceto o próprio Evento de Cancelamento (110001).
+        /// </summary>
+        public NFeTipoEvento? tpEventoAut { get; set; }
+
+        public bool ShouldSerializetpEventoAut()
+        {
+            return tpEventoAut.HasValue;
+        }
+
         #endregion
 
         #region Cancelamento Insucesso/Comprovante de Entrega NFe
@@ -297,10 +313,10 @@ namespace NFe.Classes.Servicos.Evento
 
         #endregion
 
-        #region Perecimento, perda, roubo ou furto durante o transporte
+        #region Perecimento, perda, roubo ou furto durante o transporte (112130 e 211124)
 
         /// <summary>
-        /// Informações por item da Nota de Fornecimento para o evento 112130.
+        /// Informações por item da Nota de Fornecimento (evento 112130) ou da Nota de Aquisição (evento 211124).
         /// </summary>
         [XmlElement("gPerecimento")]
         public List<gPerecimento> gPerecimento { get; set; }
@@ -309,6 +325,159 @@ namespace NFe.Classes.Servicos.Evento
         {
             return gPerecimento != null &&
                    gPerecimento.Count > 0;
+        }
+
+        #endregion
+
+        #region Informação de efetivo pagamento integral para liberar crédito presumido do adquirente (112110)
+
+        /// <summary>
+        /// P23 - Indicador de efetiva quitação do pagamento integral da operação referente à NF-e referenciada.
+        /// </summary>
+        public IndicadorQuitacao? indQuitacao { get; set; }
+
+        public bool ShouldSerializeindQuitacao()
+        {
+            return indQuitacao.HasValue;
+        }
+
+        #endregion
+
+        #region Importação em ALC/ZFM não convertida em isenção (112120)
+
+        /// <summary>
+        /// P23 - Informações por item da NF-e de importação.
+        /// </summary>
+        [XmlElement("gConsumo")]
+        public List<gConsumo> gConsumo { get; set; }
+
+        public bool ShouldSerializegConsumo()
+        {
+            return gConsumo != null &&
+                   gConsumo.Count > 0;
+        }
+
+        #endregion
+
+        #region Fornecimento não realizado com pagamento antecipado (112140)
+
+        /// <summary>
+        /// P23 - Informações por item da Nota de Pagamento antecipado.
+        /// </summary>
+        [XmlElement("gItemNaoFornecido")]
+        public List<gItemNaoFornecido> gItemNaoFornecido { get; set; }
+
+        public bool ShouldSerializegItemNaoFornecido()
+        {
+            return gItemNaoFornecido != null &&
+                   gItemNaoFornecido.Count > 0;
+        }
+
+        #endregion
+
+        #region Solicitação de Apropriação de crédito presumido (211110)
+
+        /// <summary>
+        /// P23 - Informações de crédito presumido por item.
+        /// </summary>
+        [XmlElement("gCredPresOper")]
+        public List<gCredPresOper> gCredPresOper { get; set; }
+
+        public bool ShouldSerializegCredPresOper()
+        {
+            return gCredPresOper != null &&
+                   gCredPresOper.Count > 0;
+        }
+
+        #endregion
+
+        #region Aceite de débito na apuração / Manifestação sobre transferência de crédito (211128, 212110 e 212120)
+
+        /// <summary>
+        /// P23 - Indicador de concordância/aceitação.
+        /// </summary>
+        public IndicadorAceitacao? indAceitacao { get; set; }
+
+        public bool ShouldSerializeindAceitacao()
+        {
+            return indAceitacao.HasValue;
+        }
+
+        #endregion
+
+        #region Imobilização de Item (211130)
+
+        /// <summary>
+        /// P23 - Informações de itens integrados ao ativo imobilizado.
+        /// </summary>
+        [XmlElement("gImobilizacao")]
+        public List<gImobilizacao> gImobilizacao { get; set; }
+
+        public bool ShouldSerializegImobilizacao()
+        {
+            return gImobilizacao != null &&
+                   gImobilizacao.Count > 0;
+        }
+
+        #endregion
+
+        #region Solicitação de Apropriação de Crédito de Combustível (211140)
+
+        /// <summary>
+        /// P23 - Informações de consumo de combustíveis.
+        /// </summary>
+        [XmlElement("gConsumoComb")]
+        public List<gConsumoComb> gConsumoComb { get; set; }
+
+        public bool ShouldSerializegConsumoComb()
+        {
+            return gConsumoComb != null &&
+                   gConsumoComb.Count > 0;
+        }
+
+        #endregion
+
+        #region Solicitação de Apropriação de Crédito para bens e serviços que dependem de atividade do adquirente (211150)
+
+        /// <summary>
+        /// P23 - Informações de crédito.
+        /// </summary>
+        [XmlElement("gCredito")]
+        public List<gCredito> gCredito { get; set; }
+
+        public bool ShouldSerializegCredito()
+        {
+            return gCredito != null &&
+                   gCredito.Count > 0;
+        }
+
+        #endregion
+
+        #region Manifestação do Fisco sobre Pedido de Transferência de Crédito (412120 e 412130)
+
+        /// <summary>
+        /// P23 - Indicador de deferimento do valor de transferência para a empresa que emitiu a nota referenciada.
+        /// </summary>
+        public IndicadorDeferimento? indDeferimento { get; set; }
+
+        /// <summary>
+        /// P24 - Motivo da manifestação do fisco.
+        /// </summary>
+        public MotivoDeferimento? cMotivo { get; set; }
+
+        /// <summary>
+        /// P25 - Descrição do motivo da manifestação do fisco.
+        /// </summary>
+        public string xMotivo { get; set; }
+
+        public bool ShouldSerializeindDeferimento()
+        {
+            return indDeferimento.HasValue;
+        }
+
+        public bool ShouldSerializecMotivo()
+        {
+            return cMotivo.HasValue;
         }
 
         #endregion
