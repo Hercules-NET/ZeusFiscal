@@ -4,7 +4,7 @@ using System.Security.Cryptography.Xml;
 using System.Xml;
 using DFe.Utils;
 using DFe.Utils.Assinatura;
-using Shared.DFe.Utils;
+using NFe.Utils.Evento;
 using Signature = DFe.Classes.Assinatura.Signature;
 
 namespace NFe.Utils.Assinatura
@@ -60,7 +60,7 @@ namespace NFe.Utils.Assinatura
             {
                 var documento = new XmlDocument { PreserveWhitespace = true };
                 var xml = cfgServicoRemoverAcentos
-                    ? FuncoesXml.ClasseParaXmlString(objetoLocal).RemoverAcentos()
+                    ? FuncoesXml.ClasseParaXmlString(objetoLocal).RemoverAcentosPreservandoDescEvento()
                     : FuncoesXml.ClasseParaXmlString(objetoLocal);
 
                 documento.LoadXml(xml);

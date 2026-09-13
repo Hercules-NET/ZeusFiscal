@@ -1,4 +1,4 @@
-﻿using DFe.Classes.Entidades;
+using DFe.Classes.Entidades;
 using DFe.Classes.Flags;
 using DFe.Utils;
 using DFe.Utils.Assinatura;
@@ -440,7 +440,7 @@ namespace NFe.Servicos
             #region Valida, Envia os dados e obtém a resposta
 
             var xmlEvento = _cFgServico.RemoverAcentos
-                    ? pedEvento.ObterXmlString().RemoverAcentos()
+                    ? pedEvento.ObterXmlString().RemoverAcentosPreservandoDescEvento()
                     : pedEvento.ObterXmlString();
 
             SalvarArquivoXml(idlote + "-ped-eve.xml", xmlEvento);
@@ -1244,6 +1244,15 @@ namespace NFe.Servicos
             if (perecimentos == null || !perecimentos.Any())
                 throw new ArgumentException("Informe ao menos um item para o evento de Perecimento, perda, roubo ou furto durante o transporte.", nameof(perecimentos));
 
+            // vIBS e vCBS de gControleEstoque são obrigatórios neste evento: quando não informados, são enviados zerados
+            foreach (var controleEstoque in perecimentos.Select(p => p.gControleEstoque).Where(g => g != null))
+            {
+                if (!controleEstoque.vIBS.HasValue)
+                    controleEstoque.vIBS = 0;
+                if (!controleEstoque.vCBS.HasValue)
+                    controleEstoque.vCBS = 0;
+            }
+
             var versaoServico =
                 ServicoNFe.RecepcaoEventoPerecimentoTransporteNFe.VersaoServicoParaString(
                     _cFgServico.VersaoRecepcaoEventoPerecimentoTransporte);
@@ -1685,6 +1694,9 @@ namespace NFe.Servicos
         {
             if (perecimentos == null || !perecimentos.Any())
                 throw new ArgumentException("Informe ao menos um item para o evento de Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente.", nameof(perecimentos));
+
+            if (perecimentos.Any(p => p.gControleEstoque != null && (p.gControleEstoque.vIBS.HasValue || p.gControleEstoque.vCBS.HasValue)))
+                throw new ArgumentException("Os campos vIBS e vCBS de gControleEstoque não devem ser informados no evento de Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente.", nameof(perecimentos));
 
             var versaoServico =
                 ServicoNFe.RecepcaoEventoPerecimentoTransporteAdquirenteNFe.VersaoServicoParaString(
