@@ -21,6 +21,8 @@ namespace MDFe.Damdfe.Fast.Skia
             {
                 const string caminho = @"MDFe\MDFeRetrato.frx";
                 var frx = FrxFileHelper.TryGetFrxFile(caminho);
+                if (frx == null || frx.Length == 0)
+                    throw new Exception($"Erro em DamdfeFrMDFe. Relatório '{caminho}' não encontrado, passe o parametro 'arquivoRelatorio' com o caminho do arquivo");
                 Relatorio.Load(new MemoryStream(frx));
             }
             else
@@ -48,7 +50,8 @@ namespace MDFe.Damdfe.Fast.Skia
             Relatorio.SetParameterValue("DocumentoEncerrado", config.DocumentoEncerrado);
             Relatorio.SetParameterValue("Desenvolvedor", config.Desenvolvedor);
             Relatorio.SetParameterValue("QuebrarLinhasObservacao", config.QuebrarLinhasObservacao);
-            ((PictureObject)Relatorio.FindObject("poEmitLogo")).SetImageData(config.Logomarca);
+            if (Relatorio.FindObject("poEmitLogo") != null)
+                ((PictureObject)Relatorio.FindObject("poEmitLogo")).SetImageData(config.Logomarca);
         }
 
         /// <summary>

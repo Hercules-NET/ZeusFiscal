@@ -36,16 +36,9 @@ namespace CTe.Dacte.Fast.Skia
         /// <param name="outputStream">Variável do tipo Stream para output</param>
         public void ExportarPdf(Stream outputStream)
         {
-            try
-            {
-                Relatorio.Prepare();
-                Relatorio.Export(new PDFExport(), outputStream);
-                outputStream.Position = 0;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            Relatorio.Prepare();
+            Relatorio.Export(new PDFExport(), outputStream);
+            outputStream.Position = 0;
         }
 
         /// <summary>
@@ -55,16 +48,9 @@ namespace CTe.Dacte.Fast.Skia
         {
             using (MemoryStream stream = new MemoryStream())
             {
-                try
-                {
-                    Relatorio.Prepare();
-                    Relatorio.Export(new PDFExport(), stream);
-                    return stream.ToArray();
-                }
-                catch (System.Exception ex)
-                {
-                    throw ex;
-                }
+                Relatorio.Prepare();
+                Relatorio.Export(new PDFExport(), stream);
+                return stream.ToArray();
             }
         }
 
@@ -105,45 +91,15 @@ namespace CTe.Dacte.Fast.Skia
         {
             using (MemoryStream stream = new MemoryStream())
             {
-                try
-                {
-                    Relatorio.Prepare();
-                    Relatorio.Export(exportBase, stream);
-                    return stream.ToArray();
-                }
-                catch (System.Exception ex)
-                {
-                    throw ex;
-                }
+                Relatorio.Prepare();
+                Relatorio.Export(exportBase, stream);
+                return stream.ToArray();
             }
         }
 
         public byte[] ExportarHtml()
         {
             using (MemoryStream stream = new MemoryStream())
-            {
-                try
-                {
-                    Relatorio.Prepare();
-                    HTMLExport html = new HTMLExport
-                    {
-                        SinglePage = true,
-                        Navigator = false,
-                        EmbedPictures = true
-                    };
-                    Relatorio.Export(html, stream);
-                    return stream.ToArray();
-                }
-                catch (System.Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-
-        public void ExportarHtml(Stream outputStream)
-        {
-            try
             {
                 Relatorio.Prepare();
                 HTMLExport html = new HTMLExport
@@ -152,13 +108,22 @@ namespace CTe.Dacte.Fast.Skia
                     Navigator = false,
                     EmbedPictures = true
                 };
-                Relatorio.Export(html, outputStream);
-                outputStream.Position = 0;
+                Relatorio.Export(html, stream);
+                return stream.ToArray();
             }
-            catch (System.Exception ex)
+        }
+
+        public void ExportarHtml(Stream outputStream)
+        {
+            Relatorio.Prepare();
+            HTMLExport html = new HTMLExport
             {
-                throw ex;
-            }
+                SinglePage = true,
+                Navigator = false,
+                EmbedPictures = true
+            };
+            Relatorio.Export(html, outputStream);
+            outputStream.Position = 0;
         }
     }
 }
