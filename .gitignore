@@ -285,3 +285,4 @@ build/
 *.dll
 /Bredas.SharedKernel/novo.sql
 /CLAUDE.md
+/.vscode
