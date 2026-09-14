@@ -71,6 +71,7 @@ namespace NFe.Servicos
             string path = Assembly.GetExecutingAssembly().Location;
             _path = string.IsNullOrEmpty(path) ? Directory.GetCurrentDirectory() : Path.GetDirectoryName(path);
 
+#pragma warning disable SYSLIB0014 // ServicePointManager é obsoleto, mas segue lido por HttpWebRequest e SmtpClient: mantido como antes
             //Define a versão do protocolo de segurança
             ServicePointManager.SecurityProtocol = cFgServico.ProtocoloDeSeguranca;
 
@@ -78,6 +79,7 @@ namespace NFe.Servicos
                 ServicePointManager.ServerCertificateValidationCallback = null;
             else
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+#pragma warning restore SYSLIB0014
         }
 
         private string SalvarArquivoXml(string nomeArquivo, string xmlString)

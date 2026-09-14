@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using CTe.AppTeste.Dao;
@@ -44,7 +43,6 @@ namespace CTe.AppTeste.NetCore
     {
         private static void Main(string[] args)
         {
-            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             Console.WriteLine("Bem vindo aos teste de CT-e com suporte ao NetStandard 2.0!");
             Console.WriteLine("Este exemplo necesita do arquivo Configuração.xml já criado.");
             Console.WriteLine("Caso necessite criar, utilize o app 'CTe.AppTeste'.");

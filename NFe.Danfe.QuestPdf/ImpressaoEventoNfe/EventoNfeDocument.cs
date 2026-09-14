@@ -91,7 +91,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(0.5f).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("MODELO").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignCenter().AlignTop().Text(_nfe.infNFe.ide.mod).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignCenter().AlignTop().Text(_nfe.infNFe.ide.mod.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -176,7 +176,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(0.5f).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("ÓRGÃO").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignCenter().AlignTop().Text(_procEventoNFe.evento.infEvento.cOrgao).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignCenter().AlignTop().Text(_procEventoNFe.evento.infEvento.cOrgao.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -185,7 +185,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(0.5f).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("AMBIENTE").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text(_procEventoNFe.evento.infEvento.tpAmb).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text(_procEventoNFe.evento.infEvento.tpAmb.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -203,7 +203,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(0.5f).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("EVENTO").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignCenter().AlignTop().Text(_procEventoNFe.evento.infEvento.tpEvento).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignCenter().AlignTop().Text(_procEventoNFe.evento.infEvento.tpEvento.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -221,7 +221,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(0.5f).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("SEQUÊNCIA DO EVENTO").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignRight().AlignTop().PaddingRight(2).Text(_procEventoNFe.evento.infEvento.nSeqEvento).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignRight().AlignTop().PaddingRight(2).Text(_procEventoNFe.evento.infEvento.nSeqEvento.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -360,7 +360,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(0.5f).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("ESTADO").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignCenter().AlignTop().Text(_nfe.infNFe.emit.enderEmit.UF).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignCenter().AlignTop().Text(_nfe.infNFe.emit.enderEmit.UF.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -371,7 +371,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(temTelefone ? 0.5f : 0).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("FONE / FAX").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text(_nfe.infNFe.emit.enderEmit.fone).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text(_nfe.infNFe.emit.enderEmit.fone.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -488,7 +488,7 @@ public class EventoNfeDocument : IDocument
                         tx.Item().Border(temTelefone ? 0.5f : 0).Column(txc =>
                         {
                             txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text("FONE / FAX").FontSize(5).FontFamily(_fontFamily);
-                            txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text(_nfe.infNFe.dest.enderDest.fone).FontSize(9).FontFamily(_fontFamily).Bold();
+                            txc.Item().AlignLeft().AlignTop().PaddingLeft(2).Text(_nfe.infNFe.dest.enderDest.fone.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                         });
                     });
 
@@ -594,7 +594,7 @@ public class EventoNfeDocument : IDocument
                                     .Replace("\n", ""), @"\s+", " "));
                         }
 
-                        tx.Item().Border(0.5f).PaddingLeft(2).Text(texto).FontSize(9).FontFamily(_fontFamily).Bold();
+                        tx.Item().Border(0.5f).PaddingLeft(2).Text(texto.ToString()).FontSize(9).FontFamily(_fontFamily).Bold();
                     });
                 });
             });

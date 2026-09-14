@@ -24,7 +24,7 @@ namespace Shared.NFe.Utils.InfRespTec
 
             string chaveBase64;
 
-            using (SHA1CryptoServiceProvider cryptoTransformSha1 = new SHA1CryptoServiceProvider())
+            using (var cryptoTransformSha1 = SHA1.Create())
             {
                 var hash = cryptoTransformSha1.ComputeHash(data);
                 chaveBase64 = Convert.ToBase64String(hash);
