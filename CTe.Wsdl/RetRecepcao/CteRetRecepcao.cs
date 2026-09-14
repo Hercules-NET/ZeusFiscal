@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -36,7 +35,7 @@ namespace CTe.Wsdl.RetRecepcao
                     }
                 }
             };
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            DFe.Wsdl.Common.ConfiguracaoServicoWSDL.AplicarProtocoloSegurancaLegado();
         }
 
         /// <summary>

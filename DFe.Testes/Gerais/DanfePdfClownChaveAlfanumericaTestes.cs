@@ -67,7 +67,7 @@ namespace DFe.Testes.Gerais
 
                     // Assert - PDF gerado, não vazio e com o cabeçalho %PDF
                     var bytes = ms.ToArray();
-                    Assert.IsTrue(bytes.Length > 1000, "O PDF gerado está vazio ou pequeno demais ({0} bytes)", bytes.Length);
+                    Assert.IsTrue(bytes.Length > 1000, $"O PDF gerado está vazio ou pequeno demais ({bytes.Length} bytes)");
                     Assert.AreEqual("%PDF", System.Text.Encoding.ASCII.GetString(bytes, 0, 4));
                 }
             }
