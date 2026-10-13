@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
-#if !(NETSTANDARD || NETCOREAPP)
 using DFe.Utils.Assinatura;
-#endif
+using System.Net;
 using System.Security;
 using System.IO;
 
@@ -42,34 +41,6 @@ namespace DFe.Utils
         public static X509Certificate2 ObterDoCaminho(string caminho, string password)
         {
             caminho = ArrumaCaminho(caminho);
-            SecureString stringSegura = null;
-            try
-            {
-                stringSegura = new SecureString();
-                if ((password.Length > 0))
-                {
-                    foreach (Char caractere in password.ToCharArray())
-                    {
-                        stringSegura.AppendChar(caractere);
-                    }
-                }
-                return ObterDoCaminho(caminho, stringSegura);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retorna o certificado que está no caminho especificado
-        /// </summary>
-        /// <param name="caminho">Caminho do certificado (.pfx)</param>
-        /// <param name="password">SecureString representando a senha do certificado</param>
-        /// <returns></returns>
-        public static X509Certificate2 ObterDoCaminho(string caminho, SecureString password)
-        {
-            caminho = ArrumaCaminho(caminho);
             if (!caminho.ToLower().EndsWith(".pfx"))
             {
                 throw new Exception("Caminho do certificado deve terminar com '.pfx'");
@@ -80,8 +51,18 @@ namespace DFe.Utils
                 throw new Exception("Certificado não se encontra no caminho especificado");
             }
 
-            var cert = new X509Certificate2(caminho, password, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
-            return cert;
+            return CertificadoDigital.CarregarPkcs12DeArquivo(caminho, password, KeyStorageFlagsPadrao);
+        }
+
+        /// <summary>
+        /// Retorna o certificado que está no caminho especificado
+        /// </summary>
+        /// <param name="caminho">Caminho do certificado (.pfx)</param>
+        /// <param name="password">SecureString representando a senha do certificado</param>
+        /// <returns></returns>
+        public static X509Certificate2 ObterDoCaminho(string caminho, SecureString password)
+        {
+            return ObterDoCaminho(caminho, ParaTexto(password));
         }
 
         /// <summary>
@@ -92,24 +73,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static X509Certificate2 ObterDosBytes(byte[] bytes, string password, X509KeyStorageFlags? keyStorageFlags)
         {
-            SecureString stringSegura = null;
-            try
-            {
-                stringSegura = new SecureString();
-                if ((password.Length > 0))
-                {
-                    foreach (Char caractere in password.ToCharArray())
-                    {
-                        stringSegura.AppendChar(caractere);
-                    }
-                }
-
-                return ObterDosBytes(bytes, stringSegura, keyStorageFlags);
-            }
-            catch
-            {
-                throw;
-            }
+            return CertificadoDigital.CarregarPkcs12(bytes, password, keyStorageFlags ?? KeyStorageFlagsPadrao);
         }
 
         /// <summary>
@@ -120,8 +84,17 @@ namespace DFe.Utils
         /// <returns></returns>
         public static X509Certificate2 ObterDosBytes(byte[] bytes, SecureString password, X509KeyStorageFlags? keyStorageFlags)
         {
-            var cert = new X509Certificate2(bytes, password, keyStorageFlags ?? (X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable));
-            return cert;
+            return ObterDosBytes(bytes, ParaTexto(password), keyStorageFlags);
+        }
+
+        private const X509KeyStorageFlags KeyStorageFlagsPadrao = X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable;
+
+        /// <summary>
+        /// O carregamento é centralizado na sobrecarga com string (o X509CertificateLoader não aceita SecureString)
+        /// </summary>
+        private static string ParaTexto(SecureString password)
+        {
+            return password == null ? null : new NetworkCredential(string.Empty, password).Password;
         }
 
         /// <summary>

@@ -269,7 +269,7 @@ public class RelatorioFiscalEmissoesNfceDocument : IDocument
                 {
                     resumoAutoriadasRow.RelativeItem(5)
                         .Border(0.3f)
-                        .Text(quantidadeNfce).FontSize(10)
+                        .Text(quantidadeNfce.ToString()).FontSize(10)
                         .FontFamily(Fonte).Italic();
 
                     resumoAutoriadasRow.RelativeItem(5)

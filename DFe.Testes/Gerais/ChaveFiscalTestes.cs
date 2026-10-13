@@ -84,8 +84,8 @@ namespace DFe.Testes.Gerais
 
                     // Assert
                     var dvReferencia = CalcularDvReferenciaNt(dados.Chave.Substring(0, 43));
-                    Assert.AreEqual(dvReferencia, (int)dados.DigitoVerificador, "CNPJ {0}, modelo {1}", cnpj, modelo);
-                    Assert.IsTrue(ChaveFiscal.ChaveValida(dados.Chave), "ChaveValida deveria aceitar {0}", dados.Chave);
+                    Assert.AreEqual(dvReferencia, (int)dados.DigitoVerificador, $"CNPJ {cnpj}, modelo {modelo}");
+                    Assert.IsTrue(ChaveFiscal.ChaveValida(dados.Chave), $"ChaveValida deveria aceitar {dados.Chave}");
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace DFe.Testes.Gerais
         [TestMethod]
         public void ObterChave_ComCnpjAlfanumericoMinusculo_LancaArgumentException()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsExactly<ArgumentException>(() =>
                 ChaveFiscal.ObterChave(Estado.GO, new DateTime(2025, 7, 15), "pc3d315k000193", ModeloDocumento.NFe, 1, 1, 1, 1));
         }
 
@@ -110,7 +110,7 @@ namespace DFe.Testes.Gerais
             //os caracteres ASCII 58 a 64 ficam entre '9' e 'A' e produziriam DV errado sem erro se aceitos
             var cnpjInvalido = "PC3D315K0001" + caractereInvalido + "3";
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsExactly<ArgumentException>(() =>
                 ChaveFiscal.ObterChave(Estado.GO, new DateTime(2025, 7, 15), cnpjInvalido, ModeloDocumento.NFe, 1, 1, 1, 1));
         }
 
@@ -119,7 +119,7 @@ namespace DFe.Testes.Gerais
         {
             var chaveComMinuscula = "522507pC3D315K000193550010000000011000000018";
 
-            Assert.ThrowsException<ArgumentException>(() => ChaveFiscal.ChaveValida(chaveComMinuscula));
+            Assert.ThrowsExactly<ArgumentException>(() => ChaveFiscal.ChaveValida(chaveComMinuscula));
         }
 
         #endregion
@@ -170,7 +170,7 @@ namespace DFe.Testes.Gerais
 
                     // Assert
                     var dvLegado = CalcularDvAlgoritmoLegado(dados.Chave.Substring(0, 43));
-                    Assert.AreEqual(dvLegado, dados.DigitoVerificador.ToString(), "CNPJ {0}, modelo {1}", cnpjs[i], modelo);
+                    Assert.AreEqual(dvLegado, dados.DigitoVerificador.ToString(), $"CNPJ {cnpjs[i]}, modelo {modelo}");
                     Assert.IsTrue(ChaveFiscal.ChaveValida(dados.Chave));
                 }
             }
@@ -200,21 +200,21 @@ namespace DFe.Testes.Gerais
         public void ObterChave_ComDocumentoDeComprimentoInvalido_LancaArgumentException(string documento)
         {
             //um CNPJ truncado não pode virar silenciosamente uma chave bem-formada porém errada
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsExactly<ArgumentException>(() =>
                 ChaveFiscal.ObterChave(Estado.GO, new DateTime(2026, 7, 1), documento, ModeloDocumento.NFe, 1, 1, 1, 1));
         }
 
         [TestMethod]
         public void ObterChave_ComDocumentoVazio_LancaArgumentException()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsExactly<ArgumentException>(() =>
                 ChaveFiscal.ObterChave(Estado.GO, new DateTime(2026, 7, 1), "", ModeloDocumento.NFe, 1, 1, 1, 1));
         }
 
         [TestMethod]
         public void ObterChave_ComDocumentoNulo_LancaArgumentException()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsExactly<ArgumentException>(() =>
                 ChaveFiscal.ObterChave(Estado.GO, new DateTime(2026, 7, 1), null, ModeloDocumento.NFe, 1, 1, 1, 1));
         }
 

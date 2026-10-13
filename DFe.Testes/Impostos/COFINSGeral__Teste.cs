@@ -30,7 +30,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTCOFINS.cofins01, 1000, 1, 10)]
         [DataRow(CSTCOFINS.cofins02, 1000, 1, 10)]
         public void ObterCOFINSBasico_COFINSAliq_Teste(CSTCOFINS cst, object vBC, object pCOFINS, object vCOFINS)
@@ -56,7 +55,6 @@ namespace DFe.Testes.Impostos
 
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTCOFINS.cofins03, 1000, 1, 10)]
         public void ObterCOFINSBasico_COFINSQtde_Teste(CSTCOFINS cst, object qBCProd, object vAliqProd, object vCOFINS)
         {
@@ -80,7 +78,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTCOFINS.cofins04)]
         [DataRow(CSTCOFINS.cofins05)]
         [DataRow(CSTCOFINS.cofins06)]
@@ -106,7 +103,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTCOFINS.cofins49, 1000, 1, 10, 1000, 1)]
         [DataRow(CSTCOFINS.cofins50, 1000, 1, 10, 1000, 1)]
         [DataRow(CSTCOFINS.cofins51, 1000, 1, 10, 1000, 1)]
