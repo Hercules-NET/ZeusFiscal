@@ -14,17 +14,26 @@ namespace DFe.Utils.Assinatura
             string digestMethod = "http://www.w3.org/2000/09/xmldsig#sha1",
             bool cfgServicoRemoverAcentos = false) where T : class
         {
-            var objetoLocal = objeto;
+            var xml = FuncoesXml.ClasseParaXmlString(objeto);
+            if (cfgServicoRemoverAcentos)
+                xml = xml.RemoverAcentos();
+
+            return AssinaXml(xml, id, certificado, signatureMethod, digestMethod);
+        }
+
+        /// <summary>
+        /// Assina (XMLDSig envelopado, C14N) o elemento de Id [id] do XML e retorna a Signature
+        /// </summary>
+        public static SignatureZeus AssinaXml(string xml, string id, X509Certificate2 certificado,
+            string signatureMethod, string digestMethod)
+        {
             if (id == null)
                 throw new Exception("Não é possível assinar um objeto evento sem sua respectiva Id!");
 
             var documento = new XmlDocument { PreserveWhitespace = true };
+            documento.LoadXml(xml);
 
-            documento.LoadXml(cfgServicoRemoverAcentos
-                ? FuncoesXml.ClasseParaXmlString(objetoLocal).RemoverAcentos()
-                : FuncoesXml.ClasseParaXmlString(objetoLocal));
-
-            var docXml = new SignedXml(documento) { SigningKey = certificado.PrivateKey };
+            var docXml = new SignedXml(documento);
 
             docXml.SignedInfo.SignatureMethod = signatureMethod;
             var reference = new Reference { Uri = "#" + id, DigestMethod = digestMethod };
@@ -43,7 +52,14 @@ namespace DFe.Utils.Assinatura
             keyInfo.AddClause(new KeyInfoX509Data(certificado));
 
             docXml.KeyInfo = keyInfo;
-            docXml.ComputeSignature();
+
+            // a chave legada (.NET Framework) fica guardada no certificado e não é descartada; a moderna é
+            var chaveLegada = CertificadoDigital.ObterChavePrivadaLegada(certificado);
+            using (var chaveModerna = chaveLegada == null ? certificado.ObterChavePrivadaRsa() : null)
+            {
+                docXml.SigningKey = chaveLegada ?? chaveModerna;
+                docXml.ComputeSignature();
+            }
 
             //// recuperando a representacao do XML assinado
             var xmlDigitalSignature = docXml.GetXml();

@@ -1,16 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net462;netstandard2.0;net8.0;net9.0;net10.0</TargetFrameworks>
+		<TargetFrameworks>net462;netstandard2.0;net8.0;net10.0</TargetFrameworks>
 		
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
+	  <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.12" />
+	</ItemGroup>
+
+	<!-- RSACng/CngKey (tokens A3 com provedor CNG) não fazem parte do netstandard2.0 -->
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+	  <PackageReference Include="System.Security.Cryptography.Cng" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\DFe.Classes\DFe.Classes.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="NFe.Utils.Testes" />
 	</ItemGroup>
 
 </Project>

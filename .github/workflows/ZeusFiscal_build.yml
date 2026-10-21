@@ -47,8 +47,8 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            9.0.x
-            6.0.x
+            10.0.x
+            8.0.x
 
       - name: Build/Restore Base
         run: |
@@ -119,7 +119,7 @@ jobs:
       - name: Setup NuGet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
           
       - name: Push to NuGet Feed
         working-directory: ${{ github.workspace }}

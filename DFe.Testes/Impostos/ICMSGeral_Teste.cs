@@ -15,7 +15,6 @@ namespace DFe.Testes.Impostos
         #region CRT - Normal
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CRT.RegimeNormal, OrigemMercadoria.OmEstrangeiraAdquiridaBrasil, DeterminacaoBaseIcms.DbiMargemValorAgregado, 1000, 18, 180, null, null)]
         [DataRow(CRT.RegimeNormal, OrigemMercadoria.OmEstrangeiraAdquiridaBrasilSemSimilar, DeterminacaoBaseIcms.DbiMargemValorAgregado, 1000, 18, 180, 0, 0)]
         [DataRow(CRT.RegimeNormal, OrigemMercadoria.OmEstrangeiraImportacaoDireta, DeterminacaoBaseIcms.DbiValorOperacao, 1000, 18, 180, 0, 0)]
@@ -57,7 +56,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CRT.RegimeNormal, OrigemMercadoria.OmEstrangeiraAdquiridaBrasil, DeterminacaoBaseIcms.DbiMargemValorAgregado, 1000, 18, 180, 0, 0, 0, DeterminacaoBaseIcmsSt.DbisListaNegativa, 15, 2, 1000, 18, 25, 0, 0, 0)]
         [DataRow(CRT.RegimeNormal, OrigemMercadoria.OmEstrangeiraAdquiridaBrasilSemSimilar, DeterminacaoBaseIcms.DbiMargemValorAgregado, 1000, 18, 180, 0, 0, 0, DeterminacaoBaseIcmsSt.DbisListaNegativa, 15, 2, 1000, 18, 25, 100, 10, 10)]
         [DataRow(CRT.RegimeNormal, OrigemMercadoria.OmNacionalConteudoImportacaoInferiorIgual40, DeterminacaoBaseIcms.DbiMargemValorAgregado, 100, 18, 18, 0, 0, 0, DeterminacaoBaseIcmsSt.DbisListaNegativa, 15, 2, 1000, 18, 25, 0, 0, 0)]
@@ -122,7 +120,6 @@ namespace DFe.Testes.Impostos
         #region CRT - Simples
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CRT.SimplesNacional, OrigemMercadoria.OmEstrangeiraAdquiridaBrasil, 100, 18)]
         public void ObterICMSBasico_CSOSN101_Teste(CRT crt, OrigemMercadoria origem, object pCredSN, object vCredICMSSN)
         {
@@ -157,7 +154,7 @@ namespace DFe.Testes.Impostos
         #region CST 61 - Tributação Monofásica Sobre os Combustíveis
 
         [TestMethod]
-        [DynamicData(nameof(ICMSGeralDadosDeTeste.ObterRegimesTributariosParaCst61), typeof(ICMSGeralDadosDeTeste), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(ICMSGeralDadosDeTeste.ObterRegimesTributariosParaCst61), typeof(ICMSGeralDadosDeTeste))]
         [DisplayName("Dado CST 61 quando obter ICMS então ICMS deve conter campos de tributação monofásica sobre combustíveis preenchidos")]
         public void DadoCST61QuandoObterICMSEntaoICMSDeveConterCamposDeTributacaoMonofasicaSobreCombustiveisPreenchidos(CRT crt, OrigemMercadoria origem, object vICMSMonoRet, object adRemICMSRet, object qBCMonoRet)
         {
@@ -188,7 +185,7 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DynamicData(nameof(ICMSGeralDadosDeTeste.ObterRegimesTributariosParaCst61), typeof(ICMSGeralDadosDeTeste), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(ICMSGeralDadosDeTeste.ObterRegimesTributariosParaCst61), typeof(ICMSGeralDadosDeTeste))]
         [DisplayName("Dado CST 61 quando obter ICMS então ICMS não deve ter campos que não sejam da tributação monofásica sobre combustíveis preenchidos")]
         public void DadoCST61QuandoObterIcmsEntaoIcmsNaoDeveTerCamposQueNaoSejamDaTributacaoMonofasicaSobreCombustiveisPreenchidos(CRT crt, OrigemMercadoria origem, object vICMSMonoRet, object adRemICMSRet, object qBCMonoRet)
         {
@@ -222,7 +219,7 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DynamicData(nameof(ICMSGeralDadosDeTeste.ObterRegimesTributarios), typeof(ICMSGeralDadosDeTeste), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(ICMSGeralDadosDeTeste.ObterRegimesTributarios), typeof(ICMSGeralDadosDeTeste))]
         [DisplayName("Dado CST 61 quando gerar ICMS então ICMS deve ser do tipo ICMS 61 e nenhum outro")]
         public void DadoCST61QuandoGerarICMSEntaoICMSDeveSerDoTipoICMS61ENenhumOutro(CRT crt)
         {

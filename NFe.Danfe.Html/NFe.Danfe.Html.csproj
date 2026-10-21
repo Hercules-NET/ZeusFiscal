@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="NetBarcode" Version="1.7.0" />
+    <!-- NetBarcode traz o ImageSharp 2.1.1 (vulnerável); 2.1.13 é a correção compatível da mesma major (Apache 2.0) -->
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.13" />
     <PackageReference Include="Zeus.Net.NFe.NFCe" Version="2024.1.15.1723" />
   </ItemGroup>
 

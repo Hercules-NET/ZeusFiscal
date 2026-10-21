@@ -101,7 +101,7 @@ namespace DFe.Testes.Gerais
                 var simbolos = Code128Hibrido.ObterSimbolos(chave);
 
                 // Assert
-                CollectionAssert.AreEqual(CodificarCode128CPuroLegado(chave), simbolos, "Divergência na chave {0}", chave);
+                CollectionAssert.AreEqual(CodificarCode128CPuroLegado(chave), simbolos, $"Divergência na chave {chave}");
             }
         }
 
@@ -195,7 +195,7 @@ namespace DFe.Testes.Gerais
         [DataRow(null)]
         public void ObterSimbolos_ComCodigoVazioOuNulo_LancaArgumentException(string codigo)
         {
-            Assert.ThrowsException<ArgumentException>(() => Code128Hibrido.ObterSimbolos(codigo));
+            Assert.ThrowsExactly<ArgumentException>(() => Code128Hibrido.ObterSimbolos(codigo));
         }
 
         [TestMethod]
@@ -205,7 +205,7 @@ namespace DFe.Testes.Gerais
         [DataRow("12@34", DisplayName = "Caractere @")]
         public void ObterSimbolos_ComCaractereForaDeDigitosELetrasMaiusculas_LancaArgumentException(string codigo)
         {
-            Assert.ThrowsException<ArgumentException>(() => Code128Hibrido.ObterSimbolos(codigo));
+            Assert.ThrowsExactly<ArgumentException>(() => Code128Hibrido.ObterSimbolos(codigo));
         }
 
         #endregion

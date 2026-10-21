@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Xml;
 using System;
 using System.Xml.Serialization;
@@ -26,7 +25,7 @@ namespace CTe.Wsdl.Evento.V4
 
             this.configuracao = configuracao;
             soapEnvelope = new SoapEnvelope();
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            DFe.Wsdl.Common.ConfiguracaoServicoWSDL.AplicarProtocoloSegurancaLegado();
         }
 
         /// <summary>
