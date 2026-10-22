@@ -85,6 +85,11 @@ namespace NFe.Danfe.Html.Dominio
         public decimal? PIpi { get; }
 
         /// <summary>
+        ///     Tributação do item para o leiaute da NT 2026.010 (Reforma Tributária)
+        /// </summary>
+        public ProdutoReformaTributaria ReformaTributaria { get; internal set; }
+
+        /// <summary>
         /// Valor Total
         /// </summary>
         public decimal ValorTotal { get; set; }

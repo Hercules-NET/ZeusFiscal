@@ -82,6 +82,10 @@ jobs:
         run: |
           dotnet build -p:Version=${{ steps.date.outputs.date }} ".\NFe.Danfe.QuestPdf\NFe.Danfe.QuestPdf.csproj" -c Release
 
+      - name: Build Impressão DANFE HTML
+        run: |
+          dotnet build -p:Version=${{ steps.date.outputs.date }} ".\NFe.Danfe.Html\NFe.Danfe.Html.csproj" -c Release
+
       #- name: Test
       #  run: dotnet test --no-build --verbosity normal
 
@@ -91,6 +95,7 @@ jobs:
           dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.MDFe\Hercules.NET.MDFe.csproj
           dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.CTe\Hercules.NET.CTe.csproj
           dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.Impressao.NFCe.QuestPdf\Hercules.NET.Impressao.NFCe.QuestPdf.csproj
+          dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.NFe.Danfe.Html\Hercules.NET.NFe.Danfe.Html.csproj
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -154,6 +159,7 @@ jobs:
             - Hercules.NET.MDFe
             - Hercules.NET.CTe
             - Hercules.NET.Impressao.NFCe.QuestPdf
+            - Hercules.NET.NFe.Danfe.Html
 
           files: |
             ${{ github.workspace }}/*.nupkg
