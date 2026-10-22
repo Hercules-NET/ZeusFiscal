@@ -121,5 +121,41 @@ namespace NFe.Danfe.Html {
                 return ResourceManager.GetString("danfe_model_55_nfe_page_one", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Cabeçalho, emitente, regime tributário e destinatário do leiaute da NT 2026.010.
+        /// </summary>
+        internal static string danfe_model_55_nfe_rtc_cabecalho {
+            get {
+                return ResourceManager.GetString("danfe_model_55_nfe_rtc_cabecalho", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Páginas subsequentes do leiaute da NT 2026.010.
+        /// </summary>
+        internal static string danfe_model_55_nfe_rtc_page_next {
+            get {
+                return ResourceManager.GetString("danfe_model_55_nfe_rtc_page_next", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Primeira página do leiaute da NT 2026.010.
+        /// </summary>
+        internal static string danfe_model_55_nfe_rtc_page_one {
+            get {
+                return ResourceManager.GetString("danfe_model_55_nfe_rtc_page_one", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Quadro de produtos/serviços do leiaute da NT 2026.010.
+        /// </summary>
+        internal static string danfe_model_55_nfe_rtc_produtos {
+            get {
+                return ResourceManager.GetString("danfe_model_55_nfe_rtc_produtos", resourceCulture);
+            }
+        }
     }
 }

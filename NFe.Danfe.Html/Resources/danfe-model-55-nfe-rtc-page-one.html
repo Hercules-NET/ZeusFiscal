@@ -1,0 +1,843 @@
+<!-- Header -->
+
+<style type="text/css">
+  @media print {
+    @page {
+      margin-left: 15mm;
+      margin-right: 15mm;
+    }
+    footer {
+      page-break-after: always;
+    }
+  }
+
+  * {
+    margin: 0;
+  }
+
+  .ui-widget-content {
+    border: none !important;
+  }
+
+  .nfe-square {
+    margin: 0 auto 2cm;
+    box-sizing: border-box;
+    width: 2cm;
+    height: 1cm;
+    border: 1px solid #000;
+  }
+
+  .nfeArea.page {
+    width: 18cm;
+    position: relative;
+    font-family: "Times New Roman", serif;
+    color: #000;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .nfeArea .font-12 {
+    font-size: 12pt;
+  }
+
+  .nfeArea .font-8 {
+    font-size: 8pt;
+  }
+
+  .nfeArea .bold {
+    font-weight: bold;
+  }
+  /* == TABELA == */
+  .nfeArea .area-name {
+    font-family: "Times New Roman", serif;
+    color: #000;
+    font-weight: bold;
+    margin: 5px 0 0;
+    font-size: 6pt;
+    text-transform: uppercase;
+  }
+
+  .nfeArea .txt-upper {
+    text-transform: uppercase;
+  }
+
+  .nfeArea .txt-center {
+    text-align: center;
+  }
+
+  .nfeArea .txt-right {
+    text-align: right;
+  }
+
+  .nfeArea .nf-label {
+    text-transform: uppercase;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .nfeArea .nf-label.label-small {
+    letter-spacing: -0.5px;
+    font-size: 4pt;
+  }
+
+  .nfeArea .info {
+    font-weight: bold;
+    font-size: 8pt;
+    display: block;
+    line-height: 1em;
+  }
+
+  .nfeArea table {
+    font-family: "Times New Roman", serif;
+    color: #000;
+    font-size: 5pt;
+    border-collapse: separate;
+    border-spacing: 2px;
+    width: 100%;
+    border-color: #000;
+    border-radius: 2px;
+  }
+
+  .nfeArea .no-top {
+    margin-top: -1px;
+  }
+
+  .nfeArea .mt-table {
+    margin-top: 3px;
+  }
+
+  .nfeArea .valign-middle {
+    vertical-align: middle;
+  }
+
+  .nfeArea td {
+    vertical-align: top;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-color: #000;
+    padding: 2px;
+    height: 5mm;
+  }
+
+  .nfeArea .tserie {
+    width: 32.2mm;
+    vertical-align: middle;
+    font-size: 8pt;
+    font-weight: bold;
+  }
+
+  .nfeArea .tserie span {
+    display: block;
+  }
+
+  .nfeArea .tserie h3 {
+    display: inline-block;
+  }
+
+  .nfeArea .entradaSaida .legenda {
+    text-align: left;
+    margin-left: 2mm;
+    display: block;
+  }
+
+  .nfeArea .entradaSaida .legenda span {
+    display: block;
+  }
+
+  .nfeArea .entradaSaida .identificacao {
+    float: right;
+    margin-right: 2mm;
+    border: 1px solid black;
+    width: 5mm;
+    height: 5mm;
+    text-align: center;
+    padding-top: 0;
+    line-height: 5mm;
+  }
+
+  .nfeArea .hr-dashed {
+    border: none;
+    border-top: 1px dashed #444;
+    margin: 5px 0;
+  }
+
+  .nfeArea .client_logo {
+    height: 27.5mm;
+    width: 28mm;
+    margin: 0.5mm;
+  }
+
+  .nfeArea .title {
+    font-size: 10pt;
+    margin-bottom: 2mm;
+  }
+
+  .nfeArea .txtc {
+    text-align: center;
+  }
+
+  .nfeArea .pd-0 {
+    padding: 0;
+    border: none;
+  }
+
+  .nfeArea .mb2 {
+    margin-bottom: 2mm;
+  }
+
+  .nfeArea table table {
+    margin: -1pt;
+    width: 100.5%;
+  }
+
+  .nfeArea .wrapper-table {
+    margin-bottom: 2pt;
+  }
+
+  .nfeArea .wrapper-table table {
+    margin-bottom: 0;
+  }
+
+  .nfeArea .wrapper-table table + table {
+    margin-top: -1px;
+  }
+
+  .nfeArea .boxImposto {
+    table-layout: fixed;
+  }
+
+  .nfeArea .boxImposto td {
+    width: 11.11%;
+  }
+
+  .nfeArea .boxImposto .nf-label {
+    font-size: 5pt;
+  }
+
+  .nfeArea .boxImposto .info {
+    text-align: right;
+  }
+
+  .nfeArea .wrapper-border2 {
+    border: 1px solid #000;
+    border-bottom: 0;
+    border-width: 1px;
+    border-radius: 2px;
+  }
+  .nfeArea .wrapper-border2 table {
+    margin: 0 -1px;
+    width: 100.4%;
+    border-collapse: collapse;
+  }
+  .nfeArea .wrapper-border {
+    border: 1px solid #000;
+    border-width: 1px;
+    border-radius: 2px;
+    /* border-width: 0 1px 1px; */
+    /* height: 75.7mm; */
+    height: 62.6mm;
+  }
+
+  .nfeArea .wrapper-border table {
+    margin: 0 -1px;
+    width: 100.4%;
+    /* border-collapse: separate; */
+    border-collapse: collapse;
+  }
+
+  .nfeArea .content-spacer {
+    display: block;
+    height: 10px;
+  }
+
+  .nfeArea .titles th {
+    padding: 3px 0;
+  }
+
+  .nfeArea .listProdutoServico td {
+    padding: 0;
+  }
+
+  .nfeArea .codigo {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  .nfeArea .boxProdutoServico tr td:first-child {
+    /* border-left: none; */
+  }
+
+  .nfeArea .boxProdutoServico td {
+    font-size: 6pt;
+    height: auto;
+    border-radius: 1px;
+  }
+
+  .nfeArea .boxFatura span {
+    display: block;
+  }
+
+  .nfeArea .boxFatura td {
+    border: 1px solid #000;
+  }
+
+  .nfeArea .freteConta .border {
+    width: 5mm;
+    height: 5mm;
+    float: right;
+    text-align: center;
+    line-height: 5mm;
+    border: 1px solid black;
+  }
+
+  .nfeArea .freteConta .info {
+    line-height: 5mm;
+  }
+
+  .page .boxFields td p {
+    font-family: "Times New Roman", serif;
+    font-size: 5pt;
+    line-height: 1.2em;
+    color: #000;
+  }
+
+  .nfeArea .imgCanceled {
+    position: absolute;
+    top: 75mm;
+    left: 30mm;
+    z-index: 3;
+    opacity: 0.8; 
+  }
+
+  .nfeArea.invoiceCanceled .imgCanceled {
+    display: block;
+  }
+
+  .nfeArea .imgNull {
+    position: absolute;
+    top: 75mm;
+    left: 20mm;
+    z-index: 3;
+    opacity: 0.8; 
+  }
+
+  .nfeArea.invoiceNull .imgNull {
+    display: block;
+  }
+
+  .nfeArea.invoiceCancelNull .imgCanceled {
+    top: 100mm;
+    left: 35mm;
+    display: block;
+  }
+
+  .nfeArea.imgNull {
+    top: 65mm;
+    left: 15mm;
+    display: block;
+  }
+
+  .nfeArea .page-break {
+    page-break-before: always;
+  }
+
+  .nfeArea .block {
+    display: block;
+  }
+
+  .label-mktup {
+    font-family: Arial !important;
+    font-size: 8px !important;
+    padding-top: 8px !important;
+  }
+
+  table td {
+    /* background-color: aqua; */
+    border-radius: 2px;
+    border: 1px solid #000;
+  }
+  footer table td {
+    border: 0;
+  }
+  border-table {
+    border: none;
+  }
+
+  /* == NT 2026.010 (Reforma Tributária) == */
+  .nfeArea .rtc-facultativo {
+    border-style: dashed !important;
+  }
+
+  .nfeArea .boxTotais td {
+    width: 20%;
+  }
+
+  .nfeArea.rtc .nf-label {
+    margin-bottom: 1px;
+  }
+
+  .nfeArea.rtc .boxTotais td,
+  .nfeArea.rtc .boxTotais4 td,
+  .nfeArea.rtc .boxTransporte td,
+  .nfeArea.rtc .boxFatura td,
+  .nfeArea.rtc .boxRegime td {
+    height: auto;
+    padding: 1px 2px;
+  }
+
+  .nfeArea.rtc .boxTotais .info,
+  .nfeArea.rtc .boxTotais4 .info,
+  .nfeArea.rtc .boxTransporte .info,
+  .nfeArea.rtc .boxRegime .info {
+    font-size: 7pt;
+  }
+
+  .nfeArea.rtc .area-name {
+    margin-top: 3px;
+  }
+
+  .nfeArea .boxTotais4 td {
+    width: 25%;
+  }
+
+  .nfeArea .boxTotais .info,
+  .nfeArea .boxTotais4 .info {
+    text-align: right;
+  }
+
+  .nfeArea .wrapper-rtc {
+    border: 1px solid #000;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .nfeArea .boxProdutoRtc {
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 0 -1px;
+    width: 100.4%;
+  }
+
+  .nfeArea .boxProdutoRtc th {
+    font-size: 5pt;
+    padding: 2px 1px;
+    border: 1px solid #000;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .nfeArea .boxProdutoRtc td {
+    font-size: 5pt;
+    line-height: 2.3mm;
+    height: [altura_linha_produto]mm;
+    padding: 0.4mm 0.6mm;
+    vertical-align: top;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-radius: 0;
+  }
+
+  .nfeArea .boxProdutoRtc .descricao {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  .nfeArea .boxProdutoRtc .linha {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .nfeArea .boxProdutoRtc .num {
+    text-align: right;
+  }
+
+  .nfeArea .boxProdutoRtc .tributos {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    table-layout: fixed;
+  }
+
+  .nfeArea .boxProdutoRtc .tributos td {
+    border: none;
+    height: auto;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .nfeArea .boxProdutoRtc .tributos .rot {
+    text-align: left;
+  }
+
+  .nfeArea .boxProdutoRtc .tributos .val {
+    text-align: right;
+  }
+
+  .nfeArea .boxProdutoRtc .tributos .sep {
+    width: 2mm;
+    text-align: center;
+  }
+</style>
+
+<!-- /Header -->
+<!-- Recebimentos -->
+<body>
+    <div class="page nfeArea rtc">
+        [marca_dagua]
+        <div class="boxFields" style="padding-top: 20px">
+            <table cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td colspan="2" class="txt-upper">
+                            Recebemos de [ds_company_issuer_name] os produtos/serviços
+                            constantes da nota fiscal eletrônica indicada ao lado
+                        </td>
+                        <td rowspan="2" class="tserie txt-center">
+                            <span class="font-12" style="margin-bottom: 5px">NF-e</span>
+                            <span>Nº [nl_invoice]</span>
+                            <span>Série [ds_invoice_serie]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 32mm">
+                            <span class="nf-label">Data de recebimento</span>
+                        </td>
+                        <td style="width: 124.6mm">
+                            <span class="nf-label">Identificação e assinatura do recebedor</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr class="hr-dashed" />
+[cabecalho_rtc]
+            <!--[secao:fatura]-->
+            <div data-secao="fatura" class="boxFatura">
+                <p class="area-name">Fatura / Duplicatas</p>
+                <table cellpadding="0" cellspacing="0" class="border-table">
+                    <tbody>
+                        <tr>
+                            <td class="rtc-facultativo">
+                                <span class="info">[duplicates]</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--[/secao:fatura]-->
+
+            <!-- Total dos produtos e total da nota -->
+            <p class="area-name">Total dos produtos e total da nota</p>
+            <table cellpadding="0" cellspacing="0" class="boxTotais border-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="nf-label">VALOR TOTAL DOS PRODUTOS</span>
+                            <span class="info">[vl_total_prod]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO FRETE</span>
+                            <span class="info">[vl_shipping]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO SEGURO</span>
+                            <span class="info">[vl_insurance]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">DESCONTO</span>
+                            <span class="info">[vl_discount]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">OUTRAS DESPESAS ACESSÓRIAS</span>
+                            <span class="info">[vl_other_expense]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="nf-label">VALOR TOTAL DA NOTA</span>
+                            <span class="info">[vl_total]</span>
+                        </td>
+                        <td colspan="4" style="border: none"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Total do ICMS / IPI -->
+            <p class="area-name">Total do ICMS / IPI</p>
+            <table cellpadding="0" cellspacing="0" class="boxTotais border-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="nf-label">BASE DE CÁLCULO DO ICMS</span>
+                            <span class="info">[tot_bc_icms]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO ICMS</span>
+                            <span class="info">[tot_icms]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">BASE DE CÁLCULO DO ICMS ST</span>
+                            <span class="info">[tot_bc_icms_st]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO ICMS ST</span>
+                            <span class="info">[tot_icms_st]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO IPI</span>
+                            <span class="info">[tot_total_ipi_tax]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--[secao:fcp]-->
+            <table data-secao="fcp" cellpadding="0" cellspacing="0" class="boxTotais4 no-top border-table">
+                <tbody>
+                    <tr>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO FCP</span>
+                            <span class="info">[tot_fcp]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO FCP RETIDO POR ST</span>
+                            <span class="info">[tot_fcp_st]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO DIFAL NA UF DE DESTINO</span>
+                            <span class="info">[tot_icms_uf_dest]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO FCP NA UF DE DESTINO</span>
+                            <span class="info">[tot_fcp_uf_dest]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--[/secao:fcp]-->
+            <!--[secao:icms_mono]-->
+            <table data-secao="icms_mono" cellpadding="0" cellspacing="0" class="boxTotais4 no-top border-table">
+                <tbody>
+                    <tr>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">BC DO ICMS MONOFÁSICO</span>
+                            <span class="info">[tot_qbc_mono]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO ICMS MONOFÁSICO</span>
+                            <span class="info">[tot_icms_mono]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">BC DO ICMS MONOFÁSICO POR RETENÇÃO</span>
+                            <span class="info">[tot_qbc_mono_reten]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO ICMS MONOFÁSICO POR RETENÇÃO</span>
+                            <span class="info">[tot_icms_mono_reten]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--[/secao:icms_mono]-->
+
+            <!-- Total do IBS / CBS / IS -->
+            <p class="area-name">Total do IBS / CBS / IS</p>
+            <table cellpadding="0" cellspacing="0" class="boxTotais4 border-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="nf-label">VALOR DA CBS</span>
+                            <span class="info">[tot_cbs]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO IBS UF</span>
+                            <span class="info">[tot_ibs_uf]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO IBS MUNICÍPIO</span>
+                            <span class="info">[tot_ibs_mun]</span>
+                        </td>
+                        <td>
+                            <span class="nf-label">VALOR DO IMPOSTO SELETIVO</span>
+                            <span class="info">[tot_is]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--[secao:ibscbs_mono]-->
+            <table data-secao="ibscbs_mono" cellpadding="0" cellspacing="0" class="boxTotais4 no-top border-table">
+                <tbody>
+                    <tr>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO IBS MONOFÁSICO</span>
+                            <span class="info">[tot_ibs_mono]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DA CBS MONOFÁSICA</span>
+                            <span class="info">[tot_cbs_mono]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO IBS MONOFÁSICO POR RETENÇÃO</span>
+                            <span class="info">[tot_ibs_mono_reten]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DA CBS MONOFÁSICA POR RETENÇÃO</span>
+                            <span class="info">[tot_cbs_mono_reten]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--[/secao:ibscbs_mono]-->
+
+            <!--[secao:issqn]-->
+            <p data-secao="issqn" class="area-name">Cálculo do ISSQN</p>
+            <table data-secao="issqn" cellpadding="0" cellspacing="0" class="boxTotais4 border-table">
+                <tbody>
+                    <tr>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">INSCRIÇÃO MUNICIPAL</span>
+                            <span class="info txt-center">[ds_company_im]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR TOTAL DOS SERVIÇOS</span>
+                            <span class="info">[vl_total_serv]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">BASE DE CÁLCULO DO ISSQN</span>
+                            <span class="info">[tot_bc_issqn]</span>
+                        </td>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">VALOR DO ISSQN</span>
+                            <span class="info">[tot_issqn]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--[/secao:issqn]-->
+
+            <!--[secao:transporte]-->
+            <p data-secao="transporte" class="area-name">Transportador / volumes transportados</p>
+            <table data-secao="transporte" cellpadding="0" cellspacing="0" class="boxTransporte">
+                <tbody>
+                    <tr>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">RAZÃO SOCIAL</span>
+                            <span class="info">[ds_transport_carrier_name]</span>
+                        </td>
+                        <td class="freteConta rtc-facultativo" style="width: 32mm">
+                            <span class="nf-label">FRETE POR CONTA</span>
+                            <span class="info">[ds_transport_shipping_type]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 17.3mm">
+                            <span class="nf-label">CÓDIGO ANTT</span>
+                            <span class="info">[ds_transport_rntc]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 24.5mm">
+                            <span class="nf-label">PLACA DO VEÍCULO</span>
+                            <span class="info">[ds_transport_vehicle_plate]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 11.3mm">
+                            <span class="nf-label">UF</span>
+                            <span class="info">[ds_transport_vehicle_uf]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 29.5mm">
+                            <span class="nf-label">CNPJ / CPF</span>
+                            <span class="info">[nl_transport_cnpj_cpf]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table data-secao="transporte" cellpadding="0" cellspacing="0" class="boxTransporte no-top">
+                <tbody>
+                    <tr>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">ENDEREÇO</span>
+                            <span class="info">[ds_transport_address]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 32mm">
+                            <span class="nf-label">MUNICÍPIO</span>
+                            <span class="info">[ds_transport_city]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 31mm">
+                            <span class="nf-label">UF</span>
+                            <span class="info">[ds_transport_uf]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 51.4mm">
+                            <span class="nf-label">INSCRIÇÃO ESTADUAL</span>
+                            <span class="info">[ds_transport_ie]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table data-secao="transporte" cellpadding="0" cellspacing="0" class="boxTransporte no-top border-table">
+                <tbody>
+                    <tr>
+                        <td class="rtc-facultativo">
+                            <span class="nf-label">QUANTIDADE</span>
+                            <span class="info">[nu_transport_amount_transported_volumes]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 31.4mm">
+                            <span class="nf-label">ESPÉCIE</span>
+                            <span class="info">[ds_transport_type_volumes_transported]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 31mm">
+                            <span class="nf-label">MARCA</span>
+                            <span class="info">[ds_transport_mark_volumes_transported]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 31.5mm">
+                            <span class="nf-label">NUMERAÇÃO</span>
+                            <span class="info">[ds_transport_number_volumes_transported]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 31.5mm">
+                            <span class="nf-label">PESO BRUTO</span>
+                            <span class="info">[vl_transport_gross_weight]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 32.5mm">
+                            <span class="nf-label">PESO LÍQUIDO</span>
+                            <span class="info">[vl_transport_net_weight]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--[/secao:transporte]-->
+
+[produtos_rtc]
+
+            <!-- Dados adicionais -->
+            <p class="area-name">Dados adicionais</p>
+            <table cellpadding="0"
+                   cellspacing="0"
+                   class="boxDadosAdicionais border-table">
+                <tbody>
+                    <tr>
+                        <td class="field infoComplementar">
+                            <span class="nf-label">INFORMAÇÕES COMPLEMENTARES</span>
+                            <span>[ds_additional_information]</span>
+                        </td>
+                        <td class="field reservaFisco" style="width: 85mm; height: [altura_dados_adicionais]mm">
+                            <span class="nf-label">RESERVADO AO FISCO</span>
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <footer>
+                <table cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td style="text-align: right">
+                                <strong>[credits]</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </footer>
+        </div>
+        [next-page]
+    </div>
+</body>

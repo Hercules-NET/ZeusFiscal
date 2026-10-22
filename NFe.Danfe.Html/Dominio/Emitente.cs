@@ -36,6 +36,11 @@ namespace NFe.Danfe.Html.Dominio
 
         public Endereco Endereco { get; }
 
+        /// <summary>
+        ///     C21 - Código do Regime Tributário, já formatado para impressão (ex.: "3 - REGIME NORMAL")
+        /// </summary>
+        public string Crt { get; internal set; }
+
         #endregion
 
         #region Construtor

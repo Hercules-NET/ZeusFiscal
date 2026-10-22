@@ -12,7 +12,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using DFe.Classes.Flags;
+using NFe.Classes.Informacoes.Emitente;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
 using NFe.Classes.Informacoes.Transporte;
 using NFe.Danfe.Html.CrossCutting;
@@ -112,6 +115,21 @@ namespace NFe.Danfe.Html.Dominio
         /// </summary>
         public string Creditos { get; }
 
+        /// <summary>
+        ///     Leiaute de impressão. O padrão é o leiaute atual; ReformaTributaria segue a NT 2026.010
+        /// </summary>
+        public LeiauteDanfe Leiaute { get; }
+
+        /// <summary>
+        ///     Totais exibidos somente no leiaute da NT 2026.010 (IBS, CBS, IS, FCP e monofásicos). Nulo no leiaute atual
+        /// </summary>
+        public ImpostoReformaTributaria ImpostoReformaTributaria { get; private set; }
+
+        /// <summary>
+        ///     X02 - Modalidade do frete, já formatada para impressão (ex.: "0 - Remetente")
+        /// </summary>
+        public string ModalidadeFreteDescricao { get; private set; }
+
         #endregion
 
         #region Construtor
@@ -177,6 +195,20 @@ namespace NFe.Danfe.Html.Dominio
         /// <param name="creditos">Créditos</param>
         /// <param name="issqn">ISSQN</param>
         public DanfeNFe(Classes.NFe nfe, Status status,string protocolo, string creditos, Issqn issqn = null, string logo = "")
+            : this(nfe, status, protocolo, creditos, LeiauteDanfe.Atual, issqn, logo)
+        {
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="nfe"></param>
+        /// <param name="status">Status</param>
+        /// <param name="protocolo">Número do protocolo retornado pela SEFAZ</param>
+        /// <param name="creditos">Créditos</param>
+        /// <param name="leiaute">Leiaute de impressão (atual ou NT 2026.010)</param>
+        /// <param name="issqn">ISSQN</param>
+        /// <param name="logo">Imagem em base64</param>
+        public DanfeNFe(Classes.NFe nfe, Status status, string protocolo, string creditos, LeiauteDanfe leiaute, Issqn issqn = null, string logo = "")
         {
             if (nfe == null) throw new ArgumentNullException(nameof(nfe));
             if(nfe.infNFe.ide.mod!=ModeloDocumento.NFe) throw new InvalidOperationException("Modelo da nota imcompatível com o esperado 55");
@@ -354,7 +386,7 @@ namespace NFe.Danfe.Html.Dominio
             Imposto = new Imposto(nfe.infNFe.total.ICMSTot.vBC, nfe.infNFe.total.ICMSTot.vICMS, nfe.infNFe.total.ICMSTot.vBCST,
                     nfe.infNFe.total.ICMSTot.vST, nfe.infNFe.total.ICMSTot.vProd, nfe.infNFe.total.ICMSTot.vFrete,
                     nfe.infNFe.total.ICMSTot.vSeg, nfe.infNFe.total.ICMSTot.vDesc, nfe.infNFe.total.ICMSTot.vOutro,
-                    nfe.infNFe.total.ICMSTot.vIPI, nfe.infNFe.total.ICMSTot.vNF,nfe.infNFe.total.ICMSTot.vTotTrib,
+                    nfe.infNFe.total.ICMSTot.vIPI, nfe.infNFe.total.ICMSTot.vNF,nfe.infNFe.total.ICMSTot.vTotTrib ?? 0,
                     nfe.infNFe.total.ICMSTot.vPIS, nfe.infNFe.total.ICMSTot.vCOFINS, nfe.infNFe.total.ICMSTot.vICMSUFRemet,
                     nfe.infNFe.total.ICMSTot.vICMSUFDest);
             
@@ -373,10 +405,90 @@ namespace NFe.Danfe.Html.Dominio
             ValorTotNota = Imposto.vNF;
             NumNota = nfe.infNFe.ide.nNF.ToString();
             SerieNota = nfe.infNFe.ide.serie.ToString();
-            
+
+            Leiaute = leiaute;
+            if (leiaute == LeiauteDanfe.ReformaTributaria)
+                PreencherReformaTributaria(nfe);
         }
 
 
         #endregion
+
+        /// <summary>
+        ///     Preenche o CRT, os totais e a tributação por item usados pelo leiaute da NT 2026.010
+        ///     <para>Os grupos ausentes no XML ficam nulos e não são impressos</para>
+        /// </summary>
+        private void PreencherReformaTributaria(Classes.NFe nfe)
+        {
+            var crt = nfe.infNFe.emit.CRT;
+            var descricaoCrt = typeof(CRT).GetField(crt.ToString())?
+                    .GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    .OfType<DescriptionAttribute>().FirstOrDefault()?.Description;
+            Emitente.Crt = $"{(int)crt} - {descricaoCrt?.ToUpper()}";
+
+            if (nfe.infNFe.transp != null)
+            {
+                var modFrete = nfe.infNFe.transp.modFrete;
+                string descricaoFrete;
+                switch (modFrete)
+                {
+                    case ModalidadeFrete.mfContaEmitenteOumfContaRemetente: descricaoFrete = "Remetente"; break;
+                    case ModalidadeFrete.mfContaDestinatario: descricaoFrete = "Destinatário"; break;
+                    case ModalidadeFrete.mfContaTerceiros: descricaoFrete = "Terceiros"; break;
+                    case ModalidadeFrete.mfProprioContaRemente: descricaoFrete = "Próprio Remetente"; break;
+                    case ModalidadeFrete.mfProprioContaDestinatario: descricaoFrete = "Próprio Destinatário"; break;
+                    default: descricaoFrete = "Sem Frete"; break;
+                }
+                ModalidadeFreteDescricao = $"{(int)modFrete} - {descricaoFrete}";
+            }
+
+            var icmsTot = nfe.infNFe.total.ICMSTot;
+            var ibscbsTot = nfe.infNFe.total.IBSCBSTot;
+            ImpostoReformaTributaria = new ImpostoReformaTributaria
+            {
+                vFCP = icmsTot.vFCP,
+                vFCPST = icmsTot.vFCPST,
+                vICMSUFDest = icmsTot.vICMSUFDest,
+                vFCPUFDest = icmsTot.vFCPUFDest,
+                qBCMono = icmsTot.qBCMono,
+                vICMSMono = icmsTot.vICMSMono,
+                qBCMonoReten = icmsTot.qBCMonoReten,
+                vICMSMonoReten = icmsTot.vICMSMonoReten,
+                vCBS = ibscbsTot?.gCBS?.vCBS ?? 0,
+                vIBSUF = ibscbsTot?.gIBS?.gIBSUF?.vIBSUF ?? 0,
+                vIBSMun = ibscbsTot?.gIBS?.gIBSMun?.vIBSMun ?? 0,
+                vIS = nfe.infNFe.total.ISTot?.vIS ?? 0,
+                PossuiMonofasia = ibscbsTot?.gMono != null,
+                vIBSMono = ibscbsTot?.gMono?.vIBSMono ?? 0,
+                vCBSMono = ibscbsTot?.gMono?.vCBSMono ?? 0,
+                vIBSMonoReten = ibscbsTot?.gMono?.vIBSMonoReten ?? 0,
+                vCBSMonoReten = ibscbsTot?.gMono?.vCBSMonoReten ?? 0
+            };
+
+            //os produtos foram adicionados na mesma ordem dos itens (det)
+            var produtos = Produtos.ToList();
+            for (var i = 0; i < nfe.infNFe.det.Count; i++)
+            {
+                var imposto = nfe.infNFe.det[i].imposto;
+                var gIBSCBS = imposto?.IBSCBS?.gIBSCBS;
+                produtos[i].ReformaTributaria = new ProdutoReformaTributaria
+                {
+                    CstIcms = imposto?.ICMS?.TipoICMS == null ? null
+                        : imposto.ICMS.TipoICMS.orig() + imposto.ICMS.TipoICMS.Cst() + imposto.ICMS.TipoICMS.Csosn(),
+                    cClassTrib = imposto?.IBSCBS?.cClassTrib,
+                    vBCIBSCBS = gIBSCBS?.vBC,
+                    pIBSUF = gIBSCBS?.gIBSUF == null ? (decimal?)null : gIBSCBS.gIBSUF.gRed?.pAliqEfet ?? gIBSCBS.gIBSUF.pIBSUF,
+                    vIBSUF = gIBSCBS?.gIBSUF?.vIBSUF,
+                    pIBSMun = gIBSCBS?.gIBSMun == null ? (decimal?)null : gIBSCBS.gIBSMun.gRed?.pAliqEfet ?? gIBSCBS.gIBSMun.pIBSMun,
+                    vIBSMun = gIBSCBS?.gIBSMun?.vIBSMun,
+                    pCBS = gIBSCBS?.gCBS == null ? (decimal?)null : gIBSCBS.gCBS.gRed?.pAliqEfet ?? gIBSCBS.gCBS.pCBS,
+                    vCBS = gIBSCBS?.gCBS?.vCBS,
+                    vBCIS = imposto?.IS?.vBCIS,
+                    pIS = imposto?.IS?.pIS,
+                    vIS = imposto?.IS?.vIS,
+                    vBCIPI = imposto?.IPI?.TipoIPI?.vBC()
+                };
+            }
+        }
     }
 }
