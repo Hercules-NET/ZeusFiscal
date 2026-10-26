@@ -30,7 +30,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTIPI.ipi00, 1000, 1, 10, 5, 50)]
         [DataRow(CSTIPI.ipi49, 1000, 1, 10, 5, 50)]
         [DataRow(CSTIPI.ipi50, 1000, 1, 10, 5, 50)]
@@ -59,7 +58,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTIPI.ipi01)]
         [DataRow(CSTIPI.ipi02)]
         [DataRow(CSTIPI.ipi03)]

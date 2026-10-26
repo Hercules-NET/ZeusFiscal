@@ -10,6 +10,10 @@ using CTe.CTeOSDocumento.Common;
 using CTe.CTeOSDocumento.Soap;
 using DFe.Http.Ext;
 
+// Implementação com HttpWebRequest: padrão em runtimes anteriores ao .NET 9 (.NET Framework e .NET 8);
+// a partir do .NET 9 o padrão é o RequestSefazHttpClientHandler (ver ConfiguracaoServicoWSDL)
+#pragma warning disable SYSLIB0014
+
 namespace DFe.Wsdl.Common
 {
     public class RequestSefazDefault : IRequestSefaz

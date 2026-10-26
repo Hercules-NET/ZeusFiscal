@@ -8,15 +8,17 @@
 
 ##  Versões suportadas:
 
-A biblioteca foi desenvolvida em **C#** utilizando Visual Studio Community 2022 com os SDKs net462, netstandard2.0 e net6.0 instalados.
+A biblioteca é desenvolvida em **C#** com o SDK do **.NET 10** (Visual Studio 2026 ou superior), gerando builds para .NET Framework 4.6.2, .NET Standard 2.0 e as versões LTS do .NET (8 e 10).
 |  Escopos  |  Frameworks Suportados  |
 | ------------------- | ------------------- |
-| NFe, NFCe, CTe, MDFe | .NET 4.6.2+, .NetStandard 2.0, .NET 6.0+ .NET 8.0 |
-| Impressões com FastReport OpenSource (NFe, NFCe, CTe, MDFe) | ..NET 4.6.2+, .NetStandard 2.0, .NET 6.0(windows+linux) .NET 8.0+(windows apenas) |
-| Impressões com FastReport (Versão PAGA) (NFe, NFCe, CTe, MDFe) | .NET 4.6.2+, .NetStandard 2.0, .NET 6.0(windows+linux) .NET 8.0+(windows apenas) |
-| Impressões com FastReport.Skia (Versão PAGA SkiaSharp) (NFe, NFCe, CTe, MDFe) | .NET 7.0+(windows+linux+mobile)  |
-| Impressões com QuestPdf | .NET 4.6.2+, .NetStandard 2.0, .NET 7.0+(windows+linux+mobile)  |
-| Impressões com PDFClown (NFe) | .NET 4.6.2+  |
+| NFe, NFCe, CTe, MDFe | .NET Framework 4.6.2+, .NetStandard 2.0, .NET 8, .NET 10 |
+| Impressões com FastReport OpenSource (NFe, NFCe, CTe, MDFe) | .NET Framework 4.6.2+, .NetStandard 2.0 (windows+linux), .NET 8 e .NET 10 (windows apenas) |
+| Impressões com FastReport (Versão PAGA) (NFe, NFCe, CTe, MDFe) | .NET Framework 4.6.2+ |
+| Impressões com FastReport.Skia (Versão PAGA SkiaSharp) (NFe, NFCe, CTe, MDFe) | .NET 8 e .NET 10 (windows+linux+mobile)  |
+| Impressões com QuestPdf | .NET 8 e .NET 10 (windows+linux+mobile)  |
+| Impressões com PDFClown (NFe) | .NET 8 e .NET 10  |
+
+***O suporte ao .NET 8 segue o ciclo de vida da Microsoft (fim em 10/11/2026). Aplicações em .NET 9 usam os builds do .NET 8.***
 
 ***ATENÇÃO! Não temos suporte para .NetFramework 4.5.2 ou 4.5 ou menor. A Biblioteca irá seguir o [ciclo de vida de versões da microsoft](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework), sendo retirado a compatibilidade de versoes específicas e antigas do .Net caso a microsoft retire seu suporte.***
 
