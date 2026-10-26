@@ -7,20 +7,6 @@ namespace DFe.Utils.Assinatura
     public static class ExtensaoCertificadoDigital
     {
         /// <summary>
-        /// Obtém a chave privada RSA do certificado, compatível com chaves em provedores CSP e CNG (ex.: tokens A3 mais novos).
-        /// <para>A chave retornada deve ser descartada (Dispose) por quem a obteve.</para>
-        /// </summary>
-        /// <exception cref="CryptographicException">Quando o certificado não possui chave privada RSA acessível</exception>
-        internal static RSA ObterChavePrivadaRsa(this X509Certificate2 certificado)
-        {
-            var chave = certificado.GetRSAPrivateKey();
-            if (chave == null)
-                throw new CryptographicException("O certificado digital não possui chave privada RSA acessível.");
-
-            return chave;
-        }
-
-        /// <summary>
         /// Extenção para certificado digital
         /// <para>Verificar validade do certificado digital, se vencido dispara ArgumentException</para>
         /// </summary>
@@ -52,6 +38,16 @@ namespace DFe.Utils.Assinatura
         /// Extenção para certificado digital
         /// <para>Se usado ele retorna true se for um hardware, se for PenDriver ou SmartCard</para>
         /// </summary>
+        /// <remarks>
+        /// Limitações:
+        /// <para>- Só reconhece chaves em provedor CSP (CryptoAPI) que se declara hardware removível. Chaves em provedor CNG/KSP,
+        /// comuns nos tokens e cartões A3 mais novos (ex.: "Microsoft Smart Card Key Storage Provider"), retornam false mesmo sendo A3.
+        /// No .NET 8 ou superior, tokens com minidriver da Microsoft também são abertos via CNG e retornam false.</para>
+        /// <para>- Retorna false em qualquer erro ao abrir a chave (ex.: sem chave privada, token removido).</para>
+        /// <para>- Só funciona no Windows; nas demais plataformas lança <see cref="NotSupportedException"/>.</para>
+        /// <para>Não interfere na assinatura nem no PIN. Para saber se o certificado é A3, prefira a configuração usada para
+        /// obtê-lo (<see cref="ConfiguracaoCertificado.TipoCertificado"/>).</para>
+        /// </remarks>
         /// <param name="x509Certificate2"></param>
         /// <returns>bool</returns>
         public static bool IsA3(this X509Certificate2 x509Certificate2)
@@ -64,24 +60,8 @@ namespace DFe.Utils.Assinatura
 
             try
             {
-                // Aqui vale o tipo do objeto .NET (e não o provedor registrado, como no PIN): a informação de
-                // hardware removível vem do provedor que efetivamente abriu a chave. A legada (.NET Framework) não é descartada
-                var chaveLegada = CertificadoDigital.ObterChavePrivadaLegada(x509Certificate2);
-                using (var chaveModerna = chaveLegada == null ? x509Certificate2.GetRSAPrivateKey() : null)
-                {
-                    var chave = chaveLegada ?? chaveModerna;
-
-                    if (chave is RSACryptoServiceProvider service)
-                        return service.CspKeyContainerInfo.Removable && service.CspKeyContainerInfo.HardwareDevice;
-
-                    if (chave is RSACng chaveCng)
-                    {
-                        var tipo = BitConverter.ToInt32(chaveCng.Key.GetProperty(MetodosNativos.NcryptImplTypeProperty, CngPropertyOptions.None).GetValue(), 0);
-                        return (tipo & MetodosNativos.NcryptImplHardwareRemovivel) == MetodosNativos.NcryptImplHardwareRemovivel;
-                    }
-
-                    return false;
-                }
+                var service = CertificadoDigital.ObterChavePrivadaAssinatura(x509Certificate2) as RSACryptoServiceProvider;
+                return service != null && service.CspKeyContainerInfo.Removable && service.CspKeyContainerInfo.HardwareDevice;
             }
             catch
             {

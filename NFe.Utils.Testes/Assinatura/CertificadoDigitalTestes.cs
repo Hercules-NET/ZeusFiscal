@@ -70,31 +70,39 @@ namespace NFe.Utils.Testes.Assinatura
             }
         }
 
-        [Fact]
-        public void ObterChavePrivadaRsa_sem_chave_privada_lanca_CryptographicException()
-        {
-            using (var certificado = CertificadoDeTeste.CriarEmMemoria())
-            using (var somenteChavePublica = X509CertificateLoader.LoadCertificate(certificado.RawData))
-                Assert.Throws<CryptographicException>(() => somenteChavePublica.ObterChavePrivadaRsa());
-        }
-
 #if NETFRAMEWORK
         [FatoWindows]
-        public void ObterChavePrivadaLegada_mantem_PrivateKey_no_NetFramework_e_deixa_CNG_para_o_fallback()
+        public void ObterChavePrivadaAssinatura_usa_PrivateKey_no_NetFramework_e_GetRSAPrivateKey_para_CNG()
         {
             using (var csp = CertificadoDeTeste.ComChaveCsp())
             using (var cng = CertificadoDeTeste.ComChaveCng())
             using (var a1 = CertificadoDigital.ObterCertificado(ConfiguracaoA1()))
             {
-                // o mesmo objeto de chave (CAPI) que era usado para assinar antes desta mudança
-                Assert.IsType<RSACryptoServiceProvider>(CertificadoDigital.ObterChavePrivadaLegada(a1));
-                Assert.IsType<RSACryptoServiceProvider>(CertificadoDigital.ObterChavePrivadaLegada(csp.Certificado));
+                // o mesmo objeto de chave (CAPI) do PrivateKey
+                Assert.IsType<RSACryptoServiceProvider>(CertificadoDigital.ObterChavePrivadaAssinatura(a1));
+                Assert.IsType<RSACryptoServiceProvider>(CertificadoDigital.ObterChavePrivadaAssinatura(csp.Certificado));
 
                 // chave CNG: o PrivateKey falha ("Tipo de provedor inválido") e o GetRSAPrivateKey assume
-                Assert.Null(CertificadoDigital.ObterChavePrivadaLegada(cng.Certificado));
+                Assert.IsType<RSACng>(CertificadoDigital.ObterChavePrivadaAssinatura(cng.Certificado));
             }
         }
 #endif
+
+        [FatoWindows]
+        public void ObterChavePrivadaAssinatura_devolve_sempre_a_mesma_chave_sem_descartar()
+        {
+            // o PIN do A3 fica no handle da chave: todas as assinaturas usam a mesma, que não pode ser descartada entre elas
+            using (var csp = CertificadoDeTeste.ComChaveCsp())
+            using (var cng = CertificadoDeTeste.ComChaveCng())
+            {
+                foreach (var certificado in new[] { csp.Certificado, cng.Certificado })
+                {
+                    Assert.Same(CertificadoDigital.ObterChavePrivadaAssinatura(certificado), CertificadoDigital.ObterChavePrivadaAssinatura(certificado));
+                    AssertConsegueAssinar(certificado);
+                    AssertConsegueAssinar(certificado);
+                }
+            }
+        }
 
         [FatoWindows]
         public void ObterInfoProvedorChave_distingue_chave_csp_de_cng()

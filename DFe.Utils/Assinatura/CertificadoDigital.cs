@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -62,8 +63,7 @@ namespace DFe.Utils.Assinatura
         /// </summary>
         public static byte[] ObterAssinaturaPkcs1(X509Certificate2 certificado, byte[] value)
         {
-            using (RSA rsa = certificado.ObterChavePrivadaRsa())
-                return rsa.SignData(value, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
+            return ObterChavePrivadaAssinatura(certificado).SignData(value, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
         }
 
         public static void ClearCache()
@@ -99,25 +99,27 @@ namespace DFe.Utils.Assinatura
         }
 
         /// <summary>
-        /// .NET Framework: a chave pelo <see cref="X509Certificate2.PrivateKey"/>, exatamente como antes (CAPI; a instância fica guardada
-        /// no certificado e não deve ser descartada; os demais erros continuam sendo lançados como antes).
-        /// <para>Retorna null — e o chamador usa GetRSAPrivateKey — quando a chave está em provedor CNG (o PrivateKey falha com
-        /// "Tipo de provedor inválido", PR #126), quando não há chave privada RSA e fora do .NET Framework.</para>
+        /// Chave privada usada nas assinaturas (XML e PKCS#1) e no PIN do A3: sempre a mesma instância para o mesmo certificado,
+        /// que não deve ser descartada. O handle fica aberto enquanto o certificado existir e o PIN definido nele vale para todas
+        /// as assinaturas, sem depender do cache de PIN do provedor.
+        /// <para>É o <see cref="X509Certificate2.PrivateKey"/>; quando ele não abre a chave CNG no .NET Framework ("Tipo de provedor
+        /// inválido", PR #126, ou null com chave efêmera), o GetRSAPrivateKey, guardado junto do certificado.</para>
         /// </summary>
-        internal static RSACryptoServiceProvider ObterChavePrivadaLegada(X509Certificate2 certificado)
+        internal static RSA ObterChavePrivadaAssinatura(X509Certificate2 certificado)
         {
-#if NETFRAMEWORK
+            RSA chave;
+#pragma warning disable SYSLIB0028 // PrivateKey é obsoleto no .NET 6+, mas é ele que guarda a chave no certificado
             try
             {
-                return certificado.PrivateKey as RSACryptoServiceProvider;
+                chave = certificado.PrivateKey as RSA;
             }
             catch (CryptographicException ex) when (ex.HResult == MetodosNativos.NteBadProvType)
             {
-                return null;
+                chave = null;
             }
-#else
-            return null;
-#endif
+#pragma warning restore SYSLIB0028
+
+            return chave ?? ChavesPrivadasCng.GetValue(certificado, c => c.GetRSAPrivateKey());
         }
 
         #endregion
@@ -125,6 +127,11 @@ namespace DFe.Utils.Assinatura
         #region Privados
 
         private static readonly Dictionary<string, X509Certificate2> CacheCertificado = new Dictionary<string, X509Certificate2>();
+
+        /// <summary>
+        /// Chaves CNG que o PrivateKey não abre no .NET Framework, guardadas enquanto o certificado existir
+        /// </summary>
+        private static readonly ConditionalWeakTable<X509Certificate2, RSA> ChavesPrivadasCng = new ConditionalWeakTable<X509Certificate2, RSA>();
 
 #if NET9_0_OR_GREATER
         /// <summary>
@@ -225,8 +232,8 @@ namespace DFe.Utils.Assinatura
                 throw new NotSupportedException("Metodo DefinirPinParaChavePrivada com suporte apenas no Windows atualmente!");
 
 #if NETFRAMEWORK
-            // .NET Framework: contêiner vindo do PrivateKey, como antes; sem chave legada (CNG) fica ProviderType 0 => EhCng
-            var chaveCsp = ObterChavePrivadaLegada(certificado);
+            // .NET Framework: contêiner vindo do PrivateKey, como antes; chave CNG (RSACng) fica ProviderType 0 => EhCng
+            var chaveCsp = ObterChavePrivadaAssinatura(certificado) as RSACryptoServiceProvider;
             var infoChave = chaveCsp == null
                 ? new MetodosNativos.CryptKeyProvInfo()
                 : new MetodosNativos.CryptKeyProvInfo
@@ -243,15 +250,13 @@ namespace DFe.Utils.Assinatura
 
             if (infoChave.EhCng)
             {
-                using (var chave = (RSACng)certificado.ObterChavePrivadaRsa())
-                {
-                    chave.Key.SetProperty(new CngProperty(MetodosNativos.NcryptPinProperty,
-                        Encoding.Unicode.GetBytes(pin + '\0'), CngPropertyOptions.None));
+                // o PIN fica no handle da chave usada nas assinaturas
+                var chave = (RSACng)ObterChavePrivadaAssinatura(certificado);
+                chave.Key.SetProperty(new CngProperty(MetodosNativos.NcryptPinProperty,
+                    Encoding.Unicode.GetBytes(pin + '\0'), CngPropertyOptions.None));
 
-                    // O PIN fica associado a este handle: uma operação com a chave o valida enquanto ele está aberto.
-                    // As assinaturas seguintes abrem outro handle e dependem do cache de PIN do provedor.
-                    chave.SignData(new byte[] { 0 }, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
-                }
+                // valida o PIN já no carregamento, como o CSP: o TLS abre a chave por conta própria e depende do PIN já verificado
+                chave.SignData(new byte[] { 0 }, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
                 return;
             }
 

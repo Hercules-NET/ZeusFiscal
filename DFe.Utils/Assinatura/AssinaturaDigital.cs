@@ -33,7 +33,7 @@ namespace DFe.Utils.Assinatura
             var documento = new XmlDocument { PreserveWhitespace = true };
             documento.LoadXml(xml);
 
-            var docXml = new SignedXml(documento);
+            var docXml = new SignedXml(documento) { SigningKey = CertificadoDigital.ObterChavePrivadaAssinatura(certificado) };
 
             docXml.SignedInfo.SignatureMethod = signatureMethod;
             var reference = new Reference { Uri = "#" + id, DigestMethod = digestMethod };
@@ -52,14 +52,7 @@ namespace DFe.Utils.Assinatura
             keyInfo.AddClause(new KeyInfoX509Data(certificado));
 
             docXml.KeyInfo = keyInfo;
-
-            // a chave legada (.NET Framework) fica guardada no certificado e não é descartada; a moderna é
-            var chaveLegada = CertificadoDigital.ObterChavePrivadaLegada(certificado);
-            using (var chaveModerna = chaveLegada == null ? certificado.ObterChavePrivadaRsa() : null)
-            {
-                docXml.SigningKey = chaveLegada ?? chaveModerna;
-                docXml.ComputeSignature();
-            }
+            docXml.ComputeSignature();
 
             //// recuperando a representacao do XML assinado
             var xmlDigitalSignature = docXml.GetXml();

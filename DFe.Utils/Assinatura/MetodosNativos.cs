@@ -89,12 +89,6 @@ namespace DFe.Utils.Assinatura
         /// </summary>
         internal const string NcryptPinProperty = "SmartCardPin";
 
-        /// <summary>
-        /// NCRYPT_IMPL_TYPE_PROPERTY e flags NCRYPT_IMPL_HARDWARE_FLAG | NCRYPT_IMPL_REMOVABLE_FLAG
-        /// </summary>
-        internal const string NcryptImplTypeProperty = "Impl Type";
-        internal const int NcryptImplHardwareRemovivel = 0x1 | 0x8;
-
         [DllImport("CRYPT32.DLL", SetLastError = true)]
         internal static extern bool CertSetCertificateContextProperty(
             IntPtr pCertContext,

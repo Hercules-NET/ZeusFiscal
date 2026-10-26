@@ -61,7 +61,7 @@ namespace NFe.Utils.Testes.Assinatura
         }
 
         /// <summary>
-        /// A chave obtida é descartada a cada assinatura; isso não pode remover a chave persistida do certificado
+        /// A chave guardada no certificado é reutilizada e não pode ser descartada entre uma assinatura e outra
         /// </summary>
         private static void AssinarDuasVezes(X509Certificate2 certificado, Func<X509Certificate2, SignatureZeus> assinar)
         {
