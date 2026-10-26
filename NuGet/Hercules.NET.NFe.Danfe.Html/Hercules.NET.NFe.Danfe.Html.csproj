@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>netstandard2.0</TargetFramework>
+	<PlatformTarget>AnyCpu</PlatformTarget>
+    <Configurations>Release</Configurations>
+    <NoBuild>true</NoBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NuspecFile>Hercules.NET.NFe.Danfe.Html.nuspec</NuspecFile>
+  </PropertyGroup>
+
+</Project>

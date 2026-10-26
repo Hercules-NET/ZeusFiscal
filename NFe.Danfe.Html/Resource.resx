@@ -124,4 +124,16 @@
   <data name="danfe_model_55_nfe_page_one" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\danfe-model-55-nfe-page-one.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="danfe_model_55_nfe_rtc_cabecalho" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\danfe-model-55-nfe-rtc-cabecalho.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="danfe_model_55_nfe_rtc_page_next" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\danfe-model-55-nfe-rtc-page-next.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="danfe_model_55_nfe_rtc_page_one" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\danfe-model-55-nfe-rtc-page-one.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="danfe_model_55_nfe_rtc_produtos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\danfe-model-55-nfe-rtc-produtos.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>
