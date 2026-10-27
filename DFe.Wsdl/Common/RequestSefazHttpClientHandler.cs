@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,18 +60,8 @@ namespace DFe.Wsdl.Common
 
             string xmlSoap = xmlEnvelop.InnerXml;
 
-            using (HttpClientHandler handler = new HttpClientHandler())
+            using (HttpClientHandler handler = CriarHandler(certificadoDigital))
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;//para net8 ou outras versoes
-                handler.SslProtocols = System.Security.Authentication.SslProtocols.Tls12;//NET 9+
-
-                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => { return true; };//para net8 ou outras versoes
-                handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };//NET 9+
-
-                handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                handler.CheckCertificateRevocationList = false;
-                handler.ClientCertificates.Add(certificadoDigital);
-
                 using (HttpClient client = new HttpClient(handler))
                 {
                     client.Timeout = TimeSpan.FromMilliseconds(timeOut == 0 ? 2000 : timeOut);
@@ -108,18 +97,8 @@ namespace DFe.Wsdl.Common
             string xmlSoap = xmlEnvelop.InnerXml;
 
 
-            using (HttpClientHandler handler = new HttpClientHandler())
+            using (HttpClientHandler handler = CriarHandler(certificadoDigital))
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;//para net8 ou outras versoes
-                handler.SslProtocols = System.Security.Authentication.SslProtocols.Tls12;//NET 9+
-
-                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => { return true; };//para net8 ou outras versoes
-                handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };//NET 9+
-
-                handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                handler.CheckCertificateRevocationList = false;
-                handler.ClientCertificates.Add(certificadoDigital);
-
                 using (HttpClient client = new HttpClient(handler))
                 {
                     client.Timeout = TimeSpan.FromMilliseconds(timeOut == 0 ? 2000 : timeOut);
@@ -136,6 +115,28 @@ namespace DFe.Wsdl.Common
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Cria o HttpClientHandler com TLS 1.2 e o certificado do cliente
+        /// </summary>
+        private static HttpClientHandler CriarHandler(X509Certificate2 certificadoDigital)
+        {
+            // Como antes, o TLS 1.2 também vai para a configuração global. Removido só o "+=" no callback global de validação,
+            // que acumulava um delegate a cada requisição e fazia o processo inteiro aceitar qualquer certificado de servidor.
+#pragma warning disable SYSLIB0014 // ServicePointManager é obsoleto, mas segue lido por HttpWebRequest e SmtpClient: mantido como antes
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+#pragma warning restore SYSLIB0014
+
+            var handler = new HttpClientHandler
+            {
+                SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                CheckCertificateRevocationList = false
+            };
+            handler.ClientCertificates.Add(certificadoDigital);
+            return handler;
         }
     }
 }
