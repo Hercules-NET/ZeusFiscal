@@ -3,6 +3,17 @@ namespace NFe.Classes.Informacoes.Total
     public class total
     {
         private decimal? _vNFTot;
+        private decimal? _vProdLiqTot;
+
+        /// <summary>
+        ///     W01a - Valor Total Líquido dos Produtos ou Serviços (sem tributação) - NT 2026.008
+        ///     <para> Soma dos vProdLiq dos itens</para>
+        /// </summary>
+        public decimal? vProdLiqTot
+        {
+            get {  return _vProdLiqTot; }
+            set {  _vProdLiqTot = value.Arredondar(2);}
+        }
 
         /// <summary>
         ///     W02 - Grupo Totais referentes ao ICMS
@@ -35,6 +46,11 @@ namespace NFe.Classes.Informacoes.Total
         public bool ShouldSerializevNFTot()
         {
             return _vNFTot.HasValue;
+        }
+
+        public bool ShouldSerializevProdLiqTot()
+        {
+            return vProdLiqTot.HasValue;
         }
     }
 }

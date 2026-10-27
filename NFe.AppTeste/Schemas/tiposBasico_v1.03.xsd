@@ -68,7 +68,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[0-9]{44}"/>
+			<xs:pattern value="[0-9]{6}[0-9A-Z]{12}[0-9]{26}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProt">
@@ -95,7 +95,17 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[0-9]{3}"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[0-9]{3,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCnpjBase">
+		<xs:annotation>
+			<xs:documentation>Tipo CNPJ Base</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[A-Z0-9]{8}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCnpj">
@@ -104,7 +114,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[0-9]{14}"/>
+			<xs:pattern value="[0-9A-Z]{12}[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCnpjVar">
@@ -113,7 +123,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[0-9]{3,14}"/>
+			<xs:pattern value="[0-9A-Z]{12}[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCnpjOpc">
@@ -123,7 +133,7 @@
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:maxLength value="14"/>
-			<xs:pattern value="[0-9]{0}|[0-9]{14}"/>
+			<xs:pattern value="[0-9]{0}|[0-9A-Z]{12}[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCpf">
@@ -786,7 +796,7 @@ acrescentado:
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[!-ÿ]{1}[ -ÿ]*[!-ÿ]{1}|[!-ÿ]{1}"/>
+			<xs:pattern value="[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TData">
@@ -823,6 +833,15 @@ acrescentado:
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:pattern value="0|0\.[0-9]{2,4}|[1-9]{1}[0-9]{0,2}(\.[0-9]{2,4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1104Neg">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com até 15 dígitos, sendo 11 de corpo e até 4 decimais, aceitando valores negativos</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{1,4}|[1-9]{1}[0-9]{0,10}|[1-9]{1}[0-9]{0,10}(\.[0-9]{1,4})?|-0\.[0-9]{1,4}|-[1-9]{1}[0-9]{0,10}|-[1-9]{1}[0-9]{0,10}(\.[0-9]{1,4})?"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TDec1302">
@@ -876,7 +895,6 @@ acrescentado:
 			<xs:enumeration value="90"/>
 			<xs:enumeration value="91"/>
 			<xs:enumeration value="92"/>
-			<xs:enumeration value="94"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TLatitude">
@@ -904,4 +922,44 @@ acrescentado:
 			<xs:element name="Exponent" type="xs:base64Binary"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:group name="ECT_Evento">
+		<xs:sequence>
+			<xs:element name="cRastreio">
+				<xs:annotation>
+					<xs:documentation>Código de rastreamento da ECT</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Za-z0-9]{13}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="dhPostagem" type="nfe:TDateTimeUTC">
+				<xs:annotation>
+					<xs:documentation>Data e hora da postagem, no formato AAAA-MM-DDThh:mm:ssTZD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UFAgencia" type="nfe:TUf">
+				<xs:annotation>
+					<xs:documentation>UF da agência em que foi feita a postagem</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cMunAgencia" type="nfe:TCodMunIBGE">
+				<xs:annotation>
+					<xs:documentation>Código IBGE do município que fez a postagem</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xAgencia">
+				<xs:annotation>
+					<xs:documentation>Nome da agência em que foi feita a postagem</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="nfe:TString">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
 </xs:schema>
