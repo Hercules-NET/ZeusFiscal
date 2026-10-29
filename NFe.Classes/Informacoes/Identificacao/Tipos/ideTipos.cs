@@ -570,7 +570,10 @@ namespace NFe.Classes.Informacoes.Identificacao.Tipos
 
         [Description("Recebimento do pagamento, conforme fato gerador do IBS/CBS definido no Art. 10 § 2º")]
         [XmlEnum("2")]
-        RecebimentoPagamento = 2
+        RecebimentoPagamento = 2,
+        [Description("Recebimento do pagamento con fornecimento posterior")]
+        [XmlEnum("4")]
+        RecebimentoPagamentoFornecimentoPosterior = 4
     }
 
     public enum indBemMovelUsado
