@@ -350,12 +350,12 @@ namespace NFe.Classes.Informacoes.Detalhe
             return tpCredPresIBSZFM.HasValue;
         }
 
-        public bool ShouldSerializeVUnComLiq()
+        public bool ShouldSerializevUnComLiq()
         {
             return vUnComLiq.HasValue;
         }
 
-        public bool ShouldSerializeVProdLiq()
+        public bool ShouldSerializevProdLiq()
         {
             return vProdLiq.HasValue;
         }
