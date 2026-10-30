@@ -154,6 +154,18 @@ namespace NFe.Classes.Informacoes.Detalhe
             set { _vprod = value.Arredondar(2); }
         }
 
+        public decimal? vUnComLiq
+        {
+            get { return _vUnComLiq.Arredondar(10); }
+            set { _vUnComLiq = value.Arredondar(10); }
+        }
+
+        public decimal? vProdLiq
+        {
+            get { return _vProdLiq.Arredondar(2); }
+            set { _vProdLiq = value.Arredondar(2); }
+        }
+
         /// <summary>
         ///     I12 - GTIN (Global Trade Item Number) do produto, antigo código EAN ou código de barras
         /// </summary>
@@ -302,17 +314,7 @@ namespace NFe.Classes.Informacoes.Detalhe
 
         // l117c
         public indBemMovelUsado? indBemMovelUsado { get; set; }
-        public decimal? VUnComLiq 
-        { 
-            get { return _vUnComLiq.Arredondar(10); } 
-            set { _vUnComLiq = value.Arredondar(10); } 
-        }
-        public decimal? VProdLiq 
-        {
-            get { return _vProdLiq.Arredondar(2); } 
-            set { _vProdLiq = value.Arredondar(2); }        
-        }
-
+        
         public bool ShouldSerializenItemPed()
         {
             return nItemPed.HasValue;
@@ -350,12 +352,12 @@ namespace NFe.Classes.Informacoes.Detalhe
 
         public bool ShouldSerializeVUnComLiq()
         {
-            return VUnComLiq.HasValue;
+            return vUnComLiq.HasValue;
         }
 
         public bool ShouldSerializeVProdLiq()
         {
-            return VProdLiq.HasValue;
+            return vProdLiq.HasValue;
         }
     }
 }
