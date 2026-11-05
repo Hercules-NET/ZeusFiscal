@@ -37,17 +37,17 @@ namespace DFe.Utils
         }
 
         /// <summary>
-        /// Retorna uma string no formato AAAA-MM-DDThh:mm:dd 
+        /// Retorna uma string no formato AAAA-MM-DDThh:mm:ss
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public static string ParaDataHoraStringSemUtc(this DateTimeOffset data)
         {
-            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:dd");
+            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:ss");
         }
 
         /// <summary>
-        /// Retorna uma string no formato AAAA-MM-DDThh:mm:dd 
+        /// Retorna uma string no formato AAAA-MM-DDThh:mm:ss
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
