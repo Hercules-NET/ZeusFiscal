@@ -13,7 +13,7 @@ namespace NFe.Utils.Testes.Consulta
     {
         private const string ChaveNFe = "35240112345678000195550010000000011000000010";
 
-        private static string MontarRetConsSitNFe(string tpEvento, string descEvento)
+        internal static string MontarRetConsSitNFe(string tpEvento, string descEvento)
         {
             return
                 "<retConsSitNFe xmlns=\"http://www.portalfiscal.inf.br/nfe\" versao=\"4.00\">" +
