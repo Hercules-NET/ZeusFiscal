@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PdfPig" Version="0.1.8" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\DCe.Testes\Fixtures\DceFixture.cs" Link="Fixtures\DceFixture.cs" />
+    <Compile Include="..\DCe.Testes\Fixtures\Entradas\*.cs" Link="Fixtures\Entradas\%(Filename)%(Extension)" />
+    <Compile Include="..\DCe.Testes\Fixtures\FabricaModeloDCe.cs" Link="Fixtures\FabricaModeloDCe.cs" />
+    <ProjectReference Include="..\DCe.Utils\DCe.Utils.csproj" />
+    <ProjectReference Include="..\DCe.Dace.QuestPdf\DCe.Dace.QuestPdf.csproj" />
+  </ItemGroup>
+
+</Project>
