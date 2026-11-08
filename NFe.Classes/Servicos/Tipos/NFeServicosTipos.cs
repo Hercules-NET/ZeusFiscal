@@ -228,6 +228,7 @@ namespace NFe.Classes.Servicos.Tipos
     ///     110112 - Cancelamento por substituição
     ///     110130 - Comprovante de Entrega da NF-e
     ///     110131 - Cancelamento Comprovante de Entrega da NF-e
+    ///     110150 - Ator interessado na NF-e
     ///     110192 - Insucesso na Entrega da NF-e
     ///     110193 - Cancelamento Insucesso na Entrega da NF-e
     ///     110750 - Conciliação Financeira da NF-e
@@ -237,7 +238,9 @@ namespace NFe.Classes.Servicos.Tipos
     ///     112110 - Informação de efetivo pagamento integral para liberar crédito presumido do adquirente
     ///     112120 - Importação em ALC/ZFM não convertida em isenção
     ///     112140 - Fornecimento não realizado com pagamento antecipado
+    ///     112150 - Atualização da Data de Previsão de Entrega
     ///     211110 - Solicitação de Apropriação de crédito presumido
+    ///     211120 - Destinação de item para consumo pessoal
     ///     211124 - Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente
     ///     211128 - Aceite de débito na apuração por emissão de nota de crédito
     ///     211130 - Imobilização de Item
@@ -311,6 +314,13 @@ namespace NFe.Classes.Servicos.Tipos
         TeNfeCancComprovanteDeEntregadaNFe = 110131,
 
         /// <summary>
+        /// 110150 - Ator interessado na NF-e
+        /// </summary>
+        [Description("Ator interessado na NF-e")]
+        [XmlEnum("110150")]
+        TeNfeAtorInteressadoNFe = 110150,
+
+        /// <summary>
         /// 110750 - Conciliação Financeira da NF-e
         /// </summary>
         [Description("ECONF")]
@@ -360,11 +370,25 @@ namespace NFe.Classes.Servicos.Tipos
         TeNfeFornecimentoNaoRealizadoNFe = 112140,
 
         /// <summary>
+        /// 112150 - Atualização da Data de Previsão de Entrega
+        /// </summary>
+        [Description("Atualização da Data de Previsão de Entrega")]
+        [XmlEnum("112150")]
+        TeNfeAtualizacaoDataPrevisaoEntregaNFe = 112150,
+
+        /// <summary>
         /// 211110 - Solicitação de Apropriação de crédito presumido
         /// </summary>
         [Description("Solicitação de Apropriação de crédito presumido")]
         [XmlEnum("211110")]
         TeNfeApropriacaoCredPresumidoNFe = 211110,
+
+        /// <summary>
+        /// 211120 - Destinação de item para consumo pessoal
+        /// </summary>
+        [Description("Destinação de item para consumo pessoal")]
+        [XmlEnum("211120")]
+        TeNfeDestinacaoConsumoPessoalNFe = 211120,
 
         /// <summary>
         /// 211124 - Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente
