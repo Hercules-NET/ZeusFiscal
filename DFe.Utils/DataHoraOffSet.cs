@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace DFe.Utils
 {
@@ -11,7 +12,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataString(this DateTimeOffset data)
         {
-            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-dd");
+            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace DFe.Utils
         {
             if (data == null) return null;
 
-            return data == DateTimeOffset.MinValue ? null : data.Value.ToString("yyyy-MM-dd");
+            return data == DateTimeOffset.MinValue ? null : data.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataHoraStringUtc(this DateTimeOffset data)
         {
-            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:sszzz");
+            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataHoraStringSemUtc(this DateTimeOffset data)
         {
-            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:ss");
+            return data == DateTimeOffset.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataHoraString(this DateTimeOffset data)
         {
-            return data.ToString("yyyyMMddHHmmss");
+            return data.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
         }
     }
 }
