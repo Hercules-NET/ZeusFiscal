@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace DFe.Utils
 {
@@ -12,7 +13,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataString(this DateTime data)
         {
-            return data == DateTime.MinValue ? null : data.ToString("yyyy-MM-dd");
+            return data == DateTime.MinValue ? null : data.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace DFe.Utils
         {
             if (data == null) return null;
 
-            return data == DateTime.MinValue ? null : data.Value.ToString("yyyy-MM-dd");
+            return data == DateTime.MinValue ? null : data.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataHoraStringUtc(this DateTime data)
         {
-            return data == DateTime.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:sszzz");
+            return data == DateTime.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataHoraStringSemUtc(this DateTime data)
         {
-            return data == DateTime.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:ss");
+            return data == DateTime.MinValue ? null : data.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace DFe.Utils
         /// <returns></returns>
         public static string ParaDataHoraString(this DateTime data)
         {
-            return data.ToString("yyyyMMddHHmmss");
+            return data.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
         }
 
         public static string ParaHoraString(this TimeSpan hora)
