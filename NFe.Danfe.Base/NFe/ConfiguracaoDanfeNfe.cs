@@ -42,6 +42,7 @@ namespace NFe.Danfe.Base.NFe
             DecimaisQuantidadeItem = 2;
             DataHoraImpressao = null;
             ExibirCanhoto = true;
+            NfeModelo = NfeModelo.Padrao;
         }
 
         public bool DuasLinhas { get; set; }
@@ -76,5 +77,11 @@ namespace NFe.Danfe.Base.NFe
         public int DecimaisQuantidadeItem { get; set; }
 
         public DateTime? DataHoraImpressao { get; set; }
+
+        /// <summary>
+        /// Modelo do DANFE a ser impresso: Padrao (NFeRetrato.frx) ou RTC (NFeRetratoRtc.frx).
+        /// Opcional, o valor padrão é <see cref="Base.NfeModelo.Padrao"/>.
+        /// </summary>
+        public NfeModelo NfeModelo { get; set; }
     }
 }
