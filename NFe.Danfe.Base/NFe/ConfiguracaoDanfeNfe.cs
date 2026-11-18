@@ -41,6 +41,8 @@ namespace NFe.Danfe.Base.NFe
             DecimaisValorUnitario = 2;
             DecimaisQuantidadeItem = 2;
             DataHoraImpressao = null;
+            ExibirCanhoto = true;
+            NfeModelo = NfeModelo.Padrao;
         }
 
         public bool DuasLinhas { get; set; }
@@ -52,6 +54,9 @@ namespace NFe.Danfe.Base.NFe
         public bool ExibirResumoCanhoto { get; set; }
 
         public bool ExibeRetencoes { get; set; }
+
+        /// <summary> Exibe o canhoto do DANFE. O canhoto pode ser suprimido quando o emitente não utilizar o bloco (NT 2026.010 - item 4.4). </summary>
+        public bool ExibirCanhoto { get; set; }
 
         public string ResumoCanhoto { get; set; }
 
@@ -72,5 +77,11 @@ namespace NFe.Danfe.Base.NFe
         public int DecimaisQuantidadeItem { get; set; }
 
         public DateTime? DataHoraImpressao { get; set; }
+
+        /// <summary>
+        /// Modelo do DANFE a ser impresso: Padrao (NFeRetrato.frx) ou RTC (NFeRetratoRtc.frx).
+        /// Opcional, o valor padrão é <see cref="Base.NfeModelo.Padrao"/>.
+        /// </summary>
+        public NfeModelo NfeModelo { get; set; }
     }
 }
