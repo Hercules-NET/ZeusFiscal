@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Hercules.NET.Impressao.DCe.QuestPdf</id>
+    <version>$version$</version>
+    <title>Hercules NET Impressao DCe QuestPdf</title>
+    <authors>Hercules.NET</authors>
+    <owners>Hercules.NET</owners>
+    <projectUrl>https://github.com/Hercules-NET/ZeusFiscal</projectUrl>
+    <iconUrl>https://avatars.githubusercontent.com/u/165974473</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Biblioteca para impressão da DACE completa e resumida com QuestPDF.</description>
+    <releaseNotes />
+    <copyright>Hercules.NET</copyright>
+    <language>pt-BR</language>
+    <tags>df-e dfe dce dc-e dace questpdf</tags>
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="Hercules.NET.DCe" version="$version$" />
+        <dependency id="BarcodeLib" version="3.1.4" />
+        <dependency id="HarfBuzzSharp.NativeAssets.Linux" version="7.3.0.2" />
+        <dependency id="QuestPDF" version="2024.7.3" />
+        <dependency id="SkiaSharp.NativeAssets.Linux.NoDependencies" version="2.88.8" />
+        <dependency id="SkiaSharp.QrCode" version="0.7.0" />
+      </group>
+      <group targetFramework="net10.0">
+        <dependency id="Hercules.NET.DCe" version="$version$" />
+        <dependency id="BarcodeLib" version="3.1.4" />
+        <dependency id="HarfBuzzSharp.NativeAssets.Linux" version="7.3.0.2" />
+        <dependency id="QuestPDF" version="2024.7.3" />
+        <dependency id="SkiaSharp.NativeAssets.Linux.NoDependencies" version="2.88.8" />
+        <dependency id="SkiaSharp.QrCode" version="0.7.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\DCe.Dace.QuestPdf\bin\Release\net8.0\DCe.Dace.QuestPdf.dll" target="lib/net8.0/DCe.Dace.QuestPdf.dll" />
+    <file src="..\..\DCe.Dace.QuestPdf\bin\Release\net10.0\DCe.Dace.QuestPdf.dll" target="lib/net10.0/DCe.Dace.QuestPdf.dll" />
+  </files>
+</package>
