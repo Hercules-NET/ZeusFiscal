@@ -1,5 +1,6 @@
 using DFe.Utils;
 using NFe.Classes;
+using NFe.Danfe.Base;
 using NFe.Danfe.Base.NFe;
 using Shared.DFe.Danfe;
 
@@ -21,7 +22,9 @@ namespace NFe.Danfe.Fast.NFe
             byte[] frx = null;
             if (string.IsNullOrWhiteSpace(arquivoRelatorio))
             {
-                const string caminho = @"NFe\NFeRetrato.frx";
+                var caminho = configuracaoDanfeNfe != null && configuracaoDanfeNfe.NfeModelo == NfeModelo.RTC
+                    ? @"NFe\NFeRetratoRtc.frx"
+                    : @"NFe\NFeRetrato.frx";
                 frx = FrxFileHelper.TryGetFrxFile(caminho);
             }
 

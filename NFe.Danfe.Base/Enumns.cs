@@ -1,5 +1,18 @@
 namespace NFe.Danfe.Base
 {
+    /// <summary>
+    /// Modelo do DANFE NF-e a ser impresso:
+    /// Padrao - usa o NFeRetrato.frx; RTC - usa o NFeRetratoRtc.frx (NT 2026.010 - DANFE RTC)
+    /// </summary>
+    public enum NfeModelo
+    {
+        /// <summary>Layout padrão (NFeRetrato.frx)</summary>
+        Padrao = 0,
+
+        /// <summary>Layout da Reforma Tributária do Consumo (NFeRetratoRtc.frx)</summary>
+        RTC = 1
+    }
+
     public enum NfceDetalheVendaNormal
     {
         NaoImprimir = 0,

@@ -143,6 +143,7 @@ namespace NFe.Danfe.AppTeste
                 var danfe = new DanfeFrNfe(proc: proc,
                                     configuracaoDanfeNfe: new ConfiguracaoDanfeNfe()
                                     {
+                                        NfeModelo = _configuracoes.ConfiguracaoDanfeNfe.NfeModelo,
                                         Logomarca = _configuracoes.ConfiguracaoDanfeNfce.Logomarca,
                                         DuasLinhas = RdbDuasLinhas.IsChecked == true || RdbCompleto.IsChecked == true,
                                         DocumentoCancelado = ChbCancelado.IsChecked ?? false,
