@@ -220,7 +220,15 @@
                         <Button x:Name="BtnNFeSimplificadoTipo2" Content="DANFE Simplificado Tipo 2" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" Width="150" Click="BtnNFeSimplificadoTipo2_Click" Margin="5,10,5,0" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"/>
+                    <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
+                        <Label Content="Modelo do DANFE NFe A4:" VerticalAlignment="Center" Padding="0,0,5,0" />
+                        <ComboBox x:Name="CbxNfeModelo" Width="200" VerticalAlignment="Center"
+                                  SelectedValuePath="Tag"
+                                  SelectedValue="{Binding ConfiguracaoDanfeNfe.NfeModelo}">
+                            <ComboBoxItem Content="Padrão (NFeRetrato.frx)" Tag="{x:Static base:NfeModelo.Padrao}" />
+                            <ComboBoxItem Content="RTC (NFeRetratoRtc.frx)" Tag="{x:Static base:NfeModelo.RTC}" />
+                        </ComboBox>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
