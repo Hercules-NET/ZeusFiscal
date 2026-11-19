@@ -344,4 +344,51 @@ namespace NFe.Classes.Informacoes.Detalhe
         [XmlEnum("N")]
         N = 'N'
     }
+
+    /// <summary>
+    ///     Código de atividade do Simples Nacional para cálculo dos tributos IBS/CBS.
+    ///     <para>01 = Revenda de mercadorias, venda de mercadorias industrializadas pelo contribuinte - Anexo I.</para>
+    ///     <para>02 = Operações com os demais bens materiais, sem incidência de ICMS – Anexo I.</para>
+    ///     <para>03 = Venda de mercadorias industrializadas pelo contribuinte, com industrialização incentivada na Zona Franca de Manaus - Anexo II.</para>
+    ///     <para>04 = Operações com os demais bens materiais, com industrialização incentivada na Zona Franca de Manaus, sem incidência de ICMS - Anexo II.</para>
+    ///     <para>90 = Operações não Tributáveis.</para>
+    ///     <para>Observação: informar somente quando o emitente for optante do Simples Nacional ou estiver com opção pendente.</para>
+    /// </summary>
+    public enum cAtivSN
+    {
+        /// <summary>
+        /// 01 - Revenda de mercadorias, venda de mercadorias industrializadas pelo contribuinte - Anexo I
+        /// </summary>
+        [Description("Revenda de mercadorias, venda de mercadorias industrializadas pelo contribuinte - Anexo I")]
+        [XmlEnum("01")]
+        RevendaOuIndustrializacao = 01,
+
+        /// <summary>
+        /// 02 - Operações com os demais bens materiais, sem incidência de ICMS – Anexo I
+        /// </summary>
+        [Description("Operações com os demais bens materiais, sem incidência de ICMS – Anexo I")]
+        [XmlEnum("02")]
+        DemaisBensSemIcms = 02,
+
+        /// <summary>
+        /// 03 - Venda de mercadorias industrializadas pelo contribuinte, com industrialização incentivada na Zona Franca de Manaus - Anexo II
+        /// </summary>
+        [Description("Venda de mercadorias industrializadas pelo contribuinte, com industrialização incentivada na Zona Franca de Manaus - Anexo II")]
+        [XmlEnum("03")]
+        IndustrializacaoZfm = 03,
+
+        /// <summary>
+        /// 04 - Operações com os demais bens materiais, com industrialização incentivada na Zona Franca de Manaus, sem incidência de ICMS - Anexo II
+        /// </summary>
+        [Description("Operações com os demais bens materiais, com industrialização incentivada na Zona Franca de Manaus, sem incidência de ICMS - Anexo II")]
+        [XmlEnum("04")]
+        DemaisBensSemIcmsZfm = 04,
+
+        /// <summary>
+        /// 90 - Operações não Tributáveis
+        /// </summary>
+        [Description("Operações não Tributáveis")]
+        [XmlEnum("90")]
+        OperacoesNaoTributaveis = 90
+    }
 }

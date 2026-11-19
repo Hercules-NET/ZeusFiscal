@@ -315,11 +315,14 @@ namespace NFe.Classes.Informacoes.Detalhe
         // l117c
         public indBemMovelUsado? indBemMovelUsado { get; set; }
 
-        public string cAtivSN { get; set; }
+        /// <summary>
+        ///     I17d - Código de atividade do Simples Nacional para cálculo dos tributos IBS/CBS.
+        /// </summary>
+        public cAtivSN? cAtivSN { get; set; }
 
         public bool ShouldSerializecAtivSN()
         {
-            return cAtivSN != null;
+            return cAtivSN.HasValue;
         }
 
         public bool ShouldSerializenItemPed()
