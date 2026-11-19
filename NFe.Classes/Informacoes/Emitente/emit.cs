@@ -98,14 +98,10 @@ namespace NFe.Classes.Informacoes.Emitente
         /// </summary>
         public CRT CRT { get; set; }
 
-        /// <summary>
-        ///     C21a - Tipo de regime do IBS/CBS
-        /// </summary>
-        public tpRegimeIBSCBS? tpRegimeIBSCBS { get; set; }
-
+        public int? tpRegimeIBSCBS { get; set; }
         public bool ShouldSerializetpRegimeIBSCBS()
         {
-            return tpRegimeIBSCBS.HasValue;
+            return tpRegimeIBSCBS != null;
         }
 
         /// <summary>
