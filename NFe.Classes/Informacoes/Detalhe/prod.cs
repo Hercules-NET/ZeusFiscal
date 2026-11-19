@@ -314,7 +314,14 @@ namespace NFe.Classes.Informacoes.Detalhe
 
         // l117c
         public indBemMovelUsado? indBemMovelUsado { get; set; }
-        
+
+        public string cAtivSN { get; set; }
+
+        public bool ShouldSerializecAtivSN()
+        {
+            return cAtivSN != null;
+        }
+
         public bool ShouldSerializenItemPed()
         {
             return nItemPed.HasValue;
