@@ -70,8 +70,8 @@ namespace NFe.Classes.Informacoes.Destinatario
             {
 //                if (string.IsNullOrEmpty(value))
 //                    return;
-                if (!string.IsNullOrEmpty(CNPJ) || !string.IsNullOrEmpty(CPF))
-                    throw new ArgumentException(ErroCpfCnpjIdEstrangeiroPreenchidos);
+//                if (!string.IsNullOrEmpty(CNPJ) || !string.IsNullOrEmpty(CPF))
+//                    throw new ArgumentException(ErroCpfCnpjIdEstrangeiroPreenchidos);
 
                 _idEstrangeiro = value;
             }
