@@ -68,8 +68,8 @@ namespace NFe.Classes.Informacoes.Destinatario
             get { return _idEstrangeiro; }
             set
             {
-                if (string.IsNullOrEmpty(value))
-                    return;
+//                if (string.IsNullOrEmpty(value))
+//                    return;
                 if (!string.IsNullOrEmpty(CNPJ) || !string.IsNullOrEmpty(CPF))
                     throw new ArgumentException(ErroCpfCnpjIdEstrangeiroPreenchidos);
 
