@@ -244,6 +244,12 @@ namespace NFe.Classes.Informacoes.Detalhe
         /// </summary>
         public IndicadorTotal indTot { get; set; }
 
+        // l117c
+        public indBemMovelUsado? indBemMovelUsado { get; set; }
+
+        // I17d
+        public string cAtivSN { get; set; }
+
         /// <summary>
         ///     I18 - Declaração de Importação
         /// </summary>
@@ -311,11 +317,6 @@ namespace NFe.Classes.Informacoes.Detalhe
                 _nRecopi = value;
             }
         }
-
-        // l117c
-        public indBemMovelUsado? indBemMovelUsado { get; set; }
-
-        public string cAtivSN { get; set; }
 
         public bool ShouldSerializecAtivSN()
         {
