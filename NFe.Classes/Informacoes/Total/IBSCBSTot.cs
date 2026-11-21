@@ -39,5 +39,11 @@ namespace NFe.Classes.Informacoes.Total
         /// </summary>
         [XmlElement(Order = 5)]
         public gEstornoCredTotal gEstornoCred { get; set; }
+
+        /// <summary>
+        /// W59h - Grupo de totais da composição do valor do IBS e da CBS para o Simples Nacional
+        /// </summary>
+        [XmlElement(Order = 6)]
+        public gTribSNTotal gTribSN { get; set; }
     }
 }
