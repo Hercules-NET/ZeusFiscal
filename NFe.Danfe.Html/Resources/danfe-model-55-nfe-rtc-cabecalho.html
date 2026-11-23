@@ -1,0 +1,218 @@
+            <table cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td rowspan="3" style="width: 30mm">
+                            <img class="client_logo" src="[url_logo]" alt="" />
+                        </td>
+                        <td rowspan="3"
+                            style="width: 46mm; font-size: 7pt"
+                            class="txt-center">
+                            <span class="mb2 bold block">[ds_company_issuer_name]</span>
+                            <span class="block">[ds_company_address]</span>
+                            <span class="block">
+                                [ds_company_neighborhood] - [nu_company_cep]
+                            </span>
+                            <span class="block">
+                                [ds_company_city_name] - [ds_company_uf]- Fone:
+                                [nl_company_phone_number]
+                            </span>
+                        </td>
+                        <td rowspan="3"
+                            class="txtc txt-upper"
+                            style="width: 34mm; height: 29.5mm">
+                            <h3 class="title">Danfe</h3>
+                            <p class="mb2">Documento auxiliar da Nota Fiscal Eletrônica</p>
+                            <p class="entradaSaida mb2">
+                                <span class="identificacao">
+                                    <span>[ds_code_operation_type]</span>
+                                </span>
+                                <span class="legenda">
+                                    <span>0 - Entrada</span>
+                                    <span>1 - Saída</span>
+                                </span>
+                            </p>
+                            <p>
+                                <span class="block bold">
+                                    <span>Nº</span>
+                                    <span>[nl_invoice]</span>
+                                </span>
+                                <span class="block bold">
+                                    <span>SÉRIE:</span>
+                                    <span>[ds_invoice_serie]</span>
+                                </span>
+                                <span class="block">
+                                    <span>Folha</span>
+                                    <span>[actual_page]</span>
+                                    <span>/</span>
+                                    <span>[total_pages]</span>
+                                </span>
+                            </p>
+                        </td>
+                        <td class="txt-upper" style="width: 85mm">
+                            <span class="nf-label">Controle do Fisco</span>
+                            <span class="codigo">
+                                <img alt="" style="width: 97%; margin: auto; height: 40px; margin: 5px 15px 5px 5px;" src="[BarCode]" />
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="nf-label">CHAVE DE ACESSO</span>
+                            <span class="bold block txt-center info">[ds_danfe]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="txt-center valign-middle">
+                            <span class="block">
+                                Consulte a autenticidade no portal nacional da NF-e
+                            </span>
+                            www.nfe.fazenda.gov.br/portal ou no site da SEFAZ autorizadora
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Natureza da Operação -->
+            <table cellpadding="0"
+                   cellspacing="0"
+                   class="boxNaturezaOperacao no-top border-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="nf-label">NATUREZA DA OPERAÇÃO</span>
+                            <span class="info">[_ds_transaction_nature]</span>
+                        </td>
+                        <td style="width: 84.7mm">
+                            <span class="nf-label">PROTOCOLO DE AUTORIZAÇÃO DE USO</span>
+                            <span class="info">[ds_protocol]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Inscrição -->
+            <table cellpadding="0"
+                   cellspacing="0"
+                   class="boxInscricao no-top border-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="nf-label">INSCRIÇÃO ESTADUAL</span>
+                            <span class="info">[nl_company_ie]</span>
+                        </td>
+                        <td style="width: 67.5mm">
+                            <span class="nf-label">INSCRIÇÃO ESTADUAL DO SUBST. TRIB.</span>
+                            <span class="info">[nl_company_ie_st]</span>
+                        </td>
+                        <td style="width: 64.3mm">
+                            <span class="nf-label">CNPJ / CPF</span>
+                            <span class="info">[nl_company_cnpj_cpf]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Regime tributário (NT 2026.010, item 4.2) -->
+            <table cellpadding="0"
+                   cellspacing="0"
+                   class="boxRegime no-top border-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="nf-label">CÓDIGO DO REGIME TRIBUTÁRIO</span>
+                            <span class="info">[ds_company_crt]</span>
+                        </td>
+                        <td class="rtc-facultativo" style="width: 84.7mm">
+                            <span class="nf-label">TIPO DE REGIME DE APURAÇÃO DO IBS E DA CBS</span>
+                            <span class="info"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Destinatário/Remetente -->
+            <p class="area-name">Destinatário / Remetente</p>
+            <table cellpadding="0" cellspacing="0" class="boxDestinatario border-table">
+                <tbody>
+                    <tr>
+                        <td class="pd-0">
+                            <table cellpadding="0" cellspacing="0" class="border-table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="nf-label">NOME / RAZÃO SOCIAL</span>
+                                            <span class="info">[ds_client_receiver_name]</span>
+                                        </td>
+                                        <td style="width: 40mm">
+                                            <span class="nf-label">CNPJ / CPF</span>
+                                            <span class="info">[nl_client_cnpj_cpf]</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td style="width: 22mm">
+                            <span class="nf-label">DATA DE EMISSÃO</span>
+                            <span class="info">[dt_invoice_issue]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pd-0">
+                            <table cellpadding="0" cellspacing="0" class="border-table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="nf-label">ENDEREÇO</span>
+                                            <span class="info">[ds_client_address]</span>
+                                        </td>
+                                        <td style="width: 47mm">
+                                            <span class="nf-label">BAIRRO / DISTRITO</span>
+                                            <span class="info">[ds_client_neighborhood]</span>
+                                        </td>
+                                        <td style="width: 37.2mm">
+                                            <span class="nf-label">CEP</span>
+                                            <span class="info">[nu_client_cep]</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <span class="nf-label">DATA DE ENTRADA / SAÍDA</span>
+                            <span class="info">[dt_input_output]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pd-0">
+                            <table cellpadding="0"
+                                   cellspacing="0"
+                                   style="margin-bottom: -1px"
+                                   class="border-table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="nf-label">MUNICÍPIO</span>
+                                            <span class="info">[ds_client_city_name]</span>
+                                        </td>
+                                        <td style="width: 34mm">
+                                            <span class="nf-label">FONE / FAX</span>
+                                            <span class="info">[nl_client_phone_number]</span>
+                                        </td>
+                                        <td style="width: 28mm">
+                                            <span class="nf-label">UF</span>
+                                            <span class="info">[ds_client_uf]</span>
+                                        </td>
+                                        <td style="width: 51mm">
+                                            <span class="nf-label">INSCRIÇÃO ESTADUAL</span>
+                                            <span class="info">[ds_client_ie]</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <span class="nf-label">HORA DE ENTRADA / SAÍDA</span>
+                            <span class="info">[hr_input_output]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
