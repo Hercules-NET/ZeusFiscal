@@ -9,10 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NFe.Classes\NFe.Classes.csproj" />
     <!-- NetBarcode traz o ImageSharp 2.1.1 (vulnerável); 2.1.13 é a correção compatível da mesma major (Apache 2.0) -->
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.13" />
-    <PackageReference Include="Zeus.Net.NFe.NFCe" Version="2024.1.15.1723" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DFe.Classes\DFe.Classes.csproj" />
+    <ProjectReference Include="..\NFe.Classes\NFe.Classes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

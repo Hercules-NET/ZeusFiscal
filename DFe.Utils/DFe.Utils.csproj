@@ -15,11 +15,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DFe.Classes\DFe.Classes.csproj" />
+		<InternalsVisibleTo Include="NFe.Utils.Testes" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="NFe.Utils.Testes" />
+	  <ProjectReference Include="..\DFe.Classes\DFe.Classes.csproj" />
 	</ItemGroup>
 
 </Project>

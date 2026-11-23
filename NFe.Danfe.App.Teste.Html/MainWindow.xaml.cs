@@ -1,15 +1,14 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Windows;
-using DFe.Classes.Flags;
+﻿using DFe.Classes.Flags;
 using NFe.Classes;
 using NFe.Danfe.Html;
 using NFe.Danfe.Html.CrossCutting;
 using NFe.Danfe.Html.Dominio;
 using NFe.Danfe.Html.Interfaces;
 using NFe.Utils.NFe;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
 
 namespace NFe.Danfe.App.Teste.Html
 {
