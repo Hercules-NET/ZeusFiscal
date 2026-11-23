@@ -24,7 +24,7 @@ using Type = NetBarcode.Type;
 
 namespace NFe.Danfe.Html
 {
-    public class DanfeNfeHtml2 : IDanfeHtml2
+    public partial class DanfeNfeHtml2 : IDanfeHtml2
     {
         #region Propriedades
 
@@ -356,6 +356,8 @@ namespace NFe.Danfe.Html
         /// <returns></returns>
         private string MontarDanfe(DanfeNFe danfeNfe)
         {
+            if (LeiauteReformaTributaria) return MontarDanfeReformaTributaria(danfeNfe);
+
             var sbHtmlPage = new StringBuilder();
             int paginaAtual = 1;
             var qtdLinhasPrimeiraPagina = ObterQuantidadeLinhasPrimeiraPagina(danfeNfe.Produtos.ToList());
