@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Zeus.Net.NFe.NFCe" Version="2024.1.15.1723" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NFe.Danfe.Html\NFe.Danfe.Html.csproj" />
+    <ProjectReference Include="..\NFe.Utils\NFe.Utils.csproj" />
   </ItemGroup>
 
 </Project>
