@@ -38,16 +38,20 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
         [XmlElement(Order = 7)]
         public gAjusteCompet gAjusteCompet { get; set; }
 
-        // UB116
+        // UB115a NT 2026.005
         [XmlElement(Order = 8)]
+        public gTribSN gTribSN { get; set; }
+
+        // UB116
+        [XmlElement(Order = 9)]
         public gEstornoCred gEstornoCred { get; set; }
 
         // UB120
-        [XmlElement(Order = 9)]
+        [XmlElement(Order = 10)]
         public gCredPresOper gCredPresOper { get; set; }
 
         // UB131
-        [XmlElement(Order = 10)]
+        [XmlElement(Order = 11)]
         public gCredPresIBSZFM gCredPresIBSZFM { get; set; }
 
         public bool ShouldSerializeindDoacao()

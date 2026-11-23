@@ -78,6 +78,20 @@ jobs:
           dotnet build -p:Version=${{ steps.date.outputs.date }} ".\CTe.Utils\CTe.Utils.csproj" -c Release
           dotnet build -p:Version=${{ steps.date.outputs.date }} ".\CTe.Wsdl\CTe.Wsdl.csproj" -c Release
 
+      - name: Build/Restore DCe
+        run: |
+          foreach ($projeto in @('DCe.Classes', 'DCe.Utils', 'DCe.Wsdl', 'DCe.Servicos', 'DCe.Dace.QuestPdf')) {
+            dotnet build -p:Version=${{ steps.date.outputs.date }} "$projeto/$projeto.csproj" -c Release
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+
+      - name: Testes unitários DCe e DACE
+        run: |
+          foreach ($projeto in @('DCe.Testes', 'DCe.Dace.QuestPdf.Testes')) {
+            dotnet test "$projeto/$projeto.csproj" -p:Version=${{ steps.date.outputs.date }} -c Release -f net10.0 --logger trx --results-directory TestResults/DCe
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+
       - name: Build Impressão QuestPDF
         run: |
           dotnet build -p:Version=${{ steps.date.outputs.date }} ".\NFe.Danfe.QuestPdf\NFe.Danfe.QuestPdf.csproj" -c Release
@@ -91,6 +105,10 @@ jobs:
           dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.MDFe\Hercules.NET.MDFe.csproj
           dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.CTe\Hercules.NET.CTe.csproj
           dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.Impressao.NFCe.QuestPdf\Hercules.NET.Impressao.NFCe.QuestPdf.csproj
+          dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.DCe\Hercules.NET.DCe.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet pack -o ${{ github.workspace }} -v minimal -c Release -p:NuspecProperties=version=${{ steps.date.outputs.date }} -p:PackageVersion=${{ steps.date.outputs.date }} NuGet\Hercules.NET.Impressao.DCe.QuestPdf\Hercules.NET.Impressao.DCe.QuestPdf.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -154,6 +172,8 @@ jobs:
             - Hercules.NET.MDFe
             - Hercules.NET.CTe
             - Hercules.NET.Impressao.NFCe.QuestPdf
+            - Hercules.NET.DCe
+            - Hercules.NET.Impressao.DCe.QuestPdf
 
           files: |
             ${{ github.workspace }}/*.nupkg
