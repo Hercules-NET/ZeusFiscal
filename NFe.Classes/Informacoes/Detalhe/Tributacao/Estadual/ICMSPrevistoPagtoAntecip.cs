@@ -8,7 +8,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao.Estadual
         private decimal _vICMSPrevisto;
 
         [XmlElement(Order = 1)]
-        public decimal VICMSPrevisto
+        public decimal vICMSPrevisto
         {
             get { return _vICMSPrevisto.Arredondar(2); }
             set { _vICMSPrevisto = value.Arredondar(2); }
