@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -10,9 +10,7 @@ namespace DFe.Utils.Assinatura
 {
     public static class CertificadoDigital
     {
-        private static readonly Dictionary<string, X509Certificate2> CacheCertificado = new Dictionary<string, X509Certificate2>();
-
-        #region Métodos privados
+        #region Públicos
 
         /// <summary>
         /// Cria e devolve um objeto <see cref="X509Store"/>
@@ -26,7 +24,126 @@ namespace DFe.Utils.Assinatura
             return store;
         }
 
-        #region Métodos para obter um certificado X509Certificate2
+        /// <summary>
+        /// Obtém o certificado digital conforme <see cref="ConfiguracaoCertificado.TipoCertificado"/>
+        /// <para>Com <see cref="ConfiguracaoCertificado.ManterDadosEmCache"/> a instância é reutilizada; sem cache,
+        /// libere os recursos após o uso com <see cref="X509Certificate2.Reset()"/></para>
+        /// </summary>
+        public static X509Certificate2 ObterCertificado(ConfiguracaoCertificado configuracaoCertificado)
+        {
+            if (!configuracaoCertificado.ManterDadosEmCache)
+                return ObterDadosCertificado(configuracaoCertificado);
+
+            if (!string.IsNullOrEmpty(configuracaoCertificado.CacheId) && CacheCertificado.ContainsKey(configuracaoCertificado.CacheId))
+                return CacheCertificado[configuracaoCertificado.CacheId];
+
+            var certificado = ObterDadosCertificado(configuracaoCertificado);
+
+            var keyCertificado = string.IsNullOrEmpty(configuracaoCertificado.CacheId)
+                ? certificado.SerialNumber
+                : configuracaoCertificado.CacheId;
+
+            configuracaoCertificado.CacheId = keyCertificado;
+
+            CacheCertificado.Add(keyCertificado, certificado);
+
+            return CacheCertificado[keyCertificado];
+        }
+
+        /// <summary>
+        /// Obtém a assinatura do certificado digital no formato PKCS#1, baseado em um array de bytes passado como Argumento [value].
+        /// </summary>
+        public static byte[] ObterAssinaturaPkcs1(ConfiguracaoCertificado configuracaoCertificado, byte[] value)
+        {
+            return ObterAssinaturaPkcs1(ObterCertificado(configuracaoCertificado), value);
+        }
+
+        /// <summary>
+        /// Obtém a assinatura RSA PKCS#1 v1.5 com SHA-1 (usada nos QR Codes em contingência) dos bytes informados em [value].
+        /// </summary>
+        public static byte[] ObterAssinaturaPkcs1(X509Certificate2 certificado, byte[] value)
+        {
+            return ObterChavePrivadaAssinatura(certificado).SignData(value, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
+        }
+
+        public static void ClearCache()
+        {
+            CacheCertificado.Clear();
+        }
+
+        #endregion
+
+        #region Internos
+
+        /// <summary>
+        /// Carrega um PFX. No .NET 9+ os construtores são obsoletos (SYSLIB0057); nos demais o construtor é mantido,
+        /// preservando o comportamento legado (e, no .NET Framework, é mais rápido que o X509CertificateLoader do Microsoft.Bcl.Cryptography)
+        /// </summary>
+        internal static X509Certificate2 CarregarPkcs12(byte[] conteudo, string senha, X509KeyStorageFlags keyStorageFlags)
+        {
+#if NET9_0_OR_GREATER
+            return X509CertificateLoader.LoadPkcs12(conteudo, senha, keyStorageFlags, LimitesPkcs12);
+#else
+            return new X509Certificate2(conteudo, senha, keyStorageFlags);
+#endif
+        }
+
+        /// <inheritdoc cref="CarregarPkcs12"/>
+        internal static X509Certificate2 CarregarPkcs12DeArquivo(string arquivo, string senha, X509KeyStorageFlags keyStorageFlags)
+        {
+#if NET9_0_OR_GREATER
+            return X509CertificateLoader.LoadPkcs12FromFile(arquivo, senha, keyStorageFlags, LimitesPkcs12);
+#else
+            return new X509Certificate2(arquivo, senha, keyStorageFlags);
+#endif
+        }
+
+        /// <summary>
+        /// Chave privada usada nas assinaturas (XML e PKCS#1) e no PIN do A3: sempre a mesma instância para o mesmo certificado,
+        /// que não deve ser descartada. O handle fica aberto enquanto o certificado existir e o PIN definido nele vale para todas
+        /// as assinaturas, sem depender do cache de PIN do provedor.
+        /// <para>É o <see cref="X509Certificate2.PrivateKey"/>; quando ele não abre a chave CNG no .NET Framework ("Tipo de provedor
+        /// inválido", PR #126, ou null com chave efêmera), o GetRSAPrivateKey, guardado junto do certificado.</para>
+        /// </summary>
+        internal static RSA ObterChavePrivadaAssinatura(X509Certificate2 certificado)
+        {
+            RSA chave;
+#pragma warning disable SYSLIB0028 // PrivateKey é obsoleto no .NET 6+, mas é ele que guarda a chave no certificado
+            try
+            {
+                chave = certificado.PrivateKey as RSA;
+            }
+            catch (CryptographicException ex) when (ex.HResult == MetodosNativos.NteBadProvType)
+            {
+                chave = null;
+            }
+#pragma warning restore SYSLIB0028
+
+            return chave ?? ChavesPrivadasCng.GetValue(certificado, c => c.GetRSAPrivateKey());
+        }
+
+        #endregion
+
+        #region Privados
+
+        private static readonly Dictionary<string, X509Certificate2> CacheCertificado = new Dictionary<string, X509Certificate2>();
+
+        /// <summary>
+        /// Chaves CNG que o PrivateKey não abre no .NET Framework, guardadas enquanto o certificado existir
+        /// </summary>
+        private static readonly ConditionalWeakTable<X509Certificate2, RSA> ChavesPrivadasCng = new ConditionalWeakTable<X509Certificate2, RSA>();
+
+#if NET9_0_OR_GREATER
+        /// <summary>
+        /// Mantém provedor, nome da chave e alias gravados no PFX, como o construtor fazia
+        /// </summary>
+        private static readonly Pkcs12LoaderLimits LimitesPkcs12 = new Pkcs12LoaderLimits
+        {
+            PreserveStorageProvider = true,
+            PreserveKeyName = true,
+            PreserveCertificateAlias = true
+        };
+#endif
 
         /// <summary>
         /// Obtém um certificado a partir do arquivo e da senha passados nos parâmetros
@@ -41,13 +158,12 @@ namespace DFe.Utils.Assinatura
                 throw new Exception(string.Format("Certificado digital {0} não encontrado!", arquivo));
             }
 
-            var certificado = new X509Certificate2(arquivo, senha, keyStorageFlag);
-            return certificado;
+            return CarregarPkcs12DeArquivo(arquivo, senha, keyStorageFlag);
         }
 
 
         /// <summary>
-        /// Obtém um certificado a partir do arquivo e da senha passados nos parâmetros
+        /// Obtém um certificado a partir do array de bytes e da senha passados nos parâmetros
         /// </summary>
         /// <param name="arrayBytes">Array de bytes do certificado digital</param>
         /// <param name="senha">Senha do certificado digital</param>
@@ -56,8 +172,7 @@ namespace DFe.Utils.Assinatura
         {
             try
             {
-                X509Certificate2 certificado = new X509Certificate2(arrayBytes, senha, keyStorageFlag);
-                return certificado;
+                return CarregarPkcs12(arrayBytes, senha, keyStorageFlag);
             }
             catch (Exception ex)
             {
@@ -108,41 +223,58 @@ namespace DFe.Utils.Assinatura
             return certificado;
         }
 
-        #endregion
-
         /// <summary>
         /// Define o PIN para chave privada de um objeto <see cref="X509Certificate2"/> passado no parâmetro
         /// </summary>
         private static void DefinirPinParaChavePrivada(this X509Certificate2 certificado, string pin)
         {
-            /// Suprimindo o aviso CA1416 para esta região de código específica
-#pragma warning disable CA1416
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows || Environment.OSVersion.Platform == PlatformID.Win32S)
-            {
-                if (certificado == null) throw new ArgumentNullException("certificado");
-                var key = (RSACryptoServiceProvider)certificado.PrivateKey;
-
-                var providerHandle = IntPtr.Zero;
-                var pinBuffer = Encoding.ASCII.GetBytes(pin);
-
-                MetodosNativos.Executar(() => MetodosNativos.CryptAcquireContext(ref providerHandle,
-                    key.CspKeyContainerInfo.KeyContainerName,
-                    key.CspKeyContainerInfo.ProviderName,
-                    key.CspKeyContainerInfo.ProviderType,
-                    MetodosNativos.CryptContextFlags.Silent));
-                MetodosNativos.Executar(() => MetodosNativos.CryptSetProvParam(providerHandle,
-                    MetodosNativos.CryptParameter.KeyExchangePin,
-                    pinBuffer, 0));
-                MetodosNativos.Executar(() => MetodosNativos.CertSetCertificateContextProperty(
-                    certificado.Handle,
-                    MetodosNativos.CertificateProperty.CryptoProviderHandle,
-                    0, providerHandle));
-            }
-            else
-            {
+            if (!MetodosNativos.EhWindows())
                 throw new NotSupportedException("Metodo DefinirPinParaChavePrivada com suporte apenas no Windows atualmente!");
+
+#if NETFRAMEWORK
+            // .NET Framework: contêiner vindo do PrivateKey, como antes; chave CNG (RSACng) fica ProviderType 0 => EhCng
+            var chaveCsp = ObterChavePrivadaAssinatura(certificado) as RSACryptoServiceProvider;
+            var infoChave = chaveCsp == null
+                ? new MetodosNativos.CryptKeyProvInfo()
+                : new MetodosNativos.CryptKeyProvInfo
+                {
+                    ContainerName = chaveCsp.CspKeyContainerInfo.KeyContainerName,
+                    ProviderName = chaveCsp.CspKeyContainerInfo.ProviderName,
+                    ProviderType = chaveCsp.CspKeyContainerInfo.ProviderType
+                };
+#else
+            // O provedor registrado no certificado define o caminho, sem abrir a chave: pelo tipo do objeto .NET,
+            // chaves de CSPs da Microsoft (ex.: tokens com minidriver) também chegariam como RSACng
+            var infoChave = MetodosNativos.ObterInfoProvedorChave(certificado);
+#endif
+
+            if (infoChave.EhCng)
+            {
+                // o PIN fica no handle da chave usada nas assinaturas
+                var chave = (RSACng)ObterChavePrivadaAssinatura(certificado);
+                chave.Key.SetProperty(new CngProperty(MetodosNativos.NcryptPinProperty,
+                    Encoding.Unicode.GetBytes(pin + '\0'), CngPropertyOptions.None));
+
+                // valida o PIN já no carregamento, como o CSP: o TLS abre a chave por conta própria e depende do PIN já verificado
+                chave.SignData(new byte[] { 0 }, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
+                return;
             }
-#pragma warning restore CA1416
+
+            var providerHandle = IntPtr.Zero;
+            var pinBuffer = Encoding.ASCII.GetBytes(pin);
+
+            MetodosNativos.Executar(() => MetodosNativos.CryptAcquireContext(ref providerHandle,
+                infoChave.ContainerName,
+                infoChave.ProviderName,
+                infoChave.ProviderType,
+                MetodosNativos.CryptContextFlags.Silent));
+            MetodosNativos.Executar(() => MetodosNativos.CryptSetProvParam(providerHandle,
+                MetodosNativos.CryptParameter.KeyExchangePin,
+                pinBuffer, 0));
+            MetodosNativos.Executar(() => MetodosNativos.CertSetCertificateContextProperty(
+                certificado.Handle,
+                MetodosNativos.CertificateProperty.CryptoProviderHandle,
+                0, providerHandle));
         }
 
         /// <summary>
@@ -167,179 +299,5 @@ namespace DFe.Utils.Assinatura
         }
 
         #endregion
-
-        /// <summary>
-        /// Obtém um objeto contendo o certificado digital
-        /// <para>Se for informado <see cref="ConfiguracaoCertificado.Arquivo"/>, 
-        /// o certificado digital será obtido pelo método <see cref="ObterDeArquivo(string,string)"/>,
-        /// senão será obtido pelo método <see cref="ListareObterDoRepositorio"/> </para>
-        /// <para>Para liberar os recursos do certificado, após seu uso, invoque o método <see cref="X509Certificate2.Reset()"/></para>
-        /// </summary>
-        public static X509Certificate2 ObterCertificado(ConfiguracaoCertificado configuracaoCertificado)
-        {
-            if (!configuracaoCertificado.ManterDadosEmCache)
-                return ObterDadosCertificado(configuracaoCertificado);
-
-            if (!string.IsNullOrEmpty(configuracaoCertificado.CacheId) && CacheCertificado.ContainsKey(configuracaoCertificado.CacheId))
-                return CacheCertificado[configuracaoCertificado.CacheId];
-
-            var certificado = ObterDadosCertificado(configuracaoCertificado);
-
-            var keyCertificado = string.IsNullOrEmpty(configuracaoCertificado.CacheId)
-                ? certificado.SerialNumber
-                : configuracaoCertificado.CacheId;
-
-            configuracaoCertificado.CacheId = keyCertificado;
-
-            CacheCertificado.Add(keyCertificado, certificado);
-
-            return CacheCertificado[keyCertificado];
-        }
-
-        /// <summary>
-        /// Obtém a assinatura do certificado digital no formato PKCS#1, baseado em um array de bytes passado como Argumento [value].
-        /// </summary>
-        /// <param name="configuracaoCertificado"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static byte[] ObterAssinaturaPkcs1(ConfiguracaoCertificado configuracaoCertificado, byte[] value)
-        {
-            X509Certificate2 certificado = ObterCertificado(configuracaoCertificado);
-            using (RSA rsa = certificado.GetRSAPrivateKey())
-                return rsa.SignData(value, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
-        }
-
-        public static void ClearCache()
-        {
-            CacheCertificado.Clear();
-        }
-    }
-
-    internal static class MetodosNativos
-    {
-        internal enum CryptContextFlags
-        {
-            None = 0,
-            Silent = 0x40
-        }
-
-        internal enum CertificateProperty
-        {
-            None = 0,
-            CryptoProviderHandle = 0x1
-        }
-
-        internal enum CryptParameter
-        {
-            None = 0,
-            KeyExchangePin = 0x20
-        }
-
-        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool CryptAcquireContext(
-            ref IntPtr hProv,
-            string containerName,
-            string providerName,
-            int providerType,
-            CryptContextFlags flags
-            );
-
-        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool CryptSetProvParam(
-            IntPtr hProv,
-            CryptParameter dwParam,
-            [In] byte[] pbData,
-            uint dwFlags);
-
-        [DllImport("CRYPT32.DLL", SetLastError = true)]
-        internal static extern bool CertSetCertificateContextProperty(
-            IntPtr pCertContext,
-            CertificateProperty propertyId,
-            uint dwFlags,
-            IntPtr pvData
-            );
-
-        public static void Executar(Func<bool> action)
-        {
-            if (!action())
-            {
-                throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
-            }
-        }
-    }
-
-    public static class ExtensaoCertificadoDigital
-    {
-        /// <summary>
-        /// Extenção para certificado digital
-        /// <para>Verificar validade do certificado digital, se vencido dispara ArgumentException</para>
-        /// </summary>
-        /// <param name="x509Certificate2"></param>
-        public static void VerificaValidade(this X509Certificate2 x509Certificate2)
-        {
-            DateTime dataExpiracao = Convert.ToDateTime(x509Certificate2.GetExpirationDateString());
-
-            if (dataExpiracao <= DateTime.Now)
-            {
-                throw new ArgumentException("Certificado digital vencido na data => " + dataExpiracao);
-            }
-        }
-
-        /// <summary>
-        /// Extensão para retornar o número de dias válidos do certificado
-        /// </summary>
-        /// <param name="x509Certificate2"></param>
-        /// <returns>Número de dias válidos</returns> 
-        public static int VerificaDiasValidade(this X509Certificate2 x509Certificate2)
-        {
-            DateTime dtExp = Convert.ToDateTime(x509Certificate2.GetExpirationDateString().Substring(0, 10));
-            TimeSpan dt = dtExp.Subtract(DateTime.Today);
-
-            return dt.Days;
-        }
-
-        /// <summary>
-        /// Extenção para certificado digital
-        /// <para>Se usado ele retorna true se for um hardware, se for PenDriver ou SmartCard</para>
-        /// </summary>
-        /// <param name="x509Certificate2"></param>
-        /// <returns>bool</returns>
-        public static bool IsA3(this X509Certificate2 x509Certificate2)
-        {
-            if (x509Certificate2 == null)
-                return false;
-
-            bool result = false;
-
-            /// Suprimindo o aviso CA1416 para esta região de código específica
-#pragma warning disable CA1416
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows || Environment.OSVersion.Platform == PlatformID.Win32S)
-            {
-
-                try
-                {
-                    RSACryptoServiceProvider service = x509Certificate2.PrivateKey as RSACryptoServiceProvider;
-
-                    if (service != null)
-                    {
-                        if (service.CspKeyContainerInfo.Removable &&
-                            service.CspKeyContainerInfo.HardwareDevice)
-                            result = true;
-                    }
-                }
-                catch
-                {
-                    //assume que é false
-                    result = false;
-                }
-            }
-            else
-            {
-                throw new NotSupportedException("Metodo IsA3 com suporte apenas no Windows atualmente!");
-            }
-#pragma warning restore CA1416
-
-            return result;
-        }
     }
 }

@@ -58,6 +58,26 @@ namespace NFe.Utils.Testes
                 TipoAmbiente.Producao, ModeloDocumento.NFe, TipoEmissao.teNormal);
             Assert.Equal("https://nfe.fazenda.sp.gov.br/ws/nfeautorizacao4.asmx", url);
         }
+
+        [Theory(DisplayName = "NFCe -> GO -> Conciliação Financeira (ECONF) -> WS de eventos próprio da UF")]
+        [InlineData(ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe, TipoAmbiente.Producao, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4?wsdl")]
+        [InlineData(ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe, TipoAmbiente.Producao, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4?wsdl")]
+        [InlineData(ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe, TipoAmbiente.Homologacao, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4?wsdl")]
+        [InlineData(ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe, TipoAmbiente.Homologacao, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4?wsdl")]
+        public void DeveUrlGoEstarCorretaParaConciliacaoFinanceiraNFCe(ServicoNFe servico, TipoAmbiente tipoAmbiente, string urlEsperada)
+        {
+            var url = Enderecador.ObterUrlServico(servico, VersaoServico.Versao100, Estado.GO,
+                tipoAmbiente, ModeloDocumento.NFCe, TipoEmissao.teNormal);
+            Assert.Equal(urlEsperada, url);
+        }
+
+        [Fact]
+        public void DeveConciliacaoFinanceiraNFeDeGoContinuarNaSvrs()
+        {
+            var url = Enderecador.ObterUrlServico(ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe, VersaoServico.Versao100, Estado.GO,
+                TipoAmbiente.Producao, ModeloDocumento.NFe, TipoEmissao.teNormal);
+            Assert.Equal("https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx", url);
+        }
     }
 
     public class EstadosData : TheoryData<Estado, TipoAmbiente, ServicoNFe>

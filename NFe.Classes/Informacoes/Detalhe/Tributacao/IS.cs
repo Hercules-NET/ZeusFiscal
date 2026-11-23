@@ -1,4 +1,6 @@
 ﻿using System.Xml.Serialization;
+using System;
+using System.ComponentModel;
 
 namespace NFe.Classes.Informacoes.Detalhe.Tributacao
 {
@@ -6,7 +8,7 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
     {
         private decimal _vBcIs;
         private decimal _pIs;
-        private decimal? _pIsEspec;
+        private decimal? _adRemIS;
         private decimal _qTrib;
         private decimal _vIs;
         private string _cClassTribIS;
@@ -39,32 +41,58 @@ namespace NFe.Classes.Informacoes.Detalhe.Tributacao
             set => _pIs = value.Arredondar(4);
         }
 
-        // UB07
+        /// <summary>
+        /// UB07 - Alíquota do Imposto Seletivo (por valor), conforme NT 2025.002 v1.40.
+        /// </summary>
         [XmlElement(Order = 5)]
+        public decimal? adRemIS
+        {
+            get => _adRemIS.Arredondar(4);
+            set => _adRemIS = value.Arredondar(4);
+        }
+        public bool ShouldSerializeadRemIS() => adRemIS.HasValue;
+
+        /// <summary>
+        /// Nome anterior da alíquota específica, mantido para compatibilidade de código.
+        /// </summary>
+        [Obsolete("Utilize adRemIS (NT 2025.002 v1.40).")]
+        [XmlIgnore]
         public decimal? pISEspec
         {
-            get => _pIsEspec.Arredondar(4);
-            set => _pIsEspec = value.Arredondar(4);
+            get => adRemIS;
+            set => adRemIS = value;
         }
-        public bool ShouldSerializepISEspec()
+        public bool ShouldSerializepISEspec() => false;
+
+        /// <summary>
+        /// Lê a tag de XMLs antigos; a emissão utiliza exclusivamente adRemIS.
+        /// O XmlSerializer ignora membros Obsolete, por isso a leitura usa este membro separado.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [XmlElement("pISEspec", Order = 6)]
+        public decimal? pISEspecXml
         {
-            return pISEspec.HasValue;
+            get => adRemIS;
+            set => adRemIS = value;
         }
+        public bool ShouldSerializepISEspecXml() => false;
 
         // UB09
-        [XmlElement(Order = 6)]
+        [XmlElement(Order = 7)]
         public string uTrib { get; set; }
+        public bool ShouldSerializeuTrib() => !string.IsNullOrEmpty(uTrib);
 
         // UB10
-        [XmlElement(Order = 7)]
+        [XmlElement(Order = 8)]
         public decimal qTrib
         {
             get => _qTrib.Arredondar(4);
             set => _qTrib = value.Arredondar(4);
         }
+        public bool ShouldSerializeqTrib() => ShouldSerializeuTrib();
 
         // UB11
-        [XmlElement(Order = 8)]
+        [XmlElement(Order = 9)]
         public decimal vIS
         {
             get => _vIs.Arredondar(2);

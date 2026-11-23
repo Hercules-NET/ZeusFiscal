@@ -1,17 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFrameworks>net462;netstandard2.0;net8.0;net9.0;net10.0</TargetFrameworks>
+	  <TargetFrameworks>net462;netstandard2.0;net8.0;net10.0</TargetFrameworks>
 	  
   </PropertyGroup>
 
-  <ItemGroup>
+  <!-- netstandard2.0 e .NET moderno já trazem o System.Net.Http -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DFe.Classes\DFe.Classes.csproj" />
     <ProjectReference Include="..\DFe.Utils\DFe.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="CTe.Wsdl" />
+    <InternalsVisibleTo Include="MDFe.Wsdl" />
   </ItemGroup>
 
 </Project>

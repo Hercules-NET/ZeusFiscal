@@ -446,6 +446,7 @@ namespace NFe.Utils.Enderecos
                 if (emissao != TipoEmissao.teEPEC)
                     addServico(eventoCceCanc, versao1, hom, emissao, Estado.GO, nfe, "https://homolog.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento?wsdl");
                 addServico(new[] { ServicoNFe.RecepcaoEventoCancelmento }, versao1, hom, emissao, Estado.GO, nfce, "https://homolog.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento?wsdl");
+                addServico(new[] { ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe, ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe }, versao1, hom, emissao, Estado.GO, nfce, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4?wsdl");
 
                 foreach (var modelo in todosOsModelos)
                 {
@@ -478,6 +479,7 @@ namespace NFe.Utils.Enderecos
                 if (emissao != TipoEmissao.teEPEC)
                     addServico(eventoCceCanc, versao1, prod, emissao, Estado.GO, nfe, "https://nfe.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento?wsdl");
                 addServico(new[] { ServicoNFe.RecepcaoEventoCancelmento }, versao1, prod, emissao, Estado.GO, nfce, "https://nfe.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento?wsdl");
+                addServico(new[] { ServicoNFe.RecepcaoEventoConciliacaoFinanceiraNFe, ServicoNFe.RecepcaoEventoCancConciliacaoFinanceiraNFe }, versao1, prod, emissao, Estado.GO, nfce, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4?wsdl");
 
                 foreach (var modelo in todosOsModelos)
                 {

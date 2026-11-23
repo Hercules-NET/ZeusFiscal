@@ -1,7 +1,6 @@
 ﻿using CTe.CTeOSDocumento.Common;
 using DFe.Utils;
 using System;
-using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -26,7 +25,7 @@ namespace CTe.Wsdl.Recepcao.Sincrono
 
             this.configuracao = configuracao;
             soapEnvelope = new SoapEnvelope();
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            DFe.Wsdl.Common.ConfiguracaoServicoWSDL.AplicarProtocoloSegurancaLegado();
         }
 
         /// <summary>

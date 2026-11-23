@@ -1,5 +1,5 @@
 # Hercules-NET / ZeusFiscal
-### A Principal Biblioteca em C# para Emissão e Impressão de NFe, NFCe, MDF-e e CT-e
+### A Principal Biblioteca em C# para Emissão e Impressão de NFe, NFCe, MDF-e, CT-e e DC-e
 **![(Este é o Fork e Continuação do DFe.NET ("Zeus") SAIBA MAIS SOBRE A 'DECLARAÇÃO OFICIAL A COMUNIDADE "ZEUS"' NESSE LINK!)](https://github.com/Hercules-NET/ZeusFiscal/issues/1)**
 
 **Entre no nosso **Discord** https://discord.gg/EE4TGKAkkG**
@@ -8,15 +8,19 @@
 
 ##  Versões suportadas:
 
-A biblioteca foi desenvolvida em **C#** utilizando Visual Studio Community 2022 com os SDKs net462, netstandard2.0 e net6.0 instalados.
+A biblioteca é desenvolvida em **C#** com o SDK do **.NET 10** (Visual Studio 2026 ou superior), gerando builds para .NET Framework 4.6.2, .NET Standard 2.0 e as versões LTS do .NET (8 e 10).
 |  Escopos  |  Frameworks Suportados  |
 | ------------------- | ------------------- |
-| NFe, NFCe, CTe, MDFe | .NET 4.6.2+, .NetStandard 2.0, .NET 6.0+ .NET 8.0 |
-| Impressões com FastReport OpenSource (NFe, NFCe, CTe, MDFe) | ..NET 4.6.2+, .NetStandard 2.0, .NET 6.0(windows+linux) .NET 8.0+(windows apenas) |
-| Impressões com FastReport (Versão PAGA) (NFe, NFCe, CTe, MDFe) | .NET 4.6.2+, .NetStandard 2.0, .NET 6.0(windows+linux) .NET 8.0+(windows apenas) |
-| Impressões com FastReport.Skia (Versão PAGA SkiaSharp) (NFe, NFCe, CTe, MDFe) | .NET 7.0+(windows+linux+mobile)  |
-| Impressões com QuestPdf | .NET 4.6.2+, .NetStandard 2.0, .NET 7.0+(windows+linux+mobile)  |
-| Impressões com PDFClown (NFe) | .NET 4.6.2+  |
+| NFe, NFCe, CTe, MDFe | .NET Framework 4.6.2+, .NetStandard 2.0, .NET 8, .NET 10 |
+| DC-e (modelo 99) | .NET Framework 4.6.2+, .NET Standard 2.0, .NET 8 e .NET 10 |
+| DACE completa e resumida (QuestPDF) | .NET 8 e .NET 10 |
+| Impressões com FastReport OpenSource (NFe, NFCe, CTe, MDFe) | .NET Framework 4.6.2+, .NetStandard 2.0 (windows+linux), .NET 8 e .NET 10 (windows apenas) |
+| Impressões com FastReport (Versão PAGA) (NFe, NFCe, CTe, MDFe) | .NET Framework 4.6.2+ |
+| Impressões com FastReport.Skia (Versão PAGA SkiaSharp) (NFe, NFCe, CTe, MDFe) | .NET 8 e .NET 10 (windows+linux+mobile)  |
+| Impressões com QuestPdf | .NET 8 e .NET 10 (windows+linux+mobile)  |
+| Impressões com PDFClown (NFe) | .NET 8 e .NET 10  |
+
+***O suporte ao .NET 8 segue o ciclo de vida da Microsoft (fim em 10/11/2026). Aplicações em .NET 9 usam os builds do .NET 8.***
 
 ***ATENÇÃO! Não temos suporte para .NetFramework 4.5.2 ou 4.5 ou menor. A Biblioteca irá seguir o [ciclo de vida de versões da microsoft](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework), sendo retirado a compatibilidade de versoes específicas e antigas do .Net caso a microsoft retire seu suporte.***
 
@@ -42,6 +46,15 @@ A melhor maneira de você ter a última versão do ZeusFiscal em seu projeto é 
 [![Nuget count](https://img.shields.io/nuget/v/Hercules.NET.CTe.svg)](http://www.nuget.org/packages/Hercules.NET.CTe/)
  Hercules.NET.CTe
  
+
+[![Nuget downloads](https://img.shields.io/nuget/dt/Hercules.NET.DCe.svg)](http://www.nuget.org/packages/Hercules.NET.DCe/)
+[![Nuget count](https://img.shields.io/nuget/v/Hercules.NET.DCe.svg)](http://www.nuget.org/packages/Hercules.NET.DCe/)
+ Hercules.NET.DCe
+
+[![Nuget downloads](https://img.shields.io/nuget/dt/Hercules.NET.Impressao.DCe.QuestPdf.svg)](http://www.nuget.org/packages/Hercules.NET.Impressao.DCe.QuestPdf/)
+[![Nuget count](https://img.shields.io/nuget/v/Hercules.NET.Impressao.DCe.QuestPdf.svg)](http://www.nuget.org/packages/Hercules.NET.Impressao.DCe.QuestPdf/)
+ Hercules.NET.Impressao.DCe.QuestPdf
+
 ## O que a biblioteca faz:
 
 O projeto traz classes construídas de forma manual que extraem a complexidade dos XSDs. Com isso é possível preencher objetos nativos em .NET e gerar o XML na estrutura exigida para seu DFe, assim como o processo inverso de ler um XML de um DFe e obter objetos nativos em .NET.

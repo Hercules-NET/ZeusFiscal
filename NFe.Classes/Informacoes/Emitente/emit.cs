@@ -98,6 +98,12 @@ namespace NFe.Classes.Informacoes.Emitente
         /// </summary>
         public CRT CRT { get; set; }
 
+        public int? tpRegimeIBSCBS { get; set; }
+        public bool ShouldSerializetpRegimeIBSCBS()
+        {
+            return tpRegimeIBSCBS != null;
+        }
+
         /// <summary>
         ///     C22 - Inscrição do emitente na Suframa
         ///     <para>8 a 9 dígitos. Obrigatório nas operações com CBS alíquota zero em áreas ZFM/ALC (arts. 451 e 466 da LC 214/25).</para>

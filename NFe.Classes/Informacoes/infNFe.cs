@@ -108,6 +108,11 @@ namespace NFe.Classes.Informacoes
         public infIntermed infIntermed { get; set; }
 
         /// <summary>
+        ///     Grupo de Informações da Vinculação com a Transação de Pagamento (NT 2026.006)
+        /// </summary>
+        public gPgtoVinc gPgtoVinc { get; set; }
+
+        /// <summary>
         ///     Z01 - Grupo de Informações Adicionais
         /// </summary>
         public infAdic infAdic { get; set; }

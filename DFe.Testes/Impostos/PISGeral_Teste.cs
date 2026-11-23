@@ -30,7 +30,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTPIS.pis01, 1000, 1, 10)]
         [DataRow(CSTPIS.pis02, 1000, 1, 10)]
         public void ObterPISBasico_PISAliq_Teste(CSTPIS cst, object vBC, object pPIS, object vPIS)
@@ -56,7 +55,6 @@ namespace DFe.Testes.Impostos
 
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTPIS.pis03, 1000, 1, 10)]
         public void ObterPISBasico_PISQtde_Teste(CSTPIS cst, object qBCProd, object vAliqProd, object vPIS)
         {
@@ -80,7 +78,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTPIS.pis04)]
         [DataRow(CSTPIS.pis05)]
         [DataRow(CSTPIS.pis06)]
@@ -106,7 +103,6 @@ namespace DFe.Testes.Impostos
         }
 
         [TestMethod]
-        [DataTestMethod]
         [DataRow(CSTPIS.pis49, 1000, 1, 10, 1000, 1)]
         [DataRow(CSTPIS.pis50, 1000, 1, 10, 1000, 1)]
         [DataRow(CSTPIS.pis51, 1000, 1, 10, 1000, 1)]

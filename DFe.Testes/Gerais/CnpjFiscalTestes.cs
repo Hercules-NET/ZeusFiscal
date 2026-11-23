@@ -46,13 +46,13 @@ namespace DFe.Testes.Gerais
         [DataRow("", DisplayName = "Vazia")]
         public void ObterDigitosVerificadores_ComBaseInvalida_LancaArgumentException(string baseCnpj)
         {
-            Assert.ThrowsException<ArgumentException>(() => CnpjFiscal.ObterDigitosVerificadores(baseCnpj));
+            Assert.ThrowsExactly<ArgumentException>(() => CnpjFiscal.ObterDigitosVerificadores(baseCnpj));
         }
 
         [TestMethod]
         public void ObterDigitosVerificadores_ComBaseNula_LancaArgumentNullException()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => CnpjFiscal.ObterDigitosVerificadores(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => CnpjFiscal.ObterDigitosVerificadores(null));
         }
 
         #endregion
@@ -119,7 +119,7 @@ namespace DFe.Testes.Gerais
             {
                 var cnpj = baseCnpj + CnpjFiscal.ObterDigitosVerificadores(baseCnpj);
 
-                Assert.IsTrue(CnpjFiscal.Valido(cnpj), "O CNPJ {0} deveria ser válido", cnpj);
+                Assert.IsTrue(CnpjFiscal.Valido(cnpj), $"O CNPJ {cnpj} deveria ser válido");
             }
         }
 
