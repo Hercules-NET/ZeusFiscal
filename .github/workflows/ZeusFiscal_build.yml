@@ -155,12 +155,16 @@ jobs:
         id: release_notes
         run: |
           git fetch --tags
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ || echo "")
-          if [ -z "$PREV_TAG" ]; then
-            echo "notes=$(git log --oneline)" >> $GITHUB_OUTPUT
-          else
-            echo "notes=$(git log --oneline $PREV_TAG..HEAD)" >> $GITHUB_OUTPUT
-          fi
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          {
+            echo "notes<<EOF"
+            if [ -z "$PREV_TAG" ]; then
+              git log --oneline
+            else
+              git log --oneline $PREV_TAG..HEAD
+            fi
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
