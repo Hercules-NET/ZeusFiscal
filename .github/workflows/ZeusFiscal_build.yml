@@ -127,7 +127,9 @@ jobs:
     
     steps:    
       - name: Checkout
-        uses: actions/checkout@v4 #usado para etapa de pegar commits para gerar texto release
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # garante que todas as tags sejam baixadas para o Release Notes
     
       - name: Download Artifacts
         uses: actions/download-artifact@v4
@@ -136,7 +138,7 @@ jobs:
           path: ${{ github.workspace }}
 
       - name: List Artifacts
-        run: dir
+        run: ls -la
 
       - name: Setup NuGet
         uses: actions/setup-dotnet@v4
@@ -145,7 +147,7 @@ jobs:
           
       - name: Push to NuGet Feed
         working-directory: ${{ github.workspace }}
-        run: dotnet nuget push *.nupkg --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_AUTH_TOKEN }}
+        run: dotnet nuget push *.nupkg --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
 
