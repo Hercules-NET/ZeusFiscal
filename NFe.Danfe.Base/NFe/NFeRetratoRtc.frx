@@ -1575,10 +1575,10 @@
 				<TableColumn Name="prodVlrVB" Width="61"/>
 				<TableRow Name="prodRow" Height="11.34" AutoSize="true">
 					<TableCell Name="prodNomeCell" Border.Lines="Left, Right, Bottom" Border.Width="0.5" Text="[TextoDescricaoItem()]" HtmlTags="true" TextRenderType="HtmlTags" Padding="2, 2, 2, 2" HorzAlign="Left" VertAlign="Top" Font="Times New Roman, 6pt"/>
-					<TableCell Name="prodOriginCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Left" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 6pt"/>
+					<TableCell Name="prodOriginCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Center" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 6pt"/>
 					<TableCell Name="prodQtdCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Center" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 6pt"/>
-					<TableCell Name="prodValorUnitarioCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Right" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 6pt"/>
-					<TableCell Name="prodValorCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Right" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 6pt"/>
+					<TableCell Name="prodValorUnitarioCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Center" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 6pt"/>
+					<TableCell Name="prodValorCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Center" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 6pt"/>
 					<TableCell Name="prodBcLCell" Border.Lines="Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Left" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 5.5pt"/>
 					<TableCell Name="prodBcVCell" Border.Lines="Right, Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Right" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 5.5pt"/>
 					<TableCell Name="prodAlqLACell" Border.Lines="Bottom" Border.Width="0.5" Padding="2, 2, 2, 2" HorzAlign="Left" VertAlign="Top" WordWrap="false" AllowExpressions="false" Font="Times New Roman, 5.5pt"/>
