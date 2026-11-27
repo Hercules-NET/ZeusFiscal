@@ -1,8 +1,9 @@
-using System;
-using System.Xml.Serialization;
 using DFe.Classes.Assinatura;
 using DFe.Classes.Flags;
 using DFe.Utils;
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace NFe.Classes.Protocolo
 {
@@ -61,7 +62,10 @@ namespace NFe.Classes.Protocolo
         /// </summary>
         public string xMotivo { get; set; }
 
-        [XmlElement(ElementName = "cMsg")]
+        #region Sera retirado futuramente
+
+        //[XmlElement(ElementName = "cMsg")]
+        [XmlIgnore]
         public string ProxyccMsg
         {
             get
@@ -79,15 +83,50 @@ namespace NFe.Classes.Protocolo
                 cMsg = int.Parse(value);
             }
         }
-
         [XmlIgnore]
         public int? cMsg { get; set; }
-
+        [XmlIgnore]
         public string xMsg { get; set; }
 
+        #endregion
+
         /// <summary>
-        ///     PR13 - Assinatura XML do grupo identificado pelo atributo “Id”
-        ///     A decisão de assinar a mensagem fica a critério da UF interessada.
+        ///     PR13 Grupo de informações para envio de mensagens do interesse da SEFAZ (Criado na NT 2018.005)
+        /// </summary>
+        [XmlElement("cMsg")]
+        public List<string> msgCodigos { get; set; }
+
+        [XmlElement("xMsg")]
+        public List<string> msgDescricoes { get; set; }
+
+        [XmlIgnore]
+        public List<msgSefaz> MensagensSefaz
+        {
+            get
+            {
+                var mensagens = new List<msgSefaz>();
+                if (msgCodigos == null)
+                    return mensagens;
+                for (int i = 0; i < msgCodigos.Count; i++)
+                {
+                    mensagens.Add(new msgSefaz
+                    {
+                        cMsg = int.TryParse(msgCodigos[i], out int codigo)
+                            ? codigo
+                            : (int?)null,
+
+                        xMsg = msgDescricoes != null &&
+                               i < msgDescricoes.Count
+                            ? msgDescricoes[i]
+                            : null
+                    });
+                }
+                return mensagens;
+            }
+        }
+
+        /// <summary>
+        ///     PR90 - Assinatura XML do grupo identificado pelo atributo “Id”, a decisão de assinar a mensagem fica a critério da UF interessada.
         /// </summary>
         public Signature Signature { get; set; }
     }
